@@ -8,6 +8,9 @@ physics.setDrawMode( "normal" )
 
 local sprites = require('sprites.sprites');
 local math = require('modules.math')
+local collision = require('modules.collision')
+local gameCollisions = require('game.collisions')
+
 
 -----------------------------------------------------------------------------------------------
 
@@ -33,249 +36,17 @@ Runtime:addEventListener( "enterFrame", printMemUsage)
 
 
 
-function switchPositions(direction, object1, object2)
-
-	column1 = object1.column
-	row1 = object1.row
-	id1 = object1.id
-
-	column2 = object2.column
-	row2 = object2.row
-	id2 = object2.id
-
-	local extraTile1 = 0
-	local extraTile2 = 0
-	nextColumn = 1
-	if object1.column == horizontalRowLength and direction == "vertical" then
-		nextColumn = -1
-	end
-	if direction == "vertical" then
-		for i = #tileTable, 1, -1 do
-	  		local tile = tileTable[i]
-
-  			if tile ~= nil then
-		  		if object1.row == tile.row and object1.column + nextColumn == tile.column then
-		  			extraTile1 = tile
-		  		end
-		  		if object2.row == tile.row and object2.column + nextColumn == tile.column then
-		  			extraTile2 = tile
-		  		end
-		  	end
-		end
-	end
-
-	if direction == "horizontal" then
-		transition.to( object1, { time=100, x=object2.x, 
-			onComplete=function() 
-				object1.column = column2
-				object1.id = id2
-
-				if object1.containsItem == true then
-					object1.item.x = object1.x
-				end
-
-			end} )
-		transition.to( object2, { time=100, x=object1.x, 
-			onComplete=function() 
-				object2.column = column1
-				object2.id = id1
-
-				if object2.containsItem == true then
-					object2.item.x = object2.x
-				end
-
-			end} )
-	end
-
-	if direction == "vertical" then
-		transition.to( object1, { time=100, y=object2.y, 
-			onComplete=function() 
-				object1.row = row2
-				object1.id = id2
-				if extraTile2 ~= nil then
-					object1.y = extraTile2.y
-				end
-
-				if object1.containsItem == true then
-					object1.item.y = object1.y
-				end
-			end} )
-		transition.to( object2, { time=100, y=object1.y, 
-			onComplete=function() 
-				object2.row = row1
-				object2.id = id1
-				if extraTile1 ~= nil then
-					object2.y = extraTile1.y
-				end
-
-				if object2.containsItem == true then
-					object2.item.y = object2.y
-				end
-			end} )
-	end	
-end
-
-function findSwapTile(swipeDirection, touchedTile)
-
-	local function horizontalFind()
-		for i = #tileTable, 1, -1 do
-      		local tile = tileTable[i]
-			if tile ~= nil then
-	      		if tile.row == touchedTile.row then
-					if tile.column == touchedTile.column + comparisonValue then
-						if swipeDirection == "right" then
-							switchPositions("horizontal", touchedTile, tile )
-						else
-							switchPositions("horizontal", tile, touchedTile )
-						end
-						
-					end
-	      		end
-	      	end
-		end
-	end
-
-	local function verticalFind()
-		for i = #tileTable, 1, -1 do
-      		local tile = tileTable[i]
-			if tile ~= nil then
-	      		if tile.column == touchedTile.column then
-					if tile.row == touchedTile.row + comparisonValue then
-						if swipeDirection == "up" then
-							switchPositions("vertical", touchedTile, tile)
-						else
-							switchPositions("vertical", tile, touchedTile)
-						end
-						
-					end
-	      		end
-	      	end
-		end
-	end
-
-	comparisonValue = 1
-
-	if swipeDirection == "right" then
-		horizontalFind()
-	elseif swipeDirection == "up" then
-		verticalFind()
-	else
-		comparisonValue = -1
-
-		if swipeDirection == "left" then
-			horizontalFind()
-		elseif swipeDirection == "down" then
-			verticalFind()
-		end
-	end
-end
-
-function updateElectricityTiles()
-	for i = #tileTable, 1, -1 do
-      	local tile = tileTable[i]
-
-		if tile.containsElectricity then
-
-			local tileIndex = table.indexOf( tileTable, tile )
-			local mainRow = tile.row
-			local mainColumn = tile.column
-
-			local rightIndexLimit = tileIndex + 
-									( horizontalRowLength - (tileIndex%horizontalRowLength) )
-
-			print(tileIndex .. " / " .. rightIndexLimit)
-
-			local tempTileTable = {}
-
-			--Find all empty tiles in the row
-			for i =  1, #tileTable, 1 do
-  				local innerTile = tileTable[i]
-
-  				if innerTile ~= nil then
-	  				if innerTile.row == mainRow then 
-	  					table.insert(tempTileTable, innerTile)
-	  					--tempTileTable[innerTile.column] = innerTile
-	  					--You only need to catch one row so...
-	  				end
-	  			end
-
-  				if #tempTileTable == horizontalRowLength then
-  					break
-  				end
-  			end
-
-  			for i = #tempTileTable, 1, -1 do
-  				local innerTile = tempTileTable[i]
-  				if innerTile.containsElectricity then
-  					print("Contains Electricity: " .. innerTile.column)
-  					print("mainColumn: ".. mainColumn)
-  				end
-  				
-  			end
-
-  			--Decide which empty tiles to the right
-  				local blockedElectricity = false
-	  			for i = tileIndex, rightIndexLimit, 1 do
-	  				local innerTile = tileTable[i]
-	  					
-	  					if innerTile.row == mainRow then
 
 
-			  				--called when electricity current is blocked by anything
-			  				if innerTile.empty and blockedElectricity == false then
-
-			  					local secondaryElectricity = display.newSprite( sprites.electricity.sheet , sprites.electricity.sequence )
-								secondaryElectricity:setSequence( "Electricity" )
-								secondaryElectricity:play()
-
-								local electricitySize = .3
-								secondaryElectricity.xScale = electricitySize
-								secondaryElectricity.yScale = electricitySize
-								secondaryElectricity.rotation = 0
-
-								secondaryElectricity.x = innerTile.x
-								secondaryElectricity.y = innerTile.y
-
-								physics.addBody( secondaryElectricity, "static", { friction=0.5, bounce=0.3 } )	
-								secondaryElectricity.isSensor = true
-								secondaryElectricity.collision = onElectricityCollision
-								secondaryElectricity:addEventListener( "collision" )
-
-								innerTile.containsSecondaryElectricity = true
-								innerTile.empty = false
-
-								innerTile.containsItem = true
-								innerTile.item = secondaryElectricity
-								table.insert(itemTable, innerTile.item)
-
-			  				elseif tile.containsSecondaryElectricity then
-			  					if innerTile.item ~= nil then
-			  						innerTile.empty = true
-			  						innerTile.containsSecondaryElectricity = false
-									tileTable[i].item.consumed = true
-								end
-								--blockedElectricity = true
-			  				else
-			  					if tile.empty ~= true then
-									--blockedElectricity = true
-								end
-			  				end
-
-		  			end
-
-	  			end
-		end
-	end
-end
-
-function onTileTouch(self, event)
+-- I think self is the touched object
+-- TODO: verify this
+function swipeHandler(self, event)
+	local swipeOffset = 50
 
 	if ( event.phase == "began" ) then
         -- Set touch focus
         display.getCurrentStage():setFocus( self )
         self.isFocus = true
-
-        --print("column: " .. self.column .. "row: " .. self.row)
     end
 
     if (event.phase == "ended") then
@@ -283,70 +54,29 @@ function onTileTouch(self, event)
     	yEnd = event.y
     	xEnd = event.x
 
-    	if xEnd > event.xStart + tileSize then
-    		findSwapTile("right", self)
-    	elseif xEnd < event.xStart - tileSize then
-    		findSwapTile("left", self)
-    	elseif yEnd > event.yStart + tileSize then
-    		findSwapTile("down", self)
-    	elseif yEnd < event.yStart - tileSize then
-    		findSwapTile("up", self)
+    	if     xEnd > event.xStart + swipeOffset then
+    		-- right
+
+    	elseif xEnd < event.xStart - swipeOffset then
+    		-- left
+
+    	elseif yEnd < event.yStart - swipeOffset then
+    		-- up
+
+    	elseif yEnd > event.yStart + swipeOffset then
+    		-- down
+
     	end
 
     	-- Reset touch focus
-        display.getCurrentStage():setFocus( nil )
-        self.isFocus = nil
-
-        timerTable[#timerTable+1] = timer.performWithDelay(300, updateElectricityTiles)
-
+      display.getCurrentStage():setFocus( nil )
+      self.isFocus = nil
     end
 end
 
-function onOrbCollision( self, event )
-    if ( event.phase == "began" and event.other == player ) then
-    	orbs = orbs + 1
-    	orbText.text = orbs
-    	self.consumed = true
-    end
-end
 
-function onElectricityCollision( self, event )
-    if ( event.phase == "began" and event.other == player ) then
-    	gameOver = true
-    end
-end
 
-function onTileCollision( self, event )
-    if ( event.phase == "began" and event.other == player ) then
-    	player.wallCollisionCount = player.wallCollisionCount + 1
-    end
 
-    if ( event.phase == "ended" and event.other == player ) then
-    	if player.wallCollisionCount > 0 then
-    		player.wallCollisionCount = player.wallCollisionCount - 1
-    	end
-    end
-end
-
-function onEnemyCollision( self, event )
-    if ( event.phase == "began" and event.other == player ) then
-    	self.isSensor = true
-    	self.consumed = true
-    	player:setLinearVelocity(0, 0)
-
-    	transition.to( player, { time=300, alpha=.3, 
-			onComplete=function() 
-				player.alpha = 1
-			end
-			} )
-    end
-end
-
-function onMineCollision( self, event )
-    if ( event.phase == "began" and event.other == player ) then
-    	self.consumed = true
-    end
-end
 
 function createRow(horizontalRowLength, tileSize, yPoint, sceneGroup)		
 
@@ -592,7 +322,7 @@ function scene:create( event )
 	-- create a grey rectangle as the backdrop
 	local background = display.newRect( 0, 0, screenW, screenH )
 	background.anchorX = 0
-	background.anchorY = 0
+	background.anchorY =
 	background:setFillColor( 0, 0, 0 )
 
 	horizontalRowLength = 6
@@ -715,7 +445,7 @@ function scene:show( event )
 						if tile.column == 1 then
 							createRow(horizontalRowLength, tileSize, yPoint, sceneGroup)
 						end
-
+						-- object.remove(tileTable[i])
 						display.remove( tileTable[i] )
 						table.remove( tileTable, i )	    				
 					end
