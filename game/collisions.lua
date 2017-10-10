@@ -7,8 +7,7 @@ gameCollision.orb = function( self, event )
   collision.between()
     if ( event.phase == "began" and event.other == player ) then
       gameStats.add('orb', 1)
-    	self.consumed = true
-      -- object.remove(self)
+    	self.destroy = true
     end
 end
 
@@ -33,7 +32,7 @@ end
 function onEnemyCollision( self, event )
     if ( event.phase == "began" and event.other == player ) then
     	self.isSensor = true
-    	self.consumed = true
+    	self.destroy = true
     	player:setLinearVelocity(0, 0)
 
     	transition.to( player, { time=300, alpha=.3, 
@@ -46,6 +45,6 @@ end
 
 function onMineCollision( self, event )
     if ( event.phase == "began" and event.other == player ) then
-    	self.consumed = true
+    	self.destroy = true
     end
 end
