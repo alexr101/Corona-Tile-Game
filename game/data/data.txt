@@ -1,0 +1,10 @@
+Data needed
+
+Tiles
+  General
+    x, y, type
+
+  electricity
+    direction
+
+  

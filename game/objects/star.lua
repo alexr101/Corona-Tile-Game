@@ -1,8 +1,3 @@
-local star = {}
-
-
-star.new = function()
-
-
+return star = {
   
-end
+}

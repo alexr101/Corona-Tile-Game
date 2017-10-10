@@ -17,6 +17,7 @@ local graphics = require('modules.graphics')
 local memory = require('modules.memory')
 local node = require('game.node')
 local Table = require('modules.Table')
+local tiles = require('game.tiles')
 -- memory.print()
 
 local timerTable = {}
@@ -32,6 +33,11 @@ function scene:create( event )
 	local sceneGroup = self.view
 	itemsGroup = display.newGroup()
 	blackTiles = display.newGroup()
+
+	tileTable = {}
+	enemyTable = {}
+	itemTable = {}
+	orbTable = {}
 
 	orbs = 0
 	gameSpeed = 1.2
@@ -83,10 +89,9 @@ function scene:create( event )
 				electricity.collision = onElectricityCollision
 				electricity:addEventListener( "collision" )
 
-	local tile_Horizontal = display.newImageRect("images/game-objects/rockTile.jpg", tileSize, tileSize)
-				tile_Horizontal.x = 150
-				tile_Horizontal.y = 300
-				physics.addBody( tile_Horizontal, "static", { friction=0.5, bounce=0 } )	
+	tiles.init(tileTable)
+
+	
 				
 	
 	local mineMagnet = display.newImageRect("images/game-objects/mine.png", tileSize*.6, tileSize*.6)
@@ -115,12 +120,6 @@ function scene:create( event )
 	
 	-- all display objects must be inserted into group
 
-	tileTable = {}
-	enemyTable = {}
-	itemTable = {}
-	orbTable = {}
-
-	table.insert(tileTable, tile_Horizontal)
 
 	Table.forEach(tileTable, function(element)
 		print(element)
