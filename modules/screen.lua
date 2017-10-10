@@ -18,7 +18,7 @@ function _scroll(axis, sceneGroup)
 
 	for i = numChildren, 1, -1 do
 		local obj = sceneGroup[i]
-		if obj ~= nil then
+		if obj ~= nil and obj.gui ~= true then
  			obj[axis] = obj[axis] - config.levelSpeed
 		end
 	end

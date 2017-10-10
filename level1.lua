@@ -47,6 +47,7 @@ function scene:create( event )
 	orbText:setFillColor( 1, 1, 1 )
 	orbText.x = screen.width*.26
 	orbText.y = screen.height*.05
+	orbText.gui = true
 
 	local star = display.newSprite( sprites.star.sheet , sprites.star.sequence)
 	star:setSequence( "StarPic" )
@@ -156,7 +157,7 @@ function scene:show( event )
 
 		viewLayers.order(layers)
 
-		screen.move('x', sceneGroup)
+		screen.move('y', sceneGroup)
 
 	end
 end

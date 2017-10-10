@@ -1,5 +1,5 @@
 local config = {
-  levelSpeed = 4
+  levelSpeed = -1
 }
 
 return config

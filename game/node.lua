@@ -19,7 +19,7 @@ node.new = function(val)
 end
 
 node.createRow = function(limit)
-  if(limit == 0) return nil
+  if(limit == 0) then return nil end
 
   local newNode = node.new(limit)
         newNode.right = node.createRow(limit-1)
