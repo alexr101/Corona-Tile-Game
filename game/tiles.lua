@@ -5,13 +5,24 @@ tiles.init = function(table)
 
   local config = require('game.config')
   local level = config.level
+  local xMatrix = config.xMatrix
+  local yMatrix = config.yMatrix
+
+  
 
 
-  local tile_Horizontal = display.newImageRect("images/game-objects/rockTile.jpg", tileSize, tileSize)
-  tile_Horizontal.x = 150
-  tile_Horizontal.y = 300
-  physics.addBody( tile_Horizontal, "static", { friction=0.5, bounce=0 } )	
-  table.insert(tileTable, tile_Horizontal)
+
+end
+
+tiles.create = function(obj, x, y)
+
+  local tile = display.newImageRect("images/game-objects/" .. obj.name .. ".jpg", tileSize, tileSize)
+  tile.x = x
+  tile.y = y
+  physics.addBody( tile, obj.gravity, { friction=0.5, bounce=0 } )	
+  table.insert(loadstring(obj.table), tile)
+
+  return tileHorizontal
 end
 
 
