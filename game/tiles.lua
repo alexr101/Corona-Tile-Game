@@ -1,25 +1,37 @@
 local tiles = {}
 local matrix = require('modules.matrix')
 
-tiles.init = function(table)
-
+tiles.fill = function()
   local config = require('game.config')
-  local level = config.level
   local xMatrix = config.xMatrix
   local yMatrix = config.yMatrix
 
-  
+  local grid = matrix.create()
 
-
+  for i = 1, xMatrix do
+    for j = 1, yMatrix do
+      grid[i][j] = 
+    end
+  end
 
 end
 
+
 tiles.create = function(obj, x, y)
 
-  local tile = display.newImageRect("images/game-objects/" .. obj.name .. ".jpg", tileSize, tileSize)
+  if(obj.animation) then
+    -- load sprite
+  else
+    tile = display.newImageRect("images/game-objects/" .. obj.name .. ".jpg", tileSize, tileSize)    
+  end
+
   tile.x = x
   tile.y = y
-  physics.addBody( tile, obj.gravity, { friction=0.5, bounce=0 } )	
+
+  if(obj.physics) then
+    physics.addBody( tile, obj.type, { friction=0.5, bounce=0 } )
+  end	
+
   table.insert(loadstring(obj.table), tile)
 
   return tileHorizontal
