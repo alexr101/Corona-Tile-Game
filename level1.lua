@@ -16,6 +16,7 @@ local viewLayers = require('modules.viewLayers')
 local graphics = require('modules.graphics')
 local memory = require('modules.memory')
 local node = require('game.node')
+local Table = require('modules.Table')
 -- memory.print()
 
 local timerTable = {}
@@ -71,23 +72,22 @@ function scene:create( event )
 	local electricity = display.newSprite( sprites.electricity.sheet , sprites.electricity.sequence )
 				electricity:setSequence( "Electricity" )
 				electricity:play()
-
 	local electricitySize = .3
 				electricity.xScale = electricitySize
 				electricity.yScale = electricitySize
 				electricity.rotation = 90
-
 				electricity.x = 50
 				electricity.y = 50
-
 				physics.addBody( electricity, "static", { friction=0.5, bounce=0.3 } )	
 				electricity.isSensor = true
 				electricity.collision = onElectricityCollision
 				electricity:addEventListener( "collision" )
 
 	local tile_Horizontal = display.newImageRect("images/game-objects/rockTile.jpg", tileSize, tileSize)
-				tile_Horizontal.x = 500
+				tile_Horizontal.x = 150
 				tile_Horizontal.y = 300
+				physics.addBody( tile_Horizontal, "static", { friction=0.5, bounce=0 } )	
+				
 	
 	local mineMagnet = display.newImageRect("images/game-objects/mine.png", tileSize*.6, tileSize*.6)
 				mineMagnet.x = 150
@@ -104,10 +104,7 @@ function scene:create( event )
 	background.anchorY = 0
 	background:setFillColor( 0, 0, 0 )
 
-	tileTable = {}
-	enemyTable = {}
-	itemTable = {}
-	orbTable = {}
+	
 
 	player = display.newImageRect("images/game-objects/player.png", tileSize, tileSize )
 	player.x = screen.width * .58
@@ -117,11 +114,23 @@ function scene:create( event )
 	graphics.radiate(player)
 	
 	-- all display objects must be inserted into group
-	sceneGroup:insert( background )
 
-	for i = #tileTable, 1, -1 do
+	tileTable = {}
+	enemyTable = {}
+	itemTable = {}
+	orbTable = {}
 
-	end
+	table.insert(tileTable, tile_Horizontal)
+
+	Table.forEach(tileTable, function(element)
+		print(element)
+	end)
+
+
+	sceneGroup:insert( background )	
+	sceneGroup:insert( star )
+	sceneGroup:insert( tile_Horizontal )
+	sceneGroup:insert( electricity )
 	sceneGroup:insert( mineMagnet )
  	sceneGroup:insert( orbText )
 	sceneGroup:insert( player )

@@ -1,7 +1,10 @@
 -- Add prototype func
-function test()
+local Table = {}
 
+Table.forEach = function(table, cb)
+  for i = #table, 1, -1 do
+    cb(table[i].x)
+  end
 end
 
-local tableMT = getmetatable({})
-tableMT.__index['test'] = test
+return Table
