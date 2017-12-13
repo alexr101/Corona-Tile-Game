@@ -4,23 +4,26 @@ local scene = composer.newScene()
 local physics = require "physics"
 			physics.start(true)
 			physics.setDrawMode( "normal" )
+
 local Collision = require('modules.Collision')
-local GameCollisions = require('game.Collisions')
 local Graphics = require('modules.Graphics')
 local math = require('modules.Math')
 local Memory = require('modules.Memory')
-local Node = require('game.Node')
 local Screen = require('modules.Screen')
 local Swipe = require('modules.Swipe')
-local Sprites = require('sprites.Sprites')
 local Table = require('modules.Table')
-local Tiles = require('game.Tiles')
 local ViewLayers = require('modules.ViewLayers')
 
--- memory.print()
+local GameCollisions = require('game.Collisions')
+local Node = require('game.Node')
+local Tiles = require('game.Tiles')
 
+local Sprites = require('sprites.Sprites')
+
+local MineMagnet = require('game.objects.MineMagnet')
+
+local AppContext = {}
 local timerTable = {}
-
 
 function scene:create( event )
 
@@ -33,7 +36,7 @@ function scene:create( event )
 	itemsGroup = display.newGroup()
 	blackTiles = display.newGroup()
 
-	tileTable = {1, 2, 3}
+	tileTable = {}
 	enemyTable = {}
 	itemTable = {}
 	orbTable = {}
@@ -88,18 +91,7 @@ function scene:create( event )
 				electricity.collision = onElectricityCollision
 				electricity:addEventListener( "collision" )
 
-	Tiles.init(tileTable)
-
-	
-				
-	
-	local mineMagnet = display.newImageRect("images/game-objects/mine.png", tileSize*.6, tileSize*.6)
-				mineMagnet.x = 150
-				mineMagnet.y = 150
-				physics.addBody( mineMagnet, "dynamic", { friction=0.5, bounce=0.3, radius=15 } )	
-				mineMagnet.gravityScale = 0
-				mineMagnet.collision = onMineCollision
-				mineMagnet:addEventListener( "collision" )
+	Tiles.create(MineMagnet, {x=100, y=100, tileSize=tileSize, table=enemyTable})
 
 
 	-- create a grey rectangle as the backdrop
@@ -127,9 +119,7 @@ function scene:create( event )
 
 	sceneGroup:insert( background )	
 	sceneGroup:insert( star )
-	sceneGroup:insert( tile_Horizontal )
 	sceneGroup:insert( electricity )
-	sceneGroup:insert( mineMagnet )
  	sceneGroup:insert( orbText )
 	sceneGroup:insert( player )
 	

@@ -1,6 +1,7 @@
-return electricity = {
+return {
   name = "electricity",
-  table = "electricity",
+  tableName = "electricity",
   sprite = true,
   direction = "",
+  animation = false
 }
