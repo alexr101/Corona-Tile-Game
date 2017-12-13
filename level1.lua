@@ -1,23 +1,22 @@
 local composer = require( "composer" )
+			composer.removeScene( "menu" )
 local scene = composer.newScene()
-composer.removeScene( "menu" )
-
 local physics = require "physics"
-physics.start(true)
-physics.setDrawMode( "normal" )
-
-local sprites = require('sprites.sprites');
-local math = require('modules.math')
-local collision = require('modules.collision')
-local gameCollisions = require('game.collisions')
-local screen = require('modules.screen')
-local swipe = require('modules.swipe')
-local viewLayers = require('modules.viewLayers')
-local graphics = require('modules.graphics')
-local memory = require('modules.memory')
-local node = require('game.node')
+			physics.start(true)
+			physics.setDrawMode( "normal" )
+local Collision = require('modules.Collision')
+local GameCollisions = require('game.Collisions')
+local Graphics = require('modules.Graphics')
+local math = require('modules.Math')
+local Memory = require('modules.Memory')
+local Node = require('game.Node')
+local Screen = require('modules.Screen')
+local Swipe = require('modules.Swipe')
+local Sprites = require('sprites.Sprites')
 local Table = require('modules.Table')
-local tiles = require('game.tiles')
+local Tiles = require('game.Tiles')
+local ViewLayers = require('modules.ViewLayers')
+
 -- memory.print()
 
 local timerTable = {}
@@ -34,7 +33,7 @@ function scene:create( event )
 	itemsGroup = display.newGroup()
 	blackTiles = display.newGroup()
 
-	tileTable = {}
+	tileTable = {1, 2, 3}
 	enemyTable = {}
 	itemTable = {}
 	orbTable = {}
@@ -52,18 +51,18 @@ function scene:create( event )
 	}
 	orbText = display.newText( options1 )
 	orbText:setFillColor( 1, 1, 1 )
-	orbText.x = screen.width*.26
-	orbText.y = screen.height*.05
+	orbText.x = Screen.width*.26
+	orbText.y = Screen.height*.05
 	orbText.gui = true
 
-	local star = display.newSprite( sprites.star.sheet , sprites.star.sequence)
+	local star = display.newSprite( Sprites.star.sheet , Sprites.star.sequence)
 	star:setSequence( "StarPic" )
 	star:play()
 
-	star.x = screen.width*.05
+	star.x = Screen.width*.05
 	star.y = 20
 
-	local newNode = node.new('1')
+	local newNode = Node.new('1')
 	print(newNode.val)
 
 	local starSize = .5
@@ -72,10 +71,10 @@ function scene:create( event )
 
 		-- basic measurements and setup
 	local horizontalRowLength = 6
-	local tileSize = screen.width / horizontalRowLength
-	local verticalRowLength = (screen.height / tileSize) + 1
+	local tileSize = Screen.width / horizontalRowLength
+	local verticalRowLength = (Screen.height / tileSize) + 1
 
-	local electricity = display.newSprite( sprites.electricity.sheet , sprites.electricity.sequence )
+	local electricity = display.newSprite( Sprites.electricity.sheet , Sprites.electricity.sequence )
 				electricity:setSequence( "Electricity" )
 				electricity:play()
 	local electricitySize = .3
@@ -89,7 +88,7 @@ function scene:create( event )
 				electricity.collision = onElectricityCollision
 				electricity:addEventListener( "collision" )
 
-	tiles.init(tileTable)
+	Tiles.init(tileTable)
 
 	
 				
@@ -104,7 +103,7 @@ function scene:create( event )
 
 
 	-- create a grey rectangle as the backdrop
-	local background = display.newRect( 0, 0, screen.width, screen.height )
+	local background = display.newRect( 0, 0, Screen.width, Screen.height )
 	background.anchorX = 0
 	background.anchorY = 0
 	background:setFillColor( 0, 0, 0 )
@@ -112,11 +111,11 @@ function scene:create( event )
 	
 
 	player = display.newImageRect("images/game-objects/player.png", tileSize, tileSize )
-	player.x = screen.width * .58
-	player.y = screen.height * .23
+	player.x = Screen.width * .58
+	player.y = Screen.height * .23
 
 	physics.addBody( player, "dynamic", { friction=1, bounce=0.3, radius=tileSize*.3 } )
-	graphics.radiate(player)
+	Graphics.radiate(player)
 	
 	-- all display objects must be inserted into group
 
@@ -163,9 +162,9 @@ function scene:show( event )
 			[5] = player
 		}
 
-		viewLayers.order(layers)
+		ViewLayers.order(layers)
 
-		screen.move('y', sceneGroup)
+		Screen.move('y', sceneGroup)
 
 	end
 end

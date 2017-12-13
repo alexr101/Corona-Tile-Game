@@ -1,8 +1,8 @@
 local tiles = {}
-local matrix = require('modules.matrix')
+local matrix = require('modules.Matrix')
 
 tiles.fill = function()
-  local config = require('game.config')
+  local config = require('game.Config')
   local xMatrix = config.xMatrix
   local yMatrix = config.yMatrix
 
@@ -10,7 +10,7 @@ tiles.fill = function()
 
   for i = 1, xMatrix do
     for j = 1, yMatrix do
-      grid[i][j] = 
+      grid[i][j] = 's'
     end
   end
 

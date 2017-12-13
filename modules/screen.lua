@@ -1,6 +1,6 @@
 local scene = {}
 
-local config = require('game.config')
+local config = require('game.Config')
 
 scene.width = display.actualContentWidth
 scene.height = display.actualContentHeight

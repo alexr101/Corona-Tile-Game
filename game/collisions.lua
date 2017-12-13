@@ -1,7 +1,7 @@
 local gameCollision = {}
-local collision = require('modules.collision')
-local object = require('modules.object')
-local gameStats = require('game.stats')
+local collision = require('modules.Collision')
+local object = require('modules.Object')
+local gameStats = require('game.Stats')
 
 gameCollision.orb = function( self, event )
   collision.between()
