@@ -28,19 +28,23 @@ Tiles.create = function(obj, options)
     tile = display.newSprite( obj.sprite.sheet , obj.sprite.sequence )
     tile:setSequence( "Main" )
     tile:play()
-    local scale = obj.sprite.scale
-    tile.xScale = scale
-    tile.yScale = scale
+    tile.xScale = obj.sprite.scale
+    tile.yScale = obj.sprite.scale
     tile.rotation = obj.sprite.rotation
+    tile.width = tileSize
+    tile.height = tileSize
   
     physics.addBody( tile, "static", { friction=0.5, bounce=0.3 } )	
  
   else
-    tile = display.newImageRect("images/game-objects/" .. obj.name .. ".png", tileSize, tileSize)    
+    tile = display.newImageRect("images/game-objects/" .. obj.name .. ".png", tileSize, tileSize) 
+    tile.width = tileSize
+    tile.height = tileSize
   end
 
   tile.x = x
   tile.y = y
+
   tile.info = obj
 
   if(obj.physics) then

@@ -1,9 +1,15 @@
 local composer = require( "composer" )
 			composer.removeScene( "menu" )
 local scene = composer.newScene()
+local Config = require('game.config')
+
 local physics = require "physics"
 			physics.start(true)
-			physics.setDrawMode( "normal" )
+if(Config.debug) then
+	physics.setDrawMode( "hybrid" )
+else
+	physics.setDrawMode( "normal" )
+end
 
 local Collision = require('modules.Collision')
 local Graphics = require('modules.Graphics')
