@@ -1,6 +1,6 @@
-local node = {}
+local Node = {}
 
-node = {
+Node = {
   val = nil,
   up = nil,
   down = nil,
@@ -8,9 +8,9 @@ node = {
   right = nil
 }
 
-node.new = function(val)
+Node.new = function(val)
   local newNode = {}
-	local node_mt = { __index = node }
+	local node_mt = { __index = Node }
 	newNode.val = val
 
   setmetatable(newNode, node_mt) 
@@ -18,13 +18,14 @@ node.new = function(val)
   return newNode
 end
 
-node.createRow = function(limit)
+
+Node.createRow = function(limit)
   if(limit == 0) then return nil end
 
-  local newNode = node.new(limit)
-        newNode.right = node.createRow(limit-1)
+  local newNode = Node.new(limit)
+        newNode.right = Node.createRow(limit-1)
   
-  return newNode -- returns leftmost node
+  return newNode -- returns leftmost Node
 end
 
-return node
+return Node

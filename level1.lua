@@ -62,10 +62,7 @@ function scene:create( event )
 	-- orbText.y = Screen.height*.05
 	-- orbText.gui = true
 
-	local newNode = Node.new({
-		one = 1,
-		two = 'two'
-	})
+
 	
 
 		-- basic measurements and setup

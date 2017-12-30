@@ -1,34 +1,37 @@
 local ObjectGenerator = {}
-local MineMagnet = require('game.objects.MineMagnet')
-local Star = require('game.objects.Star')
-local Electricity = require('game.objects.Electricity')
-local ElectricityGenerator = require('game.objects.ElectricityGenerator')
 
-local Rock = require('game.objects.Rock')
-local EmptySpace = require('game.objects.EmptySpace')
+ObjectGenerator.MineMagnet = require('game.objects.MineMagnet')
+ObjectGenerator.Star = require('game.objects.Star')
+ObjectGenerator.Electricity = require('game.objects.Electricity')
+ObjectGenerator.ElectricityGenerator = require('game.objects.ElectricityGenerator')
 
+ObjectGenerator.Rock = require('game.objects.Rock')
+ObjectGenerator.RockCrumbling = require('game.objects.RockCrumbling')
+ObjectGenerator.EmptySpace = require('game.objects.EmptySpace')
 
-
-
-local objectsInGridArray = {
+ObjectGenerator.objectsInGridArray = {
     EmptySpace,
     Star,
-    Electricity,
     Rock,
+    RockCrumbling,
     ElectricityGenerator
 }
 
-local objectsOutOfGridArray = {
+ObjectGenerator.objectsOutOfGridArray = {
     MineMagnet,
 }
 
+ObjectGenerator.objectsReactive = {
+    Electricity
+}
+
 ObjectGenerator.randomOutOfGrid = function()
-    return objectsOutOfGridArray[ math.random(1, table.getn(objectsOutOfGridArray) ) ]
+    return ObjectGenerator.objectsOutOfGridArray[ math.random(1, table.getn(ObjectGenerator.objectsOutOfGridArray) ) ]
 end
 
 
 ObjectGenerator.randomInGrid = function() 
-    return objectsInGridArray[ math.random(1, table.getn(objectsInGridArray) ) ]
+    return ObjectGenerator.objectsInGridArray[ math.random(1, table.getn(ObjectGenerator.objectsInGridArray) ) ]
 end
 
 return ObjectGenerator
