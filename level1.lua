@@ -88,7 +88,13 @@ function scene:create( event )
 	player.x = Screen.width * .58
 	player.y = Screen.height * .23
 	physics.addBody( player, "dynamic", { friction=1, bounce=0.3, radius=tileSize*.3 } )
-	Graphics.radiate(player)
+	Graphics.radiate(player, {
+		alphaLow = .7,
+		alphaHigh = 1,
+		speedGlow = 1000,
+		speedDimmer = 500,
+
+	})
 	
 	-- all display objects must be inserted into group
 

@@ -1,13 +1,18 @@
 local graphics = {}
 
-graphics.radiate = function(obj)
+graphics.radiate = function(obj, options)
+
+  local alphaHigh = options.alphaHigh
+  local alphaLow = options.alphaLow
+  local speedGlow = options.speedGlow
+  local speedDimmer = options.speedDimmer
 
   function glow(obj)
     transition.to( obj, { 
-      time=1000, 
-      alpha=.1, 
+      time = speedGlow, 
+      alpha = alphaLow, 
       onComplete = function() 
-        dimmer(self)
+        dimmer(obj)
       end
     })
   end
@@ -15,8 +20,8 @@ graphics.radiate = function(obj)
 
   function dimmer(obj)
     transition.to( obj, { 
-      time=800, 
-      alpha=1, 
+      time = speedDimmer, 
+      alpha = alphaHigh, 
       onComplete=function() 
         glow(obj)
       end
