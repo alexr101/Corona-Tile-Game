@@ -40,7 +40,6 @@ Tiles.create = function(obj, options)
   end	
 
   for i = 1, table.getn(tables), 1 do
-    print(i)
     table.insert(tables[i], tile)
   end
 

@@ -116,16 +116,20 @@ function scene:create( event )
 	local Screen = require('modules.Screen')
 	local Tiles = require('game.tiles')
 
+	Grid.rows = {}
 	Grid.horizontalBlocks = 5
 	Grid.tileSize = Screen.width / Grid.horizontalBlocks
 	Grid.verticalBlocks = ( Screen.height / Grid.tileSize ) + 3
 
 	for i = 0, Grid.verticalBlocks, 1 do
+		Grid.rows[i] = {} -- nested array right? :)
 
-		for i = 0, Grid.horizontalBlocks, 1 do
-
+		for j = 0, Grid.horizontalBlocks, 1 do
+			Grid.rows[i][j] = j
 		end
 	end
+
+	print(Grid.rows[1][3])
 
 	local tile = Tiles.create(MineMagnet, {
 		x=100, 
