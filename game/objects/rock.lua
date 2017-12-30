@@ -1,10 +1,9 @@
 local GameTables = require('game.tables')
 
 return {
-  name = "mineMagnet",
+  name = "rockTile",
   physics = false,
   tables = { 
     GameTables.tiles,
-    GameTables.enemies
   }
 }
