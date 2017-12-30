@@ -1,6 +1,6 @@
 return {
   name = "mineMagnet",
   table = "mineMagnets",
-  physics = true,
+  physics = false,
 
 }

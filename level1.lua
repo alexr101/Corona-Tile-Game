@@ -7,7 +7,7 @@ local physics = require "physics"
 
 local Collision = require('modules.Collision')
 local Graphics = require('modules.Graphics')
-local math = require('modules.Math')
+local Math = require('modules.Math')
 local Memory = require('modules.Memory')
 local Screen = require('modules.Screen')
 local Swipe = require('modules.Swipe')
@@ -19,8 +19,6 @@ local Node = require('game.Node')
 local Tiles = require('game.Tiles')
 
 local Sprites = require('sprites.Sprites')
-
-local MineMagnet = require('game.objects.MineMagnet')
 
 local AppContext = {}
 local timerTable = {}
@@ -111,6 +109,18 @@ function scene:create( event )
 	Graphics.radiate(player)
 	
 	-- all display objects must be inserted into group
+
+	local ObjectGenerator = {}
+	local MineMagnet = require('game.objects.MineMagnet')
+	
+	local objectsArray = {
+		MineMagnet
+	}
+
+
+	ObjectGenerator.random = function() 
+		return objectsArray[ math.random(1, 1) ]
+	end
 	
 	local Grid = {}
 	local Screen = require('modules.Screen')
@@ -125,20 +135,24 @@ function scene:create( event )
 		Grid.rows[i] = {} -- nested array right? :)
 
 		for j = 0, Grid.horizontalBlocks, 1 do
-			Grid.rows[i][j] = j
+			local x = (j * tileSize) + (tileSize*.5)
+			local y = Screen.height - ( tileSize * (i+1) ) + (tileSize*.5)
+
+			Grid.rows[i][j] = Tiles.create(ObjectGenerator.random(), {
+				x=x, 
+				y=y, 
+				tileSize=tileSize, 
+				tables= { enemyTable }
+			})
 		end
 	end
 
+
+
 	print(Grid.rows[1][3])
 
-	local tile = Tiles.create(MineMagnet, {
-		x=100, 
-		y=100, 
-		tileSize=tileSize, 
-		tables= { enemyTable }
-	})
 
-	Table.print(tile)
+
 
 	Table.forEach(tileTable, function(element)
 		-- print(element)

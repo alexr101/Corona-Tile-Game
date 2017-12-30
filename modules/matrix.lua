@@ -1,13 +1,13 @@
 local matrix = {}
 local Table = require('modules.Table')
 
-matrix.create = function(x, y)
+matrix.create = function(rows, columns)
   grid = {}
 
-  for i = 1, x do
+  for i = 1, rows do
     grid[i] = {}
 
-    for j = 1, y do
+    for j = 1, columns do
       grid[i][j] = 0 
     end
   end
