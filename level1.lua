@@ -127,7 +127,7 @@ function scene:create( event )
 	local Tiles = require('game.tiles')
 
 	Grid.rows = {}
-	Grid.horizontalBlocks = 5
+	Grid.horizontalBlocks = 20
 	Grid.tileSize = Screen.width / Grid.horizontalBlocks
 	Grid.verticalBlocks = ( Screen.height / Grid.tileSize ) + 3
 
@@ -135,14 +135,14 @@ function scene:create( event )
 		Grid.rows[i] = {} -- nested array right? :)
 
 		for j = 0, Grid.horizontalBlocks, 1 do
-			local x = (j * tileSize) + (tileSize*.5)
-			local y = Screen.height - ( tileSize * (i+1) ) + (tileSize*.5)
+			local x = (j * Grid.tileSize) + (Grid.tileSize*.5)
+			local y = Screen.height - ( Grid.tileSize * (i+1) ) + (Grid.tileSize*.5)
 
 			Grid.rows[i][j] = Tiles.create(ObjectGenerator.random(), {
-				x=x, 
-				y=y, 
-				tileSize=tileSize, 
-				tables= { enemyTable }
+				x = x, 
+				y = y, 
+				tileSize = Grid.tileSize, 
+				tables = { enemyTable }
 			})
 			sceneGroup:insert( Grid.rows[i][j] )
 		end
