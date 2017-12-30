@@ -30,7 +30,7 @@ Grid.create = function (sceneGroup)
             Grid.matrix[i][j] = Grid.fillSpace(x, y)
             sceneGroup:insert( Grid.matrix[i][j] )
             
-            Grid.createOutOfGridObj(x, y)
+            Grid.createOutOfGridObj(x, y, sceneGroup)
         end
     end
 
@@ -44,15 +44,27 @@ Grid.addNodesToMatrix = function(matrix)
         local row = Grid.matrix[i]
 
         for j= 0, table.getn(row), 1 do
-            local block = row[j]
+            local newNode = Node.new()
+            row[j].node = newNode
 
-            if row[j-1] then
-                
+            if matrix[i][j-1] then
+                row[j].node.left = row[j-1]
+            end
+            if matrix[i][j+1] then
+                row[j].node.right = row[j+1]
+            end
+            if matrix[i - 1] then
+                row[j].node.down = matrix[i-1][j]
+            end
+            if matrix[i + 1] then
+                row[j].node.up = matrix[i+1][j]
             end
         end
-
     end
 
+    print('node[1][1]' .. matrix[1][1].info.name)
+    print('node[1][1].right ' .. matrix[1][1].node.right.info.name)
+    print('node[1][1].right right ' .. matrix[1][1].node.right.node.right.info.name)
 end
 
 Grid.createOutOfGridObj = function(x, y, sceneGroup) 

@@ -101,7 +101,8 @@ function scene:create( event )
 	
 	-- all display objects must be inserted into group
 
-	Grid.create(sceneGroup)
+	local matrix = Grid.create(sceneGroup)
+	Grid.addNodesToMatrix()
 
 
 

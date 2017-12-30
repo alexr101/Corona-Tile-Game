@@ -10,19 +10,19 @@ ObjectGenerator.RockCrumbling = require('game.objects.RockCrumbling')
 ObjectGenerator.EmptySpace = require('game.objects.EmptySpace')
 
 ObjectGenerator.objectsInGridArray = {
-    EmptySpace,
-    Star,
-    Rock,
-    RockCrumbling,
-    ElectricityGenerator
+    ObjectGenerator.EmptySpace,
+    ObjectGenerator.Star,
+    ObjectGenerator.Rock,
+    ObjectGenerator.RockCrumbling,
+    ObjectGenerator.ElectricityGenerator
 }
 
 ObjectGenerator.objectsOutOfGridArray = {
-    MineMagnet,
+    ObjectGenerator.MineMagnet,
 }
 
 ObjectGenerator.objectsReactive = {
-    Electricity
+    ObjectGenerator.Electricity
 }
 
 ObjectGenerator.randomOutOfGrid = function()
