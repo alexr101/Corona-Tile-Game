@@ -34,10 +34,8 @@ function scene:create( event )
 	itemsGroup = display.newGroup()
 	blackTiles = display.newGroup()
 
-	tileTable = {}
-	enemyTable = {}
-	itemTable = {}
-	orbTable = {}
+
+
 
 	orbs = 0
 	gameSpeed = 1.2
@@ -137,14 +135,17 @@ function scene:create( event )
 		for j = 0, Grid.horizontalBlocks, 1 do
 			local x = (j * Grid.tileSize) + (Grid.tileSize*.5)
 			local y = Screen.height - ( Grid.tileSize * (i+1) ) + (Grid.tileSize*.5)
+			local object = ObjectGenerator.random()
 
-			Grid.rows[i][j] = Tiles.create(ObjectGenerator.random(), {
+			Grid.rows[i][j] = Tiles.create(object, {
 				x = x, 
 				y = y, 
 				tileSize = Grid.tileSize, 
-				tables = { enemyTable }
+				tables = object.tables
 			})
 			sceneGroup:insert( Grid.rows[i][j] )
+
+			-- create MINE enemy based on difficulty OUTSIDE OF GRID
 		end
 	end
 
@@ -153,9 +154,9 @@ function scene:create( event )
 	print(Grid.rows[1][3])
 
 
+	local GameTables = require('game.tables')
 
-
-	Table.forEach(tileTable, function(element)
+	Table.forEach(GameTables.tiles, function(element)
 		-- print(element)
 	end)
 
