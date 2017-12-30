@@ -15,7 +15,9 @@ local Table = require('modules.Table')
 local ViewLayers = require('modules.ViewLayers')
 
 local GameCollisions = require('game.Collisions')
+local Grid = require('game.Grid')
 local Node = require('game.Node')
+local GameTables = require('game.tables')
 local Tiles = require('game.Tiles')
 
 local Sprites = require('sprites.Sprites')
@@ -108,53 +110,9 @@ function scene:create( event )
 	
 	-- all display objects must be inserted into group
 
-	local ObjectGenerator = {}
-	local MineMagnet = require('game.objects.MineMagnet')
-	
-	local objectsArray = {
-		MineMagnet
-	}
+	Grid.create(sceneGroup)
 
 
-	ObjectGenerator.random = function() 
-		return objectsArray[ math.random(1, 1) ]
-	end
-	
-	local Grid = {}
-	local Screen = require('modules.Screen')
-	local Tiles = require('game.tiles')
-
-	Grid.rows = {}
-	Grid.horizontalBlocks = 20
-	Grid.tileSize = Screen.width / Grid.horizontalBlocks
-	Grid.verticalBlocks = ( Screen.height / Grid.tileSize ) + 3
-
-	for i = 0, Grid.verticalBlocks, 1 do
-		Grid.rows[i] = {} -- nested array right? :)
-
-		for j = 0, Grid.horizontalBlocks, 1 do
-			local x = (j * Grid.tileSize) + (Grid.tileSize*.5)
-			local y = Screen.height - ( Grid.tileSize * (i+1) ) + (Grid.tileSize*.5)
-			local object = ObjectGenerator.random()
-
-			Grid.rows[i][j] = Tiles.create(object, {
-				x = x, 
-				y = y, 
-				tileSize = Grid.tileSize, 
-				tables = object.tables
-			})
-			sceneGroup:insert( Grid.rows[i][j] )
-
-			-- create MINE enemy based on difficulty OUTSIDE OF GRID
-		end
-	end
-
-
-
-	print(Grid.rows[1][3])
-
-
-	local GameTables = require('game.tables')
 
 	Table.forEach(GameTables.tiles, function(element)
 		-- print(element)

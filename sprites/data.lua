@@ -10,7 +10,7 @@ data.files = {
 data.sequences = {
 	electricity = {
 		{
-			name = "Electricity",
+			name = "Main",
 			start =  1,
 			count = 6,
 			time = 700,
@@ -19,7 +19,7 @@ data.sequences = {
 	},
 	smoke = {
 		{
-			name = "Smoke",
+			name = "Main",
 			start = 7,
 			count = 14,
 			time = 1000,
@@ -28,7 +28,7 @@ data.sequences = {
 	},
 	star = {
 		{
-			name = "Star",
+			name = "Main",
 			start = 21,
 			count = 6,
 			time = 800,

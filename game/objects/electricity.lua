@@ -1,14 +1,16 @@
+local Sprites = require('sprites.sprites')  
 local GameTables = require('game.tables')
 
-return {
+return  {
   name = "electricity",
-  tableName = "electricity",
-  sprite = true,
-  direction = "",
-  animation = false,
-  object = nil,
-  tables = { 
-    GameTables.tiles,
-    GameTables.enemies
+  physics = false,
+  tables = {
+    GameTables.tiles
+  },
+  sprite = {
+    sheet = Sprites.electricity.sheet,
+    sequence = Sprites.electricity.sequence,
+    scale = .25,
+    rotation = 90
   }
 }

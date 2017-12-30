@@ -25,18 +25,30 @@ Tiles.create = function(obj, options)
 
   local tile
 
-  if(obj.animation) then
-    -- load sprite
+  if(obj.sprite) then
+    tile = display.newSprite( obj.sprite.sheet , obj.sprite.sequence )
+    tile:setSequence( "Main" )
+    tile:play()
+    local scale = obj.sprite.scale
+    tile.xScale = scale
+    tile.yScale = scale
+    tile.rotation = obj.sprite.rotation
+  
+    physics.addBody( tile, "static", { friction=0.5, bounce=0.3 } )	
+ 
   else
     tile = display.newImageRect("images/game-objects/" .. obj.name .. ".png", tileSize, tileSize)    
   end
 
   tile.x = x
   tile.y = y
-  tile.properties = obj
+  tile.info = obj
 
   if(obj.physics) then
     physics.addBody( tile, obj.type, { friction=0.5, bounce=0 } )
+    -- tile.isSensor = true
+    -- tile.collision = ontileCollision
+    -- tile:addEventListener( "collision" )
   end	
 
   for i = 1, table.getn(tables), 1 do
