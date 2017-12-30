@@ -144,6 +144,7 @@ function scene:create( event )
 				tileSize=tileSize, 
 				tables= { enemyTable }
 			})
+			sceneGroup:insert( Grid.rows[i][j] )
 		end
 	end
 
