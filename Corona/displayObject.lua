@@ -4,7 +4,7 @@ function display.newRect( ... ) -- func with added method
   local rect = oldNewRect( ... )
 
   function rect:foo( str )
-      print( str )
+      -- print( str )
   end
 
   function rect:pastLimit = function(direction, limit)

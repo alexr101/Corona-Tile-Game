@@ -4,8 +4,6 @@ local data = require('sprites.data')
 local function _getImageSheet(name)
 	local sheetFile = require('sprites.' .. data.files[name])
 	local sheetData = sheetFile:getSheet()
-    print(graphics.newImageSheet( 'sprites/' .. data.files[name] .. '.png', sheetData ))
-    print(graphics.newImageSheet( 'general.png', sheetData ))
 	return graphics.newImageSheet( 'sprites/' .. data.files[name] .. '.png', sheetData )
 end
 

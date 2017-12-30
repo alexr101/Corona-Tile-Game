@@ -21,13 +21,10 @@ Tiles.create = function(obj, options)
   local x = options.x or 0
   local y = options.y or 0
   local tileSize = options.tileSize or 0
-  local objTable = options.table or {}
+  local tables = options.tables or {}
 
-  local tile = display.newImageRect("images/game-objects/" .. obj.name .. ".png", tileSize, tileSize) 
-  print(obj.name)
-  print(tileSize)
-  print(x)
-  print(y)
+  local tile
+
   if(obj.animation) then
     -- load sprite
   else
@@ -36,15 +33,17 @@ Tiles.create = function(obj, options)
 
   tile.x = x
   tile.y = y
+  tile.properties = obj
 
   if(obj.physics) then
     physics.addBody( tile, obj.type, { friction=0.5, bounce=0 } )
   end	
-  print(tile)
-  print(obj.table)
-  table.insert(objTable, tile)
 
-  return tileHorizontal
+  for i = 0, tables, 1 do
+    table.insert(tables[i], tile)
+  end
+
+  return tile
 end
 
 Tiles.init = function(table)

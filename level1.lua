@@ -44,83 +44,107 @@ function scene:create( event )
 	orbs = 0
 	gameSpeed = 1.2
 
-	local options1 = 
-	{
-	    text = orbs,
-	    width = 120,     --required for multi-line and alignment
-	    align = "left",
-	    font = native.systemFont,
-	    fontSize = 18
-	}
-	orbText = display.newText( options1 )
-	orbText:setFillColor( 1, 1, 1 )
-	orbText.x = Screen.width*.26
-	orbText.y = Screen.height*.05
-	orbText.gui = true
+	-- local options1 = 
+	-- {
+	--     text = orbs,
+	--     width = 120,     --required for multi-line and alignment
+	--     align = "left",
+	--     font = native.systemFont,
+	--     fontSize = 18
+	-- }
+	-- orbText = display.newText( options1 )
+	-- orbText:setFillColor( 1, 1, 1 )
+	-- orbText.x = Screen.width*.26
+	-- orbText.y = Screen.height*.05
+	-- orbText.gui = true
 
-	local star = display.newSprite( Sprites.star.sheet , Sprites.star.sequence)
-	star:setSequence( "StarPic" )
-	star:play()
+	-- local star = display.newSprite( Sprites.star.sheet , Sprites.star.sequence)
+	-- star:setSequence( "StarPic" )
+	-- star:play()
+	-- star.x = Screen.width*.05
+	-- star.y = 20
+	-- local starSize = .5
+	-- star.xScale = starSize
+	-- star.yScale = starSize
 
-	star.x = Screen.width*.05
-	star.y = 20
-
-	local newNode = Node.new('1')
-	print(newNode.val)
-
-	local starSize = .5
-	star.xScale = starSize
-	star.yScale = starSize
+	local newNode = Node.new({
+		one = 1,
+		two = 'two'
+	})
+	
 
 		-- basic measurements and setup
 	local horizontalRowLength = 6
 	local tileSize = Screen.width / horizontalRowLength
 	local verticalRowLength = (Screen.height / tileSize) + 1
 
-	local electricity = display.newSprite( Sprites.electricity.sheet , Sprites.electricity.sequence )
-				electricity:setSequence( "Electricity" )
-				electricity:play()
-	local electricitySize = .3
-				electricity.xScale = electricitySize
-				electricity.yScale = electricitySize
-				electricity.rotation = 90
-				electricity.x = 50
-				electricity.y = 50
-				physics.addBody( electricity, "static", { friction=0.5, bounce=0.3 } )	
-				electricity.isSensor = true
-				electricity.collision = onElectricityCollision
-				electricity:addEventListener( "collision" )
+	-- local electricity = display.newSprite( Sprites.electricity.sheet , Sprites.electricity.sequence )
+	-- electricity:setSequence( "Electricity" )
+	-- electricity:play()
+	-- local electricitySize = .3
+	-- electricity.xScale = electricitySize
+	-- electricity.yScale = electricitySize
+	-- electricity.rotation = 90
+	-- electricity.x = 50
+	-- electricity.y = 50
+	-- physics.addBody( electricity, "static", { friction=0.5, bounce=0.3 } )	
+	-- electricity.isSensor = true
+	-- electricity.collision = onElectricityCollision
+	-- electricity:addEventListener( "collision" )
 
-	Tiles.create(MineMagnet, {x=100, y=100, tileSize=tileSize, table=enemyTable})
 
+
+	
 
 	-- create a grey rectangle as the backdrop
-	local background = display.newRect( 0, 0, Screen.width, Screen.height )
-	background.anchorX = 0
-	background.anchorY = 0
-	background:setFillColor( 0, 0, 0 )
+	-- local background = display.newRect( 0, 0, Screen.width, Screen.height )
+	-- background.anchorX = 0
+	-- background.anchorY = 0
+	-- background:setFillColor( 0, 0, 0 )
 
 	
 
 	player = display.newImageRect("images/game-objects/player.png", tileSize, tileSize )
 	player.x = Screen.width * .58
 	player.y = Screen.height * .23
-
 	physics.addBody( player, "dynamic", { friction=1, bounce=0.3, radius=tileSize*.3 } )
 	Graphics.radiate(player)
 	
 	-- all display objects must be inserted into group
+	
+	local Grid = {}
+	local Screen = require('modules.Screen')
+	local Tiles = require('game.tiles')
 
+	Grid.horizontalBlocks = 5
+	Grid.tileSize = Screen.width / Grid.horizontalBlocks
+	Grid.verticalBlocks = ( Screen.height / Grid.tileSize ) + 3
+
+	for i = 0, Grid.verticalBlocks, 1 do
+
+		for i = 0, Grid.horizontalBlocks, 1 do
+
+		end
+	end
+
+	local tile = Tiles.create(MineMagnet, {
+		x=100, 
+		y=100, 
+		tileSize=tileSize, 
+		tables=[enemyTable]
+	})
+
+	Table.print(tile)
 
 	Table.forEach(tileTable, function(element)
-		print(element)
+		-- print(element)
 	end)
 
 
-	sceneGroup:insert( background )	
-	sceneGroup:insert( star )
-	sceneGroup:insert( electricity )
- 	sceneGroup:insert( orbText )
+	-- sceneGroup:insert( background )	
+	-- sceneGroup:insert( star )
+	-- sceneGroup:insert( electricity )
+ 	-- sceneGroup:insert( orbText )
 	sceneGroup:insert( player )
 	
 end

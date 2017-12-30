@@ -3,5 +3,6 @@ return {
   tableName = "electricity",
   sprite = true,
   direction = "",
-  animation = false
+  animation = false,
+  object = nil
 }

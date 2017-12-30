@@ -6,7 +6,7 @@ function _order(arr)
   itemsGroup:toFront()
   blackTiles:toFront()
   player:toFront()
-  orbText:toFront()
+  -- orbText:toFront()
   player:toFront()
 end
 
