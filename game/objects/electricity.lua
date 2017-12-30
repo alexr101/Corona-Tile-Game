@@ -2,6 +2,19 @@ local Sprites = require('sprites.sprites')
 local GameTables = require('game.tables')
 local Screen = require('modules.screen')
 
+local Config = require('game.config')
+local scaleSizes = {
+  [1] = 0,
+  [2] = 0,
+  [3] = 0,
+  [4] = 0,
+  [5] = .3125,
+  [6] = .26,
+  [7] = .225,
+  [8] = .1955,
+  [9] = .173,
+}
+
 return  {
   name = "electricity",
   physics = false,
@@ -11,7 +24,7 @@ return  {
   sprite = {
     sheet = Sprites.electricity.sheet,
     sequence = Sprites.electricity.sequence,
-    scale = .3125,
+    scale = scaleSizes[Config.tiles],
     rotation = 90
   }
 }
