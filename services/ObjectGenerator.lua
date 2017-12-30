@@ -9,8 +9,8 @@ local Rock = require('game.objects.Rock')
 
 local objectsArray = {
     -- MineMagnet,
-    -- Star,
-    Electricity,
+    Star,
+    -- Electricity,
     Rock
 }
 

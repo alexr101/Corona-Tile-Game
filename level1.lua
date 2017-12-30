@@ -56,15 +56,6 @@ function scene:create( event )
 	-- orbText.y = Screen.height*.05
 	-- orbText.gui = true
 
-	-- local star = display.newSprite( Sprites.star.sheet , Sprites.star.sequence)
-	-- star:setSequence( "StarPic" )
-	-- star:play()
-	-- star.x = Screen.width*.05
-	-- star.y = 20
-	-- local starSize = .5
-	-- star.xScale = starSize
-	-- star.yScale = starSize
-
 	local newNode = Node.new({
 		one = 1,
 		two = 'two'
@@ -91,15 +82,6 @@ function scene:create( event )
 	-- electricity:addEventListener( "collision" )
 
 
-
-	
-
-	-- create a grey rectangle as the backdrop
-	-- local background = display.newRect( 0, 0, Screen.width, Screen.height )
-	-- background.anchorX = 0
-	-- background.anchorY = 0
-	-- background:setFillColor( 0, 0, 0 )
-
 	
 
 	player = display.newImageRect("images/game-objects/player.png", tileSize, tileSize )
@@ -119,9 +101,6 @@ function scene:create( event )
 	end)
 
 
-	-- sceneGroup:insert( background )	
-	-- sceneGroup:insert( star )
-	-- sceneGroup:insert( electricity )
  	-- sceneGroup:insert( orbText )
 	sceneGroup:insert( player )
 	
