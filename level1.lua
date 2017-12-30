@@ -131,7 +131,7 @@ function scene:create( event )
 		x=100, 
 		y=100, 
 		tileSize=tileSize, 
-		tables=[enemyTable]
+		tables= { enemyTable }
 	})
 
 	Table.print(tile)

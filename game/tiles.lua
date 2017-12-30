@@ -39,7 +39,8 @@ Tiles.create = function(obj, options)
     physics.addBody( tile, obj.type, { friction=0.5, bounce=0 } )
   end	
 
-  for i = 0, tables, 1 do
+  for i = 1, table.getn(tables), 1 do
+    print(i)
     table.insert(tables[i], tile)
   end
 
