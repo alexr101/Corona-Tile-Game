@@ -33,9 +33,9 @@ Tiles.create = function(obj, options)
     tile.rotation = obj.sprite.rotation
     tile.width = tileSize
     tile.height = tileSize
-  
-    physics.addBody( tile, "static", { friction=0.5, bounce=0.3 } )	
- 
+    physics.addBody( tile, obj.physics.type, { friction=0.5, bounce=0.3 } )
+    tile.isSensor = obj.physics.isSensor
+
   else
     tile = display.newImageRect("images/game-objects/" .. obj.name .. ".png", tileSize, tileSize) 
     tile.width = tileSize
@@ -48,8 +48,8 @@ Tiles.create = function(obj, options)
   tile.info = obj
 
   if(obj.physics) then
-    physics.addBody( tile, obj.type, { friction=0.5, bounce=0 } )
-    -- tile.isSensor = true
+    physics.addBody( tile, obj.physics.type, { friction=0.5, bounce=0 } )
+    tile.isSensor = obj.physics.isSensor
     -- tile.collision = ontileCollision
     -- tile:addEventListener( "collision" )
   end	
@@ -65,7 +65,6 @@ Tiles.init = function(table)
 
   local config = require('game.config')
   local level = config.level
-
 
   local tile_Horizontal = display.newImageRect("images/game-objects/rockTile.jpg", tileSize, tileSize)
   tile_Horizontal.x = 150

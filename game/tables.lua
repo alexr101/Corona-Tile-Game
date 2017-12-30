@@ -2,7 +2,7 @@ local Tables = {
     tiles = {},
     enemies = {},
     items = {},
-    orbs = {},
+    orbs = {}
 }
 
 

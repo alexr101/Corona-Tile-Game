@@ -20,6 +20,10 @@ return  {
   tables = {
     GameTables.tiles
   },
+  physics = {
+    type = 'static',
+    isSensor = true
+  },
   sprite = {
     sheet = Sprites.star.sheet,
     sequence = Sprites.star.sequence,

@@ -29,25 +29,41 @@ Grid.create = function (sceneGroup)
             Grid.matrix[i][j] = Grid.fillSpace(x, y)
             sceneGroup:insert( Grid.matrix[i][j] )
 
+            local outOfGridObj = Grid.createMagnet(x, y)
+
+            if outOfGridObj ~= nil then
+                sceneGroup:insert( outOfGridObj )
+            end
             -- create MINE enemy based on difficulty OUTSIDE OF GRID
         end
     end
 end
 
-Grid.fillSpace = function(x, y) 
-
-    local object = ObjectGenerator.random()
-    local space = 'empty'
-    local fillSpaceOdds = math.random(1, 100)
-
-    -- if fillSpaceOdds <= 20 then
-        space = Tiles.create(object, {
+Grid.createMagnet = function(x, y) 
+    local object = ObjectGenerator.randomOutOfGrid()
+    local outOfGridOdds = math.random(1, 100)
+    
+    if outOfGridOdds < 2 then
+        return Tiles.create(object, {
             x = x, 
             y = y, 
             tileSize = Grid.tileSize, 
             tables = object.tables
         })
-    -- end
+    end
+end
+
+Grid.fillSpace = function(x, y) 
+
+    local object = ObjectGenerator.randomInGrid()
+    local space = 'empty'
+
+    space = Tiles.create(object, {
+        x = x, 
+        y = y, 
+        tileSize = Grid.tileSize, 
+        tables = object.tables
+    })
 
     return space
 end
