@@ -8,8 +8,8 @@ local Rock = require('game.objects.Rock')
 
 
 local objectsArray = {
-    MineMagnet,
-    Star,
+    -- MineMagnet,
+    -- Star,
     Electricity,
     Rock
 }

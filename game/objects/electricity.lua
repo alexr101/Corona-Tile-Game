@@ -1,5 +1,6 @@
 local Sprites = require('sprites.sprites')  
 local GameTables = require('game.tables')
+local Screen = require('modules.screen')
 
 return  {
   name = "electricity",
@@ -10,7 +11,7 @@ return  {
   sprite = {
     sheet = Sprites.electricity.sheet,
     sequence = Sprites.electricity.sequence,
-    scale = .25,
+    scale = .225,
     rotation = 90
   }
 }

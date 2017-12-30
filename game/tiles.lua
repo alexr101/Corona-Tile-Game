@@ -13,7 +13,6 @@ Tiles.fill = function()
       grid[i][j] = 's'
     end
   end
-
 end
 
 
