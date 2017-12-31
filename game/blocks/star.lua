@@ -16,6 +16,7 @@ local scaleSizes = {
 
 return  {
   name = "star",
+  collisionType = 'star',
   physics = false,
   tables = {
     GameTables.tiles

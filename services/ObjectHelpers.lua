@@ -13,15 +13,26 @@ ObjectHelpers.remove = function(obj, index)
 	  table.remove( tileTable, i )
     titleTable[i] = nil
   else
-    local row = obj.coordinates.row
-    local column = obj.coordinates.column
-    local obj = Grid.matrix[row][column]
-    local objInfo = Grid.matrix[row][column].info
+    local row
+    local column
+    local obj1
+    local objInfo
+
+    if(obj.coordinates ~= nil) then
+      row = obj.coordinates.row
+      column = obj.coordinates.column
+      obj1 = Grid.matrix[row][column]
+      objInfo = Grid.matrix[row][column].info
+    end
+
     local x = obj.x
     local y = obj.y
-
+    
     obj:removeSelf()
     obj = nil
+    -- Grid.matrix[row][column]:removeSelf()
+    -- Grid.matrix[row][column] = nil
+
     local function replaceGrid() 
       Grid.matrix[row][column] = Tiles.create(objInfo, {
           x = x, 
@@ -34,12 +45,9 @@ ObjectHelpers.remove = function(obj, index)
         column = column
       } 
     end
-
-    timer.performWithDelay( 1, replaceGrid )
-
-    
-    -- display.remove(obj)
-    -- obj = nil
+    if(false) then
+      timer.performWithDelay( 1, replaceGrid )
+    end
   end  	
 end
 

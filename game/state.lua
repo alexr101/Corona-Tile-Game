@@ -2,7 +2,7 @@ local State = {}
 
 State = {
   score = 100,
-  starts = 0,
+  stars = 0,
   active = false,
   tileSize = 0,
   sceneGroup = {}

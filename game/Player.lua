@@ -18,5 +18,4 @@ Player.new = function(tileSize)
     return Player.instance
 end
 
-
 return Player

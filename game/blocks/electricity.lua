@@ -17,6 +17,7 @@ local scaleSizes = {
 
 return  {
   name = "electricity",
+  collisionType = 'electricity',
   physics = false,
   tables = {
     GameTables.tiles
