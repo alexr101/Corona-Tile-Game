@@ -11,19 +11,18 @@ else
 	physics.setDrawMode( "normal" )
 end
 
-local Collision = require('modules.Collision')
-local Graphics = require('modules.Graphics')
+local Graphics = require('UI.graphics')
 local Math = require('modules.Math')
-local Memory = require('modules.Memory')
-local Screen = require('modules.Screen')
+local Memory = require('device.Memory')
+local Screen = require('device.Screen')
 local Table = require('modules.Table')
 local ViewLayers = require('modules.ViewLayers')
 
-local GameCollisions = require('game.Collisions')
-local Grid = require('game.Grid')
-local Node = require('game.Node')
+local GameCollisions = require('Physics.Collisions')
+local Grid = require('game.map.Grid')
+local Node = require('game.map.node')
 local GameTables = require('game.tables')
-local Tiles = require('game.Tiles')
+local Tiles = require('game.map.tiles')
 
 local Sprites = require('sprites.Sprites')
 
@@ -86,7 +85,7 @@ function scene:create( event )
 
 	
 
-	player = display.newImageRect("images/game-objects/player.png", tileSize, tileSize )
+	player = display.newImageRect("assets/game-objects/player.png", tileSize, tileSize )
 	player.x = Screen.width * .58
 	player.y = Screen.height * .23
 	physics.addBody( player, "dynamic", { friction=1, bounce=0.3, radius=tileSize*.3 } )

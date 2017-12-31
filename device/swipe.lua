@@ -15,7 +15,7 @@ swipe.handler = function(event)
     yEnd = event.y
     xEnd = event.x
 
-    local Grid = require('game.Grid')
+    local Grid = require('game.map.Grid')
 
     local row = event.target.coordinates.row
     local column = event.target.coordinates.column

@@ -1,5 +1,5 @@
 local Tiles = {}
-local matrix = require('modules.Matrix')
+local matrix = require('game.map.matrix')
 local Swipe = require('device.Swipe')
 
 Tiles.fill = function()
@@ -38,7 +38,7 @@ Tiles.create = function(obj, options)
     tile.isSensor = obj.physics.isSensor
 
   else
-    tile = display.newImageRect("images/game-objects/" .. obj.name .. ".png", tileSize, tileSize) 
+    tile = display.newImageRect("assets/game-objects/" .. obj.name .. ".png", tileSize, tileSize) 
     tile.width = tileSize
     tile.height = tileSize
   end
@@ -72,7 +72,7 @@ Tiles.init = function(table)
   local config = require('game.config')
   local level = config.level
 
-  local tile_Horizontal = display.newImageRect("images/game-objects/rockTile.jpg", tileSize, tileSize)
+  local tile_Horizontal = display.newImageRect("assets/game-objects/rockTile.jpg", tileSize, tileSize)
   tile_Horizontal.x = 150
   tile_Horizontal.y = 300
   physics.addBody( tile_Horizontal, "static", { friction=0.5, bounce=0 } )	

@@ -1,9 +1,9 @@
 local Grid = {}
 local ObjectGenerator = require('services.ObjectGenerator')
-local Screen = require('modules.Screen')
-local Tiles = require('game.tiles')
+local Screen = require('device.Screen')
+local Tiles = require('game.map.tiles')
 local Config = require('game.config')
-local Node = require('game.node')
+local Node = require('game.map.node')
 
 Grid.matrix = {}
 Grid.columns = 0

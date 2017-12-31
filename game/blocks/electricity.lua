@@ -1,6 +1,6 @@
 local Sprites = require('sprites.sprites')  
 local GameTables = require('game.tables')
-local Screen = require('modules.screen')
+local Screen = require('device.Screen')
 
 local Config = require('game.config')
 local scaleSizes = {

@@ -13,8 +13,8 @@ settings =
 	excludeFiles =
 	{
 		-- Include only the necessary icon files on each platform
-		iphone = { "images/icons/Icon-*dpi.png", },
-		android = { "images/icons/Icon.png", "images/icons/Icon-Small-*.png", "images/icons/Icon*@2x.png", },
+		iphone = { "assets/icons/Icon-*dpi.png", },
+		android = { "assets/icons/Icon.png", "assets/icons/Icon-Small-*.png", "assets/icons/Icon*@2x.png", },
 	},
 	
 	plugins =
@@ -49,23 +49,23 @@ settings =
 
 			CFBundleIconFiles =
 			{
-				"images/icons/Icon.png",
-				"images/icons/Icon@2x.png",
-				"images/icons/Icon-167.png",
-				"images/icons/Icon-60.png",
-				"images/icons/Icon-60@2x.png",
-				"images/icons/Icon-60@3x.png",
-				"images/icons/Icon-72.png",
-				"images/icons/Icon-72@2x.png",
-				"images/icons/Icon-76.png",
-				"images/icons/Icon-76@2x.png",
-				"images/icons/Icon-Small.png",
-				"images/icons/Icon-Small@2x.png",
-				"images/icons/Icon-Small@3x.png",
-				"images/icons/Icon-Small-40.png",
-				"images/icons/Icon-Small-40@2x.png",
-				"images/icons/Icon-Small-50.png",
-				"images/icons/Icon-Small-50@2x.png",
+				"assets/icons/Icon.png",
+				"assets/icons/Icon@2x.png",
+				"assets/icons/Icon-167.png",
+				"assets/icons/Icon-60.png",
+				"assets/icons/Icon-60@2x.png",
+				"assets/icons/Icon-60@3x.png",
+				"assets/icons/Icon-72.png",
+				"assets/icons/Icon-72@2x.png",
+				"assets/icons/Icon-76.png",
+				"assets/icons/Icon-76@2x.png",
+				"assets/icons/Icon-Small.png",
+				"assets/icons/Icon-Small@2x.png",
+				"assets/icons/Icon-Small@3x.png",
+				"assets/icons/Icon-Small-40.png",
+				"assets/icons/Icon-Small-40@2x.png",
+				"assets/icons/Icon-Small-50.png",
+				"assets/icons/Icon-Small-50@2x.png",
 			},
 
 			-- Launch image files table

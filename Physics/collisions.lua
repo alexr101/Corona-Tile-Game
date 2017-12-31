@@ -1,12 +1,10 @@
 local gameCollision = {}
-local collision = require('modules.Collision')
 local object = require('modules.Object')
-local gameStats = require('game.Stats')
+local gameState = require('game.State')
 
 gameCollision.orb = function( self, event )
-  collision.between()
     if ( event.phase == "began" and event.other == player ) then
-      gameStats.add('orb', 1)
+      gameState.add('orb', 1)
     	self.destroy = true
     end
 end

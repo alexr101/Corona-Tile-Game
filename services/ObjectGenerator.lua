@@ -1,13 +1,13 @@
 local ObjectGenerator = {}
 
-ObjectGenerator.MineMagnet = require('game.objects.MineMagnet')
-ObjectGenerator.Star = require('game.objects.Star')
-ObjectGenerator.Electricity = require('game.objects.Electricity')
-ObjectGenerator.ElectricityGenerator = require('game.objects.ElectricityGenerator')
+ObjectGenerator.MineMagnet = require('game.blocks.MineMagnet')
+ObjectGenerator.Star = require('game.blocks.Star')
+ObjectGenerator.Electricity = require('game.blocks.Electricity')
+ObjectGenerator.ElectricityGenerator = require('game.blocks.ElectricityGenerator')
 
-ObjectGenerator.Rock = require('game.objects.Rock')
-ObjectGenerator.RockCrumbling = require('game.objects.RockCrumbling')
-ObjectGenerator.EmptySpace = require('game.objects.EmptySpace')
+ObjectGenerator.Rock = require('game.blocks.Rock')
+ObjectGenerator.RockCrumbling = require('game.blocks.RockCrumbling')
+ObjectGenerator.EmptySpace = require('game.blocks.EmptySpace')
 
 ObjectGenerator.objectsInGridArray = {
     ObjectGenerator.EmptySpace,
