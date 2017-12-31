@@ -83,6 +83,7 @@ Grid.createOutOfGridObj = function(x, y, sceneGroup)
             tileSize = Grid.tileSize, 
             tables = object.tables
         })
+        tile.outOfGrid = true
         sceneGroup:insert( tile )
     end
 end
@@ -167,12 +168,6 @@ Grid.swap = function(options)
         row = row,
         column = column
     }
---    print(Grid.matrix[targetRow][targetColumn].coordinates.row)
---     print(Grid.matrix[targetRow][targetColumn].coordinates.column)
-
---     print(Grid.matrix[row][column].coordinates.row)
---     print(Grid.matrix[row][column].coordinates.column)
---     print(targetRow) 
 
     local temp = Grid.matrix[row][column]
     Grid.matrix[row][column] = Grid.matrix[targetRow][targetColumn]

@@ -48,7 +48,9 @@ Tiles.create = function(obj, options)
 
   tile.info = obj
 
-  tile:addEventListener( "touch", Swipe.handler )
+  if(obj.outOfGrid == nil or obj.outOfGrid == false) then
+    tile:addEventListener( "touch", Swipe.handler )
+  end
 
 
   if(obj.physics) then

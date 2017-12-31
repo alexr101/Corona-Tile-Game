@@ -6,12 +6,9 @@ swipe.handler = function(event)
   local swipeOffset = 50
   local target = event.target
 
-	if ( event.phase == "began" ) then
-    display.getCurrentStage():setFocus( target )
-    target.isFocus = true
-    print(target.info.name)
-    print(target.coordinates.row)
-    print(target.coordinates.column)
+  if ( event.phase == "began" ) then    
+      display.getCurrentStage():setFocus( target )
+      target.isFocus = true
   end
 
   if (event.phase == "ended") then
