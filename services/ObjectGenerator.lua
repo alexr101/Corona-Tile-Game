@@ -29,7 +29,6 @@ ObjectGenerator.randomOutOfGrid = function()
     return ObjectGenerator.objectsOutOfGridArray[ math.random(1, table.getn(ObjectGenerator.objectsOutOfGridArray) ) ]
 end
 
-
 ObjectGenerator.randomInGrid = function() 
     return ObjectGenerator.objectsInGridArray[ math.random(1, table.getn(ObjectGenerator.objectsInGridArray) ) ]
 end

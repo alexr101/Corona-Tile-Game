@@ -5,6 +5,7 @@ local ObjectHelpers = {}
 ObjectHelpers.remove = function(obj, index)
   local Grid = require('game.map.Grid')
   local Tiles = require('game.map.tiles')
+  local ObjectGenerator = require('services.ObjectGenerator')
 
   index = index or nil
 
@@ -46,6 +47,11 @@ ObjectHelpers.remove = function(obj, index)
       } 
     end
     if(false) then
+      timer.performWithDelay( 1, replaceGrid )
+    end
+
+    if(objInfo.consumable) then
+      objInfo = ObjectGenerator.EmptySpace
       timer.performWithDelay( 1, replaceGrid )
     end
   end  	
