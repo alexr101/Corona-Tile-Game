@@ -17,6 +17,7 @@ local Memory = require('device.Memory')
 local Screen = require('device.Screen')
 local Table = require('Utils.Table')
 local zOrdering = require('UI.zOrdering')
+local Player = require('game.Player')
 
 local GameCollisions = require('Physics.Collisions')
 local Grid = require('game.map.Grid')
@@ -85,17 +86,7 @@ function scene:create( event )
 
 	
 
-	player = display.newImageRect("assets/game-objects/player.png", tileSize, tileSize )
-	player.x = Screen.width * .58
-	player.y = Screen.height * .23
-	physics.addBody( player, "dynamic", { friction=1, bounce=0.3, radius=tileSize*.3 } )
-	Graphics.radiate(player, {
-		alphaLow = .7,
-		alphaHigh = 1,
-		speedGlow = 1000,
-		speedDimmer = 500,
-
-	})
+	player = Player.new(tileSize)
 	
 	-- all display objects must be inserted into group
 

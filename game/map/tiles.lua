@@ -1,6 +1,7 @@
 local Tiles = {}
 local matrix = require('game.map.matrix')
 local Swipe = require('device.Swipe')
+local Collisions = require('Physics.Collisions')
 
 Tiles.fill = function()
   local config = require('game.Config')
@@ -32,22 +33,16 @@ Tiles.create = function(obj, options)
     tile.xScale = obj.sprite.scale
     tile.yScale = obj.sprite.scale
     tile.rotation = obj.sprite.rotation
-    tile.width = tileSize
-    tile.height = tileSize
-    physics.addBody( tile, obj.physics.type, { friction=0.5, bounce=0.3 } )
-    tile.isSensor = obj.physics.isSensor
-
   else
     tile = display.newImageRect("assets/game-objects/" .. obj.name .. ".png", tileSize, tileSize) 
-    tile.width = tileSize
-    tile.height = tileSize
   end
-
+  
+  tile.width = tileSize
+  tile.height = tileSize
   tile.x = x
   tile.y = y
-
   tile.info = obj
-
+  
   if(obj.outOfGrid == nil or obj.outOfGrid == false) then
     tile:addEventListener( "touch", Swipe.handler )
   end
@@ -56,8 +51,9 @@ Tiles.create = function(obj, options)
   if(obj.physics) then
     physics.addBody( tile, obj.physics.type, { friction=0.5, bounce=0 } )
     tile.isSensor = obj.physics.isSensor
-    -- tile.collision = ontileCollision
-    -- tile:addEventListener( "collision" )
+    
+    tile.collision = Collisions.mine
+    tile:addEventListener( "collision" )
   end	
 
   for i = 1, table.getn(tables), 1 do
