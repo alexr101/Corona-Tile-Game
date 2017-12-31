@@ -18,6 +18,7 @@ return  {
   name = "star",
   collisionType = 'star',
   physics = false,
+  consumable = true,
   tables = {
     GameTables.tiles
   },
