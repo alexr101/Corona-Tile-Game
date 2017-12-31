@@ -22,7 +22,7 @@ Tiles.create = function(obj, options)
   local x = options.x or 0
   local y = options.y or 0
   local tileSize = options.tileSize or 0
-  local tables = options.tables or {}
+  local tables = obj.tables or {}
 
   local tile
 

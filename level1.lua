@@ -36,12 +36,10 @@ function scene:create( event )
 	-- e.g. add display objects to 'sceneGroup', add touch listeners, etc.
 
 	local sceneGroup = self.view
+	AppState.sceneGroup = sceneGroup
+
 	itemsGroup = display.newGroup()
 	blackTiles = display.newGroup()
-	AppState.active = true
-	AppState.add('score', 100)
-	print(AppState.score)
-	AppState.sceneGroup = sceneGroup
 
 	local Grid = require('game.map.Grid')
 	local GameCollisions = require('Physics.Collisions')
@@ -62,6 +60,7 @@ function scene:create( event )
 
 	local horizontalRowLength = 6
 	local tileSize = Screen.width / horizontalRowLength
+	AppState.tileSize = tileSize
 	
 	player = Player.new(tileSize)
 	

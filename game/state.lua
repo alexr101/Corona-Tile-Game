@@ -4,6 +4,7 @@ State = {
   score = 100,
   starts = 0,
   active = false,
+  tileSize = 0,
   sceneGroup = {}
 }
 

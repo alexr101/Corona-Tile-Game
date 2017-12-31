@@ -81,7 +81,6 @@ Grid.createOutOfGridObj = function(x, y, sceneGroup)
             x = x, 
             y = y, 
             tileSize = Grid.tileSize, 
-            tables = object.tables
         })
         tile.outOfGrid = true
         sceneGroup:insert( tile )

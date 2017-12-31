@@ -4,6 +4,8 @@ local ObjectHelpers = {}
 -- otherwise treated as an object
 ObjectHelpers.remove = function(obj, index)
   local Grid = require('game.map.Grid')
+  local Tiles = require('game.map.tiles')
+
   index = index or nil
 
   if index ~= nil then
@@ -13,24 +15,28 @@ ObjectHelpers.remove = function(obj, index)
   else
     local row = obj.coordinates.row
     local column = obj.coordinates.column
-    local obj1 = Grid.matrix[row][column]
+    local obj = Grid.matrix[row][column]
+    local objInfo = Grid.matrix[row][column].info
+    local x = obj.x
+    local y = obj.y
 
-    local swapImage = function(oldImage, imageFile, width, height)
-      local newImage = display.newImageRect(imageFile, width, height)
+    obj:removeSelf()
+    obj = nil
+    local function replaceGrid() 
+      Grid.matrix[row][column] = Tiles.create(objInfo, {
+          x = x, 
+          y = y, 
+          tileSize = AppState.tileSize, 
+      })
 
-      newImage.x = oldImage.x
-      newImage.y = oldImage.y
-      oldImage:removeSelf()
-      oldImage = nil
-      AppState.add('score', 10)
-      -- print(AppState.score)
-      AppState.sceneGroup:insert(newImage)
-
-      -- AppState.currentGame.sceneGroup:insert(newImage)
-      return newImage
+      Grid.matrix[row][column].coordinates ={
+        row = row,
+        column = column
+      } 
     end
 
-    Grid.matrix[row][column] = swapImage(obj1, "assets/game-objects/rockTile.png", 50, 50)
+    timer.performWithDelay( 1, replaceGrid )
+
     
     -- display.remove(obj)
     -- obj = nil
