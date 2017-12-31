@@ -1,5 +1,5 @@
 local matrix = {}
-local Table = require('modules.Table')
+local Table = require('Utils.Table')
 
 matrix.create = function(rows, columns)
   grid = {}

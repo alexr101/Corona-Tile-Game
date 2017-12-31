@@ -1,5 +1,5 @@
 local gameCollision = {}
-local object = require('modules.Object')
+local object = require('Services.ObjectHelpers')
 local gameState = require('game.State')
 
 gameCollision.orb = function( self, event )

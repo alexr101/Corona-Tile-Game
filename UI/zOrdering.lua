@@ -1,4 +1,4 @@
-local viewLayers = {}
+local zOrdering = {}
 
 function _order(arr)
   -- Loop through arr and order items
@@ -10,10 +10,10 @@ function _order(arr)
   player:toFront()
 end
 
-viewLayers.order = function(arr)
+zOrdering.order = function(arr)
   local orderFn = function() _order(arr) end
   Runtime:addEventListener("enterFrame", orderFn)
 end
 
 
-return viewLayers
+return zOrdering

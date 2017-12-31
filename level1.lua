@@ -12,11 +12,11 @@ else
 end
 
 local Graphics = require('UI.graphics')
-local Math = require('modules.Math')
+local Math = require('Utils.math')
 local Memory = require('device.Memory')
 local Screen = require('device.Screen')
-local Table = require('modules.Table')
-local ViewLayers = require('modules.ViewLayers')
+local Table = require('Utils.Table')
+local zOrdering = require('UI.zOrdering')
 
 local GameCollisions = require('Physics.Collisions')
 local Grid = require('game.map.Grid')
@@ -139,7 +139,7 @@ function scene:show( event )
 			[5] = player
 		}
 
-		ViewLayers.order(layers)
+		zOrdering.order(layers)
 
 		Screen.move('y', sceneGroup)
 
