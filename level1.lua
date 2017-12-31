@@ -16,7 +16,6 @@ local Graphics = require('modules.Graphics')
 local Math = require('modules.Math')
 local Memory = require('modules.Memory')
 local Screen = require('modules.Screen')
-local Swipe = require('modules.Swipe')
 local Table = require('modules.Table')
 local ViewLayers = require('modules.ViewLayers')
 
@@ -103,8 +102,6 @@ function scene:create( event )
 
 	local matrix = Grid.create(sceneGroup)
 	Grid.addNodesToMatrix()
-
-
 
 	Table.forEach(GameTables.tiles, function(element)
 		-- print(element)

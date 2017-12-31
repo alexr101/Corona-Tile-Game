@@ -28,6 +28,11 @@ Grid.create = function (sceneGroup)
             local y = Screen.height - ( Grid.tileSize * (i+1) ) + (Grid.tileSize*.5)
 
             Grid.matrix[i][j] = Grid.fillSpace(x, y)
+            Grid.matrix[i][j].coordinates = {
+                row = i, 
+                column = j
+            }
+
             sceneGroup:insert( Grid.matrix[i][j] )
             
             Grid.createOutOfGridObj(x, y, sceneGroup)
@@ -95,6 +100,27 @@ Grid.fillSpace = function(x, y)
     })
 
     return space
+end
+
+Grid.swap = function(options)
+    local direction = options.direction
+    local coordinates = options.coordinates
+
+    local row = coordinates.row
+    local column = coordinates.column
+    local targetRow = row
+    local targetColumn = column
+
+    if direction == 'right' then
+        targetColumn = targetColumn + 1
+    elseif direction == 'left' then
+        targetColumn = targetColumn - 1
+    elseif direction == 'up' then
+        targetRow = targetRow + 1
+    elseif direction == 'down' then
+        targetRow = targetRow - 1
+    end
+
 end
 
 return Grid

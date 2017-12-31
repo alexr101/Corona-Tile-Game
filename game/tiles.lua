@@ -1,5 +1,6 @@
 local Tiles = {}
 local matrix = require('modules.Matrix')
+local Swipe = require('device.Swipe')
 
 Tiles.fill = function()
   local config = require('game.Config')
@@ -46,6 +47,9 @@ Tiles.create = function(obj, options)
   tile.y = y
 
   tile.info = obj
+
+  tile:addEventListener( "touch", Swipe.handler )
+
 
   if(obj.physics) then
     physics.addBody( tile, obj.physics.type, { friction=0.5, bounce=0 } )
