@@ -1,10 +1,18 @@
 local State = {}
 
-State.currentGame = {
-  score = 0,
-  stars = 0,
-  active = false
+State = {
+  score = 100,
+  starts = 0,
+  active = false,
+  sceneGroup = {}
 }
+
+State.get = function()
+  return State.game
+end
+
+
+print('called state')
 
 State.resetGame = function()
   currentGame.score = 0
@@ -13,7 +21,7 @@ State.resetGame = function()
 end
 
 State.add = function(stat, amount)
-  State.currentGame[stat] = State.currentGame[stat] + amount
+  State[stat] = State[stat] + amount
 
   -- TODO: update TEXT UI
   -- orbText.text = orbs

@@ -2,6 +2,8 @@ local Collisions = {}
 local object = require('Services.ObjectHelpers')
 local gameState = require('game.State')
 local Graphics = require('UI.Graphics')
+local Player = require('game.Player')
+local ObjectHelpers = require('services.objectHelpers')
 
 Collisions.star = function( self, event )
     if ( event.phase == "began" and event.other == player ) then
@@ -38,7 +40,8 @@ Collisions.enemy = function( self, event )
 end
 
 Collisions.mine = function( self, event )
-    if ( event.phase == "began" and event.other == player ) then
+    if ( event.phase == "began" and event.other == Player.instance ) then
+        ObjectHelpers.remove(self)
     	self.destroy = true
     end
 end

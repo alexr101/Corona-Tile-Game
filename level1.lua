@@ -18,12 +18,10 @@ local Screen = require('device.Screen')
 local Table = require('Utils.Table')
 local zOrdering = require('UI.zOrdering')
 local Player = require('game.Player')
+AppState = require('game.state')
 
-local GameCollisions = require('Physics.Collisions')
-local Grid = require('game.map.Grid')
 local Node = require('game.map.node')
 local GameTables = require('game.tables')
-local Tiles = require('game.map.tiles')
 
 local Sprites = require('sprites.Sprites')
 
@@ -40,12 +38,13 @@ function scene:create( event )
 	local sceneGroup = self.view
 	itemsGroup = display.newGroup()
 	blackTiles = display.newGroup()
+	AppState.active = true
+	AppState.add('score', 100)
+	print(AppState.score)
+	AppState.sceneGroup = sceneGroup
 
-
-
-
-	orbs = 0
-	gameSpeed = 1.2
+	local Grid = require('game.map.Grid')
+	local GameCollisions = require('Physics.Collisions')
 
 	-- local options1 = 
 	-- {
@@ -61,35 +60,11 @@ function scene:create( event )
 	-- orbText.y = Screen.height*.05
 	-- orbText.gui = true
 
-
-	
-
-		-- basic measurements and setup
 	local horizontalRowLength = 6
 	local tileSize = Screen.width / horizontalRowLength
-	local verticalRowLength = (Screen.height / tileSize) + 1
-
-	-- local electricity = display.newSprite( Sprites.electricity.sheet , Sprites.electricity.sequence )
-	-- electricity:setSequence( "Electricity" )
-	-- electricity:play()
-	-- local electricitySize = .3
-	-- electricity.xScale = electricitySize
-	-- electricity.yScale = electricitySize
-	-- electricity.rotation = 90
-	-- electricity.x = 50
-	-- electricity.y = 50
-	-- physics.addBody( electricity, "static", { friction=0.5, bounce=0.3 } )	
-	-- electricity.isSensor = true
-	-- electricity.collision = onElectricityCollision
-	-- electricity:addEventListener( "collision" )
-
-
 	
-
 	player = Player.new(tileSize)
 	
-	-- all display objects must be inserted into group
-
 	local matrix = Grid.create(sceneGroup)
 	Grid.addNodesToMatrix()
 
@@ -98,9 +73,8 @@ function scene:create( event )
 	end)
 
 
- 	-- sceneGroup:insert( orbText )
-	sceneGroup:insert( player )
-	
+	-- AppState.currentGame.sceneGroup:insert(player)
+	-- sceneGroup:insert( player )	
 end
 
 
