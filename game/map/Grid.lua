@@ -123,6 +123,16 @@ Grid.swap = function(options)
 
     local obj1 = Grid.matrix[row][column]
     local obj2 = Grid.matrix[targetRow][targetColumn] 
+    local objForYReference1
+    local objForYReference2
+
+    if (targetColumn > 0) then
+        objYReference1 = Grid.matrix[row][column-1]
+        objYReference2 = Grid.matrix[targetRow][targetColumn-1] 
+    else
+        objYReference1 = Grid.matrix[row][column+1]
+        objYReference2 = Grid.matrix[targetRow][targetColumn+1]
+    end
 
     if obj1 == nil or obj2 == nil or obj1.transitioning == true or obj2.transitioning == true then
         print('invalid swipe')
@@ -132,7 +142,7 @@ Grid.swap = function(options)
     obj1.transitioning = true
     obj2.transitioning = true
 
-    local transitionSpeed = 200
+    local transitionSpeed = 100
 
     if direction == 'right' or direction == 'left' then
         transition.to( obj1, { time=transitionSpeed, alpha=1, x=obj2.x, 
@@ -149,11 +159,13 @@ Grid.swap = function(options)
         transition.to( obj1, { time=transitionSpeed, alpha=1, y=obj2.y, 
             onComplete = function() 
                 obj1.transitioning = false 
+                obj1.y = objYReference2.y
             end 
         })
         transition.to( obj2, { time=transitionSpeed, alpha=1, y=obj1.y,
             onComplete = function() 
                 obj2.transitioning = false 
+                obj2.y = objYReference1.y
             end 
         })
     end
