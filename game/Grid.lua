@@ -121,6 +121,63 @@ Grid.swap = function(options)
         targetRow = targetRow - 1
     end
 
+    local obj1 = Grid.matrix[row][column]
+    local obj2 = Grid.matrix[targetRow][targetColumn] 
+
+    if obj1 == nil or obj2 == nil or obj1.transitioning == true or obj2.transitioning == true then
+        print('invalid swipe')
+        return 
+    end
+
+    obj1.transitioning = true
+    obj2.transitioning = true
+
+    local transitionSpeed = 200
+
+    if direction == 'right' or direction == 'left' then
+        transition.to( obj1, { time=transitionSpeed, alpha=1, x=obj2.x, 
+            onComplete = function() 
+                obj1.transitioning = false 
+            end 
+        })
+        transition.to( obj2, { time=transitionSpeed, alpha=1, x=obj1.x, 
+            onComplete = function() 
+                obj2.transitioning = false 
+            end 
+        })
+    else 
+        transition.to( obj1, { time=transitionSpeed, alpha=1, y=obj2.y, 
+            onComplete = function() 
+                obj1.transitioning = false 
+            end 
+        })
+        transition.to( obj2, { time=transitionSpeed, alpha=1, y=obj1.y,
+            onComplete = function() 
+                obj2.transitioning = false 
+            end 
+        })
+    end
+
+    Grid.matrix[row][column].coordinates = {
+        row = targetRow,
+        column = targetColumn
+    }
+
+    Grid.matrix[targetRow][targetColumn].coordinates = {
+        row = row,
+        column = column
+    }
+--    print(Grid.matrix[targetRow][targetColumn].coordinates.row)
+--     print(Grid.matrix[targetRow][targetColumn].coordinates.column)
+
+--     print(Grid.matrix[row][column].coordinates.row)
+--     print(Grid.matrix[row][column].coordinates.column)
+--     print(targetRow) 
+
+    local temp = Grid.matrix[row][column]
+    Grid.matrix[row][column] = Grid.matrix[targetRow][targetColumn]
+    Grid.matrix[targetRow][targetColumn] = temp
+
 end
 
 return Grid

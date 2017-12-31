@@ -9,6 +9,9 @@ swipe.handler = function(event)
 	if ( event.phase == "began" ) then
     display.getCurrentStage():setFocus( target )
     target.isFocus = true
+    print(target.info.name)
+    print(target.coordinates.row)
+    print(target.coordinates.column)
   end
 
   if (event.phase == "ended") then
@@ -18,8 +21,8 @@ swipe.handler = function(event)
     local Grid = require('game.Grid')
 
     local row = event.target.coordinates.row
-    local column = event.target.coordinates.columns
-    local direction
+    local column = event.target.coordinates.column
+    local direction = ''
 
     if     xEnd > event.xStart + swipeOffset then
       direction = 'right'
@@ -31,10 +34,12 @@ swipe.handler = function(event)
       direction = 'down'
     end
 
-    Grid.swap({
-      direction = direction,
-      coordinates = { row = row, column = column }
-    })
+    if direction ~= '' then
+      Grid.swap({
+        direction = direction,
+        coordinates = { row = row, column = column }
+      })
+    end
 
     display.getCurrentStage():setFocus( nil )
     target.isFocus = nil
