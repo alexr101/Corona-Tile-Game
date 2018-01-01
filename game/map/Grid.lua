@@ -124,17 +124,18 @@ Grid.swap = function(options)
     local obj1 = Grid.matrix[row][column]
     local obj2 = Grid.matrix[targetRow][targetColumn] 
 
+    if obj1 == nil or obj2 == nil or obj1.transitioning == true or obj2.transitioning == true then
+        print('invalid swipe')
+        return 
+    end
+
+    -- set direction in case you need to remove in services.ObjectHelpers.remove
     if direction == 'right' or direction == 'left' then
         obj1.moving = 'horizontally'
         obj2.moving = 'horizontally'
     elseif direction == 'up' or direction == 'down' then
         obj1.moving = 'vertically'
         obj2.moving = 'vertically'
-    end
-
-    if obj1 == nil or obj2 == nil or obj1.transitioning == true or obj2.transitioning == true then
-        print('invalid swipe')
-        return 
     end
 
     -- get close proximity objects for transition position references
