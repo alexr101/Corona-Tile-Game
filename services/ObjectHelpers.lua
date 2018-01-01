@@ -6,6 +6,7 @@ ObjectHelpers.remove = function(obj, index)
   local Grid = require('game.map.Grid')
   local Tiles = require('game.map.tiles')
   local ObjectGenerator = require('services.ObjectGenerator')
+  local AppState = require('game.state')
 
   index = index or nil
 
@@ -26,8 +27,27 @@ ObjectHelpers.remove = function(obj, index)
       objInfo = Grid.matrix[row][column].info
     end
 
+    -- get close proximity objects for transition position references
+    local objForVerticalReference
+    local objForHorizontalReference = Grid.matrix[row+1][column]
+
+    if (column > 0) then
+        objForVerticalReference = Grid.matrix[row][column-1]
+    else
+        objForVerticalReference = Grid.matrix[row][column+1]
+    end
+
+
+
     local x = obj.x
     local y = obj.y
+
+    if (obj.moving == 'horizontally') then
+      x = objForHorizontalReference.x
+    else
+      y = objForVerticalReference.y
+    end
+
     
     obj:removeSelf()
     obj = nil
@@ -45,13 +65,14 @@ ObjectHelpers.remove = function(obj, index)
         row = row,
         column = column
       } 
+      AppState.sceneGroup:insert(Grid.matrix[row][column])
     end
     if(false) then
       timer.performWithDelay( 1, replaceGrid )
     end
 
     if(objInfo.consumable) then
-      objInfo = ObjectGenerator.EmptySpace
+      objInfo = ObjectGenerator.DebugSpace
       timer.performWithDelay( 1, replaceGrid )
     end
   end  	

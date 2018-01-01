@@ -123,6 +123,21 @@ Grid.swap = function(options)
 
     local obj1 = Grid.matrix[row][column]
     local obj2 = Grid.matrix[targetRow][targetColumn] 
+
+    if direction == 'right' or direction == 'left' then
+        obj1.moving = 'horizontally'
+        obj2.moving = 'horizontally'
+    elseif direction == 'up' or direction == 'down' then
+        obj1.moving = 'vertically'
+        obj2.moving = 'vertically'
+    end
+
+    if obj1 == nil or obj2 == nil or obj1.transitioning == true or obj2.transitioning == true then
+        print('invalid swipe')
+        return 
+    end
+
+    -- get close proximity objects for transition position references
     local objForYReference1
     local objForYReference2
 
@@ -134,14 +149,9 @@ Grid.swap = function(options)
         objYReference2 = Grid.matrix[targetRow][targetColumn+1]
     end
 
-    if obj1 == nil or obj2 == nil or obj1.transitioning == true or obj2.transitioning == true then
-        print('invalid swipe')
-        return 
-    end
-
+    -- transition the positions
     obj1.transitioning = true
     obj2.transitioning = true
-
     local transitionSpeed = 100
 
     if direction == 'right' or direction == 'left' then
@@ -170,6 +180,7 @@ Grid.swap = function(options)
         })
     end
 
+    -- take care of internal coordinates
     Grid.matrix[row][column].coordinates = {
         row = targetRow,
         column = targetColumn
@@ -180,10 +191,10 @@ Grid.swap = function(options)
         column = column
     }
 
+    -- do the actual swap
     local temp = Grid.matrix[row][column]
     Grid.matrix[row][column] = Grid.matrix[targetRow][targetColumn]
     Grid.matrix[targetRow][targetColumn] = temp
-
 end
 
 return Grid

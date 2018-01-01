@@ -1,5 +1,5 @@
 local config = {
-  debug = false,
+  debug = true,
   levelSpeed = -.5,
   xMatrix = 7,
   yMatrix = 7,

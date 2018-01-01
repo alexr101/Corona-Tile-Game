@@ -8,6 +8,8 @@ ObjectGenerator.ElectricityGenerator = require('game.blocks.ElectricityGenerator
 ObjectGenerator.Rock = require('game.blocks.Rock')
 ObjectGenerator.RockCrumbling = require('game.blocks.RockCrumbling')
 ObjectGenerator.EmptySpace = require('game.blocks.EmptySpace')
+ObjectGenerator.DebugSpace = require('game.blocks.DebugSpace')
+
 
 ObjectGenerator.objectsInGridArray = {
     ObjectGenerator.EmptySpace,
