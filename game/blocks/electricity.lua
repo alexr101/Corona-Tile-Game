@@ -19,6 +19,7 @@ return  {
   name = "electricity",
   collisionType = 'electricity',
   physics = false,
+  conductsElectricity = true,
   tables = {
     GameTables.tiles
   },
