@@ -66,7 +66,7 @@ end
 Tiles.replace = function(options)
   local AppState = require('game.state')
 
-  local GridObj = options.GridObj
+  local Grid = require('game.map.Grid')
   local objInfo = options.objInfo
   local x = options.x
   local y = options.y
@@ -74,18 +74,18 @@ Tiles.replace = function(options)
   local column = options.column
 
   
-  GridObj = Tiles.create(objInfo, {
+  Grid.matrix[row][column] = Tiles.create(objInfo, {
       x = x, 
       y = y, 
       tileSize = AppState.tileSize, 
   })
 
-  GridObj.coordinates = {
+  Grid.matrix[row][column].coordinates = {
     row = row,
     column = column
   } 
 
-  AppState.sceneGroup:insert(GridObj)
+  AppState.sceneGroup:insert(Grid.matrix[row][column])
 end
 
 Tiles.init = function(table)

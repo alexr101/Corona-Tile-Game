@@ -59,7 +59,7 @@ ObjectHelpers.remove = function(obj, index)
       objInfo = ObjectGenerator.DebugSpace
       
       local replaceTileFn = Tiles.replace({
-        GridObj = Grid.matrix[row][column],
+        -- GridObj = Grid.matrix[row][column],
         objInfo = objInfo,
         x = x,
         y = y,
