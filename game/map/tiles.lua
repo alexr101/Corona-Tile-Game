@@ -65,16 +65,20 @@ end
 
 Tiles.replace = function(options)
   local AppState = require('game.state')
-
   local Grid = require('game.map.Grid')
-  local objInfo = options.objInfo
+
+  local oldObj = options.oldObj
+  local newObjInfo = options.newObjInfo
   local x = options.x
   local y = options.y
   local row = options.row
   local column = options.column
 
+  oldObj:removeSelf()
+  oldObj = nil
+
   
-  Grid.matrix[row][column] = Tiles.create(objInfo, {
+  Grid.matrix[row][column] = Tiles.create(newObjInfo, {
       x = x, 
       y = y, 
       tileSize = AppState.tileSize, 

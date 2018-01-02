@@ -5,6 +5,14 @@ local Config = require('game.Config')
 function conductElectricity(obj)
     if(obj.right ~= nil and obj.right.info.conductsElectricity) then
         -- TODO: replace with electricity obj
+        Tiles.replace({
+            objInfo = ObjectGenerator.Electricity,
+            x = x,
+            y = y,
+            row = row,
+            column = column
+        })
+
         conductElectricity(obj.right)
     end
 

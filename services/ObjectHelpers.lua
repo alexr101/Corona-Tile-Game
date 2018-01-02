@@ -46,21 +46,15 @@ ObjectHelpers.remove = function(obj, index)
       y = objForVerticalReference.y
     end
 
-    
-    obj:removeSelf()
-    obj = nil
-
     -- for testing
     if(false) then
       timer.performWithDelay( 1, replaceTile )
     end
 
-    if(objInfo.consumable) then
-      objInfo = ObjectGenerator.DebugSpace
-      
+    if(objInfo.consumable) then      
       local replaceTileFn = Tiles.replace({
-        -- GridObj = Grid.matrix[row][column],
-        objInfo = objInfo,
+        oldObj = obj,
+        newObjInfo = ObjectGenerator.EmptySpace,
         x = x,
         y = y,
         row = row,
