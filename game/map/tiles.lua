@@ -63,6 +63,31 @@ Tiles.create = function(obj, options)
   return tile
 end
 
+Tiles.replace = function(options)
+  local AppState = require('game.state')
+
+  local GridObj = options.GridObj
+  local objInfo = options.objInfo
+  local x = options.x
+  local y = options.y
+  local row = options.row
+  local column = options.column
+
+  
+  GridObj = Tiles.create(objInfo, {
+      x = x, 
+      y = y, 
+      tileSize = AppState.tileSize, 
+  })
+
+  GridObj.coordinates = {
+    row = row,
+    column = column
+  } 
+
+  AppState.sceneGroup:insert(GridObj)
+end
+
 Tiles.init = function(table)
 
   local config = require('game.config')

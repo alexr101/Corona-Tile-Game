@@ -56,7 +56,7 @@ function comesFromConductor(options)
         result = comesFromConductor({
             obj = obj,
             verifiedBlocks = verifiedBlocks,
-            conductorFound = false
+            conductorFound = conductorFound
         })
     end
 

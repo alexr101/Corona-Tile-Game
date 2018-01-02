@@ -50,30 +50,24 @@ ObjectHelpers.remove = function(obj, index)
     obj:removeSelf()
     obj = nil
 
-    -- replace the object if needed 
-    -- hint: you'll probably always need it
-    local function replaceGrid() 
-      Grid.matrix[row][column] = Tiles.create(objInfo, {
-          x = x, 
-          y = y, 
-          tileSize = AppState.tileSize, 
-      })
-
-      Grid.matrix[row][column].coordinates ={
-        row = row,
-        column = column
-      } 
-      AppState.sceneGroup:insert(Grid.matrix[row][column])
-    end
-
     -- for testing
     if(false) then
-      timer.performWithDelay( 1, replaceGrid )
+      timer.performWithDelay( 1, replaceTile )
     end
 
     if(objInfo.consumable) then
-      objInfo = ObjectGenerator.EmptySpace
-      timer.performWithDelay( 1, replaceGrid )
+      objInfo = ObjectGenerator.DebugSpace
+      
+      local replaceTileFn = Tiles.replace({
+        GridObj = Grid.matrix[row][column],
+        objInfo = objInfo,
+        x = x,
+        y = y,
+        row = row,
+        column = column
+      })
+
+      timer.performWithDelay( 1, replaceTileFn )
     end
   end  	
 end
