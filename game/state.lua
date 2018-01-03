@@ -13,8 +13,6 @@ State.get = function()
 end
 
 
-print('called state')
-
 State.resetGame = function()
   currentGame.score = 0
   currentGame.stars = 0

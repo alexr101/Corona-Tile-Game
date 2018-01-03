@@ -66,10 +66,6 @@ Grid.addNodesToMatrix = function(matrix)
             end
         end
     end
-
-    print('node[1][1]' .. matrix[1][1].info.name)
-    print('node[1][1].right ' .. matrix[1][1].node.right.info.name)
-    print('node[1][1].right right ' .. matrix[1][1].node.right.node.right.info.name)
 end
 
 Grid.createOutOfGridObj = function(x, y, sceneGroup) 

@@ -1,4 +1,5 @@
 local swipe = {}
+local RowBehavior = require('game.behaviors.Row')
 
 -- I think self is the touched object
 -- TODO: Verify this
@@ -36,6 +37,8 @@ swipe.handler = function(event)
         direction = direction,
         coordinates = { row = row, column = column }
       })
+      RowBehavior.update(row)
+      -- RowBehavior.cleanup(row)
     end
 
     display.getCurrentStage():setFocus( nil )
