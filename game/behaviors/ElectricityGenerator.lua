@@ -18,7 +18,6 @@ function conductElectricity(obj, direction)
         }
         
         Tiles.replace(replaceOptions)
-        print(obj.info.name)
 
         conductElectricity(obj, direction)
     else 

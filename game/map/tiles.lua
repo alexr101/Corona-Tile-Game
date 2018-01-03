@@ -73,8 +73,8 @@ Tiles.replace = function(options)
   local row = options.row
   local column = options.column
 
-  oldObj:removeSelf()
-  oldObj = nil
+  Grid.matrix[row][column]:removeSelf()
+  Grid.matrix[row][column] = nil
   
   Grid.matrix[row][column] = Tiles.create(newObjInfo, {
       x = x, 
