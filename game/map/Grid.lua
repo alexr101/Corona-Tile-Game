@@ -50,19 +50,19 @@ Grid.addNodesToMatrix = function(matrix)
 
         for j= 0, table.getn(row), 1 do
             local newNode = Node.new()
-            row[j].node = newNode
+            Grid.matrix[i][j].node = newNode
 
             if matrix[i][j-1] then
-                row[j].node.left = row[j-1]
+                Grid.matrix[i][j].node.left = row[j-1]
             end
             if matrix[i][j+1] then
-                row[j].node.right = row[j+1]
+                Grid.matrix[i][j].node.right = row[j+1]
             end
             if matrix[i - 1] then
-                row[j].node.down = matrix[i-1][j]
+                Grid.matrix[i][j].node.down = matrix[i-1][j]
             end
             if matrix[i + 1] then
-                row[j].node.up = matrix[i+1][j]
+                Grid.matrix[i][j].node.up = matrix[i+1][j]
             end
         end
     end

@@ -1,27 +1,37 @@
 BehaviorElectricityGenerator = {}
 local Grid = require('game.map.Grid')
 local Config = require('game.Config')
+local ObjectGenerator = require('services.ObjectGenerator')
+local Tiles = require('game.map.Tiles')
 
-function conductElectricity(obj)
-    if(obj.right ~= nil and obj.right.info.conductsElectricity) then
-        -- TODO: replace with electricity obj
-        Tiles.replace({
-            objInfo = ObjectGenerator.Electricity,
-            x = x,
-            y = y,
-            row = row,
-            column = column
-        })
+function conductElectricity(obj, direction)
+    local obj = obj.node[direction]
 
-        conductElectricity(obj.right)
+    if(obj ~= nil and obj.info.conductsElectricity == true and obj.info.name ~= 'electricity') then
+        local replaceOptions = {
+            oldObj = obj,
+            newObjInfo = ObjectGenerator.Electricity,
+            x = obj.x,
+            y = obj.y,
+            row = obj.coordinates.row,
+            column = obj.coordinates.column
+        }
+        
+        Tiles.replace(replaceOptions)
+        print(obj.info.name)
+
+        conductElectricity(obj, direction)
+    else 
+        return
     end
 
-    if(obj.left ~= nil and obj.left.info.conductsElectricity) then
-        -- TODO: replace with electricity obj
-        conductElectricity(obj.right)
-    end
 
-    return
+end
+
+-- []-[]-[]-[]-[]
+
+function replaceWithElectricity()
+    
 end
 
 -- removes electricity that is not coming from an electric conductor
@@ -88,9 +98,10 @@ end
 
 BehaviorElectricityGenerator.updateElectricity = function(obj)
     local row = obj.coordinates.row
-
-    conductElectricity(obj)
-    removeElectricity({row: row})   
+    print('conductor position: ' .. obj.coordinates.row .. ' ' .. obj.coordinates.column)
+    conductElectricity(obj, 'right')
+    conductElectricity(obj, 'left')
+    -- removeElectricity({row: row})   
 end
 
 

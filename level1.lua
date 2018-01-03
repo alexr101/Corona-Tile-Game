@@ -68,7 +68,11 @@ function scene:create( event )
 	Grid.addNodesToMatrix()
 
 	Table.forEach(GameTables.tiles, function(element)
-		-- print(element)
+		local ElectricityBehavior = require('game.behaviors.ElectricityGenerator')
+		if(element.info.name == 'electricityGenerator') then
+			ElectricityBehavior.updateElectricity(element)
+
+		end
 	end)
 
 

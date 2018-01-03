@@ -3,7 +3,7 @@ local Table = {}
 
 Table.forEach = function(table, cb)
   for i = #table, 1, -1 do
-    cb(table[i].x)
+    cb(table[i])
   end
 end
 

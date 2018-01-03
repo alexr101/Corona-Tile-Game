@@ -46,8 +46,7 @@ Tiles.create = function(obj, options)
   if(obj.outOfGrid == nil or obj.outOfGrid == false) then
     tile:addEventListener( "touch", Swipe.handler )
   end
-
-
+  
   if(obj.physics) then
     physics.addBody( tile, obj.physics.type, { friction=0.5, bounce=0 } )
     tile.isSensor = obj.physics.isSensor
@@ -76,7 +75,6 @@ Tiles.replace = function(options)
 
   oldObj:removeSelf()
   oldObj = nil
-
   
   Grid.matrix[row][column] = Tiles.create(newObjInfo, {
       x = x, 
