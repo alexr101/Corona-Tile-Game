@@ -22,6 +22,8 @@ Row.removeElectricity = function(options)
     local index = 0
 
     for i = 0, rowLength-1, 1 do
+        print(row)
+        print(index)
         local gridObj = Grid.matrix[row][index]
         -- print(i)
         if(Grid.matrix[row][index].node.right ~= nil) then
@@ -35,7 +37,7 @@ Row.removeElectricity = function(options)
             local result = comesFromConductor({ --results = {verifiedblocks, conductorFound}
                 firstObjVerified = false, 
                 row = row,
-                column = i
+                column = index
             }) 
 
             -- print(result.verifiedBlocks)
@@ -54,16 +56,16 @@ Row.removeElectricity = function(options)
 
                   if(Grid.matrix[row][column].info.name == 'electricity') then
                     -- print('replace column: ' .. column)
-                    local replaceOptions = {
-                        oldObj = nil,
-                        newObjInfo = ObjectGenerator.EmptySpace,
-                        x = Grid.matrix[row][column].x,
-                        y = Grid.matrix[row][column].y,
-                        row = row,
-                        column = Grid.matrix[row][column].coordinates.column
-                    }
+                    -- local replaceOptions = {
+                    --     oldObj = nil,
+                    --     newObjInfo = ObjectGenerator.DebugSpace,
+                    --     x = Grid.matrix[row][column].x,
+                    --     y = Grid.matrix[row][column].y,
+                    --     row = row,
+                    --     column = Grid.matrix[row][column].coordinates.column
+                    -- }
                     
-                    Tiles.replace(replaceOptions)
+                    -- Tiles.replace(replaceOptions)
                   end
                 end
             end

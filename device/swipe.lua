@@ -44,7 +44,7 @@ swipe.handler = function(event)
       RowBehavior.update(row)
       if(direction == 'up') then
         RowBehavior.update(row+1)
-      else
+      elseif(direction == 'down') then
         RowBehavior.update(row-1)
       end
       -- RowBehavior.cleanup(row)
