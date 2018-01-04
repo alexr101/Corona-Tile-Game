@@ -134,21 +134,6 @@ Grid.swap = function(options)
         obj2.moving = 'vertically'
     end
 
-    if direction == 'right' then
-        Grid.matrix[row][column].node.left = Grid.matrix[targetRow][targetColumn]
-        Grid.matrix[targetRow][targetColumn].node.right = Grid.matrix[row][column]
-    elseif direction == 'left' then
-        Grid.matrix[row][column].node.right = Grid.matrix[targetRow][targetColumn]
-        Grid.matrix[targetRow][targetColumn].node.left = Grid.matrix[row][column]
-    elseif direction == 'up' then
-        Grid.matrix[row][column].node.up = Grid.matrix[targetRow][targetColumn]
-        Grid.matrix[targetRow][targetColumn].node.down = Grid.matrix[row][column]
-    elseif direction == 'down' then
-        Grid.matrix[row][column].node.down = Grid.matrix[targetRow][targetColumn]
-        Grid.matrix[targetRow][targetColumn].node.up = Grid.matrix[row][column]
-    end
-
-
     -- get close proximity objects for transition position references
     local objForYReference1
     local objForYReference2
@@ -207,6 +192,15 @@ Grid.swap = function(options)
     local temp = Grid.matrix[row][column]
     Grid.matrix[row][column] = Grid.matrix[targetRow][targetColumn]
     Grid.matrix[targetRow][targetColumn] = temp
+
+
+    Node.updateSwapPositions({ 
+        row = row,
+        column = column,
+        targetColumn = targetColumn,
+        targetRow = targetRow,
+        direction = direction
+    })
 end
 
 return Grid

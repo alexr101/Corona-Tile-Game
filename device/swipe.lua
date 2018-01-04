@@ -26,7 +26,6 @@ swipe.handler = function(event)
 
     Node.seeAll({row = row, column = column })
 
-
     if     xEnd > event.xStart + swipeOffset then
       direction = 'right'
     elseif xEnd < event.xStart - swipeOffset then
