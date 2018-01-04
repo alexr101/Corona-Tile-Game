@@ -17,6 +17,17 @@ Table.length = function(table)
   return count
 end
 
+Table.hasValue = function(table, val)
+    
+  for index, value in ipairs(table) do
+      if value == val then
+          return true
+      end
+  end
+
+  return false
+end
+
 Table.print = function(table)
 
   for index, data in ipairs(table) do

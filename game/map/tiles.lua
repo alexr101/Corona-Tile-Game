@@ -2,6 +2,7 @@ local Tiles = {}
 local matrix = require('game.map.matrix')
 local Swipe = require('device.Swipe')
 local Collisions = require('Physics.Collisions')
+local Node = require('game.map.node')
 
 Tiles.fill = function()
   local config = require('game.Config')
@@ -86,29 +87,12 @@ Tiles.replace = function(options)
     row = row,
     column = column
   } 
-  Grid.matrix[row][column].node = {
-    up = nil,
-    down = nil,
-    right = nil,
-    left = nil
-  }
-  -- you have to update the 
-  if (Grid.matrix[row+1] ~= nil) then
-    Grid.matrix[row][column].node.up = Grid.matrix[row+1][column]
-    Grid.matrix[row+1][column].node.down = Grid.matrix[row][column]
-  end
-  if (Grid.matrix[row-1] ~= nil) then
-    Grid.matrix[row][column].node.down = Grid.matrix[row-1][column]
-    Grid.matrix[row-1][column].node.up = Grid.matrix[row][column]
-  end
-  if (Grid.matrix[row][column+1] ~= nil) then
-    Grid.matrix[row][column].node.right = Grid.matrix[row][column + 1]
-    Grid.matrix[row][column+1].node.left = Grid.matrix[row][column]
-  end
-  if (Grid.matrix[row][column-1] ~= nil) then
-    Grid.matrix[row][column].node.left = Grid.matrix[row][column - 1]
-    Grid.matrix[row][column-1].node.right = Grid.matrix[row][column]
-  end
+  
+  Node.updatePositions({ 
+    row = row, 
+    column = column,
+    directions = {'all'}
+  })
 
   AppState.sceneGroup:insert(Grid.matrix[row][column])
 end

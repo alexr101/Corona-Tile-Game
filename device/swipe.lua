@@ -7,6 +7,9 @@ swipe.handler = function(event)
   local swipeOffset = 50
   local target = event.target
 
+  local Grid = require('game.map.Grid')
+  local Node = require('game.map.Node')
+
   if ( event.phase == "began" ) then    
       display.getCurrentStage():setFocus( target )
       target.isFocus = true
@@ -16,11 +19,13 @@ swipe.handler = function(event)
     yEnd = event.y
     xEnd = event.x
 
-    local Grid = require('game.map.Grid')
 
     local row = event.target.coordinates.row
     local column = event.target.coordinates.column
     local direction = ''
+
+    Node.seeAll({row = row, column = column })
+
 
     if     xEnd > event.xStart + swipeOffset then
       direction = 'right'

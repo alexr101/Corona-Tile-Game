@@ -94,15 +94,15 @@ function comesFromConductor(options)
     } 
 
     table.insert(verifiedBlocks, currentColumn)
-    print('obj name: ' .. obj.info.name .. ' column: ' .. currentColumn .. ' options.column' .. column .. 'right: ')
+    -- print('obj name: ' .. obj.info.name .. ' column: ' .. currentColumn .. ' options.column' .. column .. 'right: ')
     if(obj.node.right ~= nil) then
-        print('node right' .. obj.node.right.info.name)
+        -- print('node right' .. obj.node.right.info.name)
     end
     -- print(firstObjVerified)
-    print(objsValid)
+    -- print(objsValid)
 
     if(firstObjVerified == false and obj.info.name == 'electricityGenerator') then
-        print('continue: initial is electricity generator')
+        -- print('continue: initial is electricity generator')
 
         result = comesFromConductor({
             row = row,
@@ -111,7 +111,7 @@ function comesFromConductor(options)
             conductorFound = true
         })
     elseif(objsValid and obj.node.right.info.name == 'electricity') then
-        print('continue: is electricity block')
+        -- print('continue: is electricity block')
 
         result = comesFromConductor({
             row = row,
@@ -121,7 +121,7 @@ function comesFromConductor(options)
         })
     -- found a conductor but keep searching right to verify blocks
     elseif(objsValid and obj.node.right.info.name == 'electricityGenerator') then
-        print('continue: is an electricity generator')
+        -- print('continue: is an electricity generator')
 
         result = comesFromConductor({
             row = row,
@@ -132,7 +132,7 @@ function comesFromConductor(options)
 
     -- conducts electricity but is not generator or elecrticity. ie: empty space
     elseif(objsValid and obj.node.right.info.conductsElecricity == true) then
-        print('continue: conducts electricity but is not electricity')
+        -- print('continue: conducts electricity but is not electricity')
 
         result = comesFromConductor({
             row = row,
@@ -145,7 +145,7 @@ function comesFromConductor(options)
     -- end of the line. conductor found = true if we found an electricity conductor along the way
     elseif(objsValid and obj.node.right.info.conductsElectricity == false) then
         
-        print('end: found a block' )
+        -- print('end: found a block' )
 
         return {
             verifiedBlocks = verifiedBlocks,
@@ -154,7 +154,7 @@ function comesFromConductor(options)
 
     elseif(obj ~= nil and obj.node.right == nil) then
         
-        print('end: found end of the line')
+        -- print('end: found end of the line')
 
         return {
             verifiedBlocks = verifiedBlocks,
@@ -162,8 +162,8 @@ function comesFromConductor(options)
         } 
     end
 
-    print('end of conductor search')
-    print(result.conductorFound)
+    -- print('end of conductor search')
+    -- print(result.conductorFound)
 
     return result
 

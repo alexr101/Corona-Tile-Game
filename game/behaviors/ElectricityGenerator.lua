@@ -35,9 +35,9 @@ BehaviorElectricityGenerator.updateElectricity = function(obj)
     conductElectricity(obj, 'right')
     conductElectricity(obj, 'left')
     if(obj.node.right ~= nil) then
-        print(row)
-        print(obj.coordinates.column)
-        print(obj.node.right.info.name)
+        -- print(row)
+        -- print(obj.coordinates.column)
+        -- print(obj.node.right.info.name)
     end
 end
 
