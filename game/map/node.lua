@@ -48,13 +48,11 @@ Node.updatePositions = function(options)
   local directions = options.directions or {}
   local Grid = require('game.map.Grid')
   local Table = require('Utils.Table')
+  local newNode = options.newNode
 
-  Grid.matrix[row][column].node = {
-    up = nil,
-    down = nil,
-    right = nil,
-    left = nil
-  }
+  if(options.newNode == nil or options.newNode == true) then
+    Grid.matrix[row][column].node = Node.new()
+  end
 
   -- up
   if (Grid.matrix[row+1] ~= nil and 
@@ -93,6 +91,8 @@ Node.updateSwapPositions = function(options)
   local nodeDirections2
   print(row)
   print(column)
+  Grid.matrix[row][column].node = Node.new()
+  Grid.matrix[targetColumn][targetRow].node = Node.new()
 
   -- set directions and manual update for the actual swappers
   if direction == 'up' then
@@ -109,6 +109,7 @@ Node.updateSwapPositions = function(options)
     nodeDirections1 = {'up', 'right', 'down'}
     nodeDirections2 = {'up', 'left', 'down'}
     Grid.matrix[row][column].node.left = Grid.matrix[targetRow][targetColumn]
+    print(Grid.matrix[targetColumn][targetRow].node)
     Grid.matrix[targetColumn][targetRow].node.right = Grid.matrix[row][column]
   elseif direction == 'left' then
     nodeDirections1 = {'up', 'left', 'down'}
@@ -120,13 +121,15 @@ Node.updateSwapPositions = function(options)
   Node.updatePositions({ 
     row = row,
     column = column,
-    directions = nodeDirections1
+    directions = nodeDirections1,
+    newNode = false
   })
 
   Node.updatePositions({ 
     row = targetRow,
     column = targetColumn,
-    directions = nodeDirections2
+    directions = nodeDirections2,
+    newNode = false
   })
 end
 
