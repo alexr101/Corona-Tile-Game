@@ -2,7 +2,7 @@ local Row = {}
 
 
 Row.update = function(row) 
---   Row.removeElectricity({ row = row })
+  Row.removeElectricity({ row = row })
   -- Row.findGeneratorsAndUpdateElectricity({row: row})
 end
 
@@ -29,8 +29,9 @@ Row.removeElectricity = function(options)
             -- print(Grid.matrix[row][i].node.right.coordinates.column)
 
         end
-        if(gridObj ~= nil) then
-            print('start conductor search')
+        if(gridObj ~= nil and (gridObj.info.name == 'electricity' or gridObj.info.name == 'electricityGenerator')) then
+            print()
+            print('hit electricity or conductor at index ' .. index .. ' start conductorSearch') 
             local result = comesFromConductor({ --results = {verifiedblocks, conductorFound}
                 firstObjVerified = false, 
                 row = row,
@@ -39,8 +40,11 @@ Row.removeElectricity = function(options)
 
             -- print(result.verifiedBlocks)
 
-            index = math.max(unpack(result.verifiedBlocks)) + 1
-            -- print('max i ' .. i)
+            index = math.max(unpack(result.verifiedBlocks))
+
+
+            print('new index after search: ' .. index)
+
             if(result.conductorFound == false) then
 
                 -- TODO: convert all verified tiles to empty spaces w a for loop :-)
@@ -60,7 +64,7 @@ Row.removeElectricity = function(options)
                     }
                     
                     Tiles.replace(replaceOptions)
-                end
+                  end
                 end
             end
         end
@@ -102,7 +106,7 @@ function comesFromConductor(options)
     -- print(objsValid)
 
     if(firstObjVerified == false and obj.info.name == 'electricityGenerator') then
-        -- print('continue: initial is electricity generator')
+        print('continue: initial is electricity generator')
 
         result = comesFromConductor({
             row = row,
@@ -111,7 +115,7 @@ function comesFromConductor(options)
             conductorFound = true
         })
     elseif(objsValid and obj.node.right.info.name == 'electricity') then
-        -- print('continue: is electricity block')
+        print('continue: is electricity block')
 
         result = comesFromConductor({
             row = row,
@@ -121,7 +125,7 @@ function comesFromConductor(options)
         })
     -- found a conductor but keep searching right to verify blocks
     elseif(objsValid and obj.node.right.info.name == 'electricityGenerator') then
-        -- print('continue: is an electricity generator')
+        print('continue: is an electricity generator')
 
         result = comesFromConductor({
             row = row,
@@ -132,7 +136,7 @@ function comesFromConductor(options)
 
     -- conducts electricity but is not generator or elecrticity. ie: empty space
     elseif(objsValid and obj.node.right.info.conductsElecricity == true) then
-        -- print('continue: conducts electricity but is not electricity')
+        print('continue: conducts electricity but is not electricity')
 
         result = comesFromConductor({
             row = row,
@@ -145,7 +149,7 @@ function comesFromConductor(options)
     -- end of the line. conductor found = true if we found an electricity conductor along the way
     elseif(objsValid and obj.node.right.info.conductsElectricity == false) then
         
-        -- print('end: found a block' )
+        print('end: found a block' )
 
         return {
             verifiedBlocks = verifiedBlocks,
@@ -154,7 +158,7 @@ function comesFromConductor(options)
 
     elseif(obj ~= nil and obj.node.right == nil) then
         
-        -- print('end: found end of the line')
+        print('end: found end of the line')
 
         return {
             verifiedBlocks = verifiedBlocks,
@@ -162,8 +166,8 @@ function comesFromConductor(options)
         } 
     end
 
-    -- print('end of conductor search')
-    -- print(result.conductorFound)
+    print('end of conductor search. found?')
+    print(result.conductorFound)
 
     return result
 
