@@ -7,7 +7,7 @@ local Tiles = require('game.map.Tiles')
 function conductElectricity(obj, direction)
     local obj = obj.node[direction]
 
-    if(obj ~= nil and obj.info.conductsElectricity == true and obj.info.name ~= 'electricity') then
+    if(obj ~= nil and obj.info.conductsElectricity == true and obj.info.name ~= 'electricity' and obj.info.name ~= 'electricityGenerator') then
         local replaceOptions = {
             oldObj = obj,
             newObjInfo = ObjectGenerator.Electricity,
@@ -32,9 +32,13 @@ end
 
 BehaviorElectricityGenerator.updateElectricity = function(obj)
     local row = obj.coordinates.row
-
     conductElectricity(obj, 'right')
     conductElectricity(obj, 'left')
+    if(obj.node.right ~= nil) then
+        print(row)
+        print(obj.coordinates.column)
+        print(obj.node.right.info.name)
+    end
 end
 
 
