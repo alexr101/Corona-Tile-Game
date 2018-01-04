@@ -97,7 +97,6 @@ Node.updateSwapPositions = function(options)
   })
 end
 
-
 Node.createRow = function(limit)
   if(limit == 0) then return nil end
 

@@ -117,6 +117,7 @@ Grid.swap = function(options)
         targetRow = targetRow - 1
     end
 
+    print(targetRow)
     local obj1 = Grid.matrix[row][column]
     local obj2 = Grid.matrix[targetRow][targetColumn] 
 
