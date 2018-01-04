@@ -89,33 +89,32 @@ Node.updateSwapPositions = function(options)
   local direction = options.direction
   local nodeDirections1
   local nodeDirections2
-  print(row)
-  print(column)
+
+  print(Grid.matrix[targetRow][targetColumn])
   Grid.matrix[row][column].node = Node.new()
-  Grid.matrix[targetColumn][targetRow].node = Node.new()
+  Grid.matrix[targetRow][targetColumn].node = Node.new()
 
   -- set directions and manual update for the actual swappers
   if direction == 'up' then
     nodeDirections1 = {'left', 'up', 'right'}
     nodeDirections2 = {'left', 'down', 'right'}
     Grid.matrix[row][column].node.down = Grid.matrix[targetRow][targetColumn]
-    Grid.matrix[targetColumn][targetRow].node.up = Grid.matrix[row][column]
+    Grid.matrix[targetRow][targetColumn].node.up = Grid.matrix[row][column]
   elseif direction == 'down' then
     nodeDirections1 = {'left', 'down', 'right'}
     nodeDirections2 = {'left', 'up', 'right'}
     Grid.matrix[row][column].node.up = Grid.matrix[targetRow][targetColumn]
-    Grid.matrix[targetColumn][targetRow].node.down = Grid.matrix[row][column]
+    Grid.matrix[targetRow][targetColumn].node.down = Grid.matrix[row][column]
   elseif direction == 'right' then
     nodeDirections1 = {'up', 'right', 'down'}
     nodeDirections2 = {'up', 'left', 'down'}
     Grid.matrix[row][column].node.left = Grid.matrix[targetRow][targetColumn]
-    print(Grid.matrix[targetColumn][targetRow].node)
-    Grid.matrix[targetColumn][targetRow].node.right = Grid.matrix[row][column]
+    Grid.matrix[targetRow][targetColumn].node.right = Grid.matrix[row][column]
   elseif direction == 'left' then
     nodeDirections1 = {'up', 'left', 'down'}
     nodeDirections2 = {'up', 'right', 'down'}
     Grid.matrix[row][column].node.right = Grid.matrix[targetRow][targetColumn]
-    Grid.matrix[targetColumn][targetRow].node.left = Grid.matrix[row][column]
+    Grid.matrix[targetRow][targetColumn].node.left = Grid.matrix[row][column]
   end
 
   Node.updatePositions({ 

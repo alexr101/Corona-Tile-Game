@@ -177,6 +177,7 @@ Grid.swap = function(options)
         })
     end
 
+
     -- take care of internal coordinates
     Grid.matrix[row][column].coordinates = {
         row = targetRow,
@@ -188,10 +189,14 @@ Grid.swap = function(options)
         column = column
     }
 
+    print(Grid.matrix[targetRow][targetColumn])
+
     -- do the actual swap
     local temp = Grid.matrix[row][column]
     Grid.matrix[row][column] = Grid.matrix[targetRow][targetColumn]
     Grid.matrix[targetRow][targetColumn] = temp
+
+    print(Grid.matrix[targetRow][targetColumn])
 
 
     Node.updateSwapPositions({ 

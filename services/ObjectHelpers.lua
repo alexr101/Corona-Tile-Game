@@ -28,7 +28,13 @@ ObjectHelpers.remove = function(obj, index)
 
     -- get close proximity objects for transition position references
     local objForVerticalReference
-    local objForHorizontalReference = Grid.matrix[row+1][column]
+    local objForHorizontalReference
+
+    if (Grid.matrix[row+1] ~= nil) then
+      objForHorizontalReference = Grid.matrix[row+1][column]
+    else
+      objForHorizontalReference = Grid.matrix[row-1][column]
+    end
 
     if (column > 0) then
         objForVerticalReference = Grid.matrix[row][column-1]
