@@ -2,7 +2,7 @@ local Row = {}
 
 
 Row.update = function(row) 
-  Row.removeElectricity({ row = row })
+--   Row.removeElectricity({ row = row })
   -- Row.findGeneratorsAndUpdateElectricity({row: row})
 end
 

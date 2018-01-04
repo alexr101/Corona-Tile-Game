@@ -196,15 +196,11 @@ Grid.swap = function(options)
     Grid.matrix[row][column] = Grid.matrix[targetRow][targetColumn]
     Grid.matrix[targetRow][targetColumn] = temp
 
-    print(Grid.matrix[targetRow][targetColumn])
-
-
     Node.updateSwapPositions({ 
         row = row,
         column = column,
         targetColumn = targetColumn,
-        targetRow = targetRow,
-        direction = direction
+        targetRow = targetRow
     })
 end
 

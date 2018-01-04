@@ -45,7 +45,7 @@ end
 Node.updatePositions = function(options)
   local row = options.row
   local column = options.column
-  local directions = options.directions or {}
+  local directions = options.directions or {'all'}
   local Grid = require('game.map.Grid')
   local Table = require('Utils.Table')
   local newNode = options.newNode
@@ -81,54 +81,19 @@ Node.updatePositions = function(options)
 end
 
 Node.updateSwapPositions = function(options)
-  local Grid = require('game.map.Grid')
   local row = options.row
   local column = options.column
   local targetRow = options.targetRow
   local targetColumn = options.targetColumn
-  local direction = options.direction
-  local nodeDirections1
-  local nodeDirections2
-
-  print(Grid.matrix[targetRow][targetColumn])
-  Grid.matrix[row][column].node = Node.new()
-  Grid.matrix[targetRow][targetColumn].node = Node.new()
-
-  -- set directions and manual update for the actual swappers
-  if direction == 'up' then
-    nodeDirections1 = {'left', 'up', 'right'}
-    nodeDirections2 = {'left', 'down', 'right'}
-    Grid.matrix[row][column].node.down = Grid.matrix[targetRow][targetColumn]
-    Grid.matrix[targetRow][targetColumn].node.up = Grid.matrix[row][column]
-  elseif direction == 'down' then
-    nodeDirections1 = {'left', 'down', 'right'}
-    nodeDirections2 = {'left', 'up', 'right'}
-    Grid.matrix[row][column].node.up = Grid.matrix[targetRow][targetColumn]
-    Grid.matrix[targetRow][targetColumn].node.down = Grid.matrix[row][column]
-  elseif direction == 'right' then
-    nodeDirections1 = {'up', 'right', 'down'}
-    nodeDirections2 = {'up', 'left', 'down'}
-    Grid.matrix[row][column].node.left = Grid.matrix[targetRow][targetColumn]
-    Grid.matrix[targetRow][targetColumn].node.right = Grid.matrix[row][column]
-  elseif direction == 'left' then
-    nodeDirections1 = {'up', 'left', 'down'}
-    nodeDirections2 = {'up', 'right', 'down'}
-    Grid.matrix[row][column].node.right = Grid.matrix[targetRow][targetColumn]
-    Grid.matrix[targetRow][targetColumn].node.left = Grid.matrix[row][column]
-  end
 
   Node.updatePositions({ 
     row = row,
     column = column,
-    directions = nodeDirections1,
-    newNode = false
   })
 
   Node.updatePositions({ 
     row = targetRow,
     column = targetColumn,
-    directions = nodeDirections2,
-    newNode = false
   })
 end
 
