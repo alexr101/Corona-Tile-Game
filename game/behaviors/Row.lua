@@ -8,12 +8,27 @@ end
 
 Row.getYPosition = function(row)
     local Config = require('game.Config')
-    local numbers = {}
+    local Grid = require('game.map.Grid')
+    local hashTable = {}
+    local maxCount = 1
+    local result
 
     for i = 0, Config.tiles-1, 1 do
+        local y = Grid.matrix[row][i].y
+        
+        if(hashTable[y] == nil) then
+            hashTable[y] = 1
+        else
+            hashTable[y] = hashTable[y] + 1
+        end
 
-    end
+        if(hashTable[y] > maxCount) then
+            maxCount = hashTable[y]
+            result = y
+        end
+    end 
 
+    return result
 end
 
 -- removes electricity that is not coming from an electric conductor
@@ -26,6 +41,7 @@ Row.removeElectricity = function(options)
     local Tiles = require('game.map.Tiles')
     local Table = require('Utils.Table')
     local Grid = require('game.map.Grid')
+    local Config = require('game.config')
 
     local row = options.row
     local rowLength = Config.tiles 
@@ -62,7 +78,7 @@ Row.removeElectricity = function(options)
                     local replaceOptions = {
                         newObjInfo = ObjectGenerator.DebugSpace,
                         x = State.getColXPosition(column),
-                        y = Grid.matrix[row][column].y,
+                        y = Row.getYPosition(row),
                         row = row,
                         column = column
                     }
