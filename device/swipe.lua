@@ -13,6 +13,7 @@ swipe.handler = function(event)
   if ( event.phase == "began" ) then    
       display.getCurrentStage():setFocus( target )
       target.isFocus = true
+      print('clicked: ' .. target.info.name)
   end
 
   if (event.phase == "ended") then
@@ -24,7 +25,7 @@ swipe.handler = function(event)
     local column = event.target.coordinates.column
     local direction = ''
 
-    Node.seeAll({row = row, column = column })
+    -- Node.seeAll({row = row, column = column })
 
     if     xEnd > event.xStart + swipeOffset then
       direction = 'right'
@@ -45,9 +46,9 @@ swipe.handler = function(event)
       RowBehavior.printRow(row)
       RowBehavior.update(row)
       if(direction == 'up') then
-        -- RowBehavior.update(row+1)
+        RowBehavior.update(row+1)
       elseif(direction == 'down') then
-        -- RowBehavior.update(row-1)
+        RowBehavior.update(row-1)
       end
       -- RowBehavior.cleanup(row)
     end

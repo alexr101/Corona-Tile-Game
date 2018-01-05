@@ -99,6 +99,7 @@ Grid.fillSpace = function(x, y)
 end
 
 Grid.swap = function(options)
+    local RowBehavior = require('game.behaviors.Row')
     local direction = options.direction
     local coordinates = options.coordinates
 
@@ -137,19 +138,19 @@ Grid.swap = function(options)
     -- get close proximity objects for transition position references
     local objForYReference1
     local objForYReference2
-
-    if (targetColumn > 0) then
-        objYReference1 = Grid.matrix[row][column-1]
-        objYReference2 = Grid.matrix[targetRow][targetColumn-1] 
+    print(targetColumn)
+    if (targetColumn > 1) then
+        objRowReference1 = Grid.matrix[row][column-1].coordinates.row
+        objRowReference2 = Grid.matrix[targetRow][targetColumn-1].coordinates.row
     else
-        objYReference1 = Grid.matrix[row][column+1]
-        objYReference2 = Grid.matrix[targetRow][targetColumn+1]
+        objRowReference1 = Grid.matrix[row][column+1].coordinates.row
+        objRowReference2 = Grid.matrix[targetRow][targetColumn+1].coordinates.row
     end
 
     -- transition the positions
     obj1.transitioning = true
     obj2.transitioning = true
-    local transitionSpeed = 1
+    local transitionSpeed = 100
 
     if direction == 'right' or direction == 'left' then
         transition.to( obj1, { time=transitionSpeed, alpha=1, x=obj2.x, 
@@ -166,13 +167,13 @@ Grid.swap = function(options)
         transition.to( obj1, { time=transitionSpeed, alpha=1, y=obj2.y, 
             onComplete = function() 
                 obj1.transitioning = false 
-                obj1.y = objYReference2.y
+                obj1.y = RowBehavior.getYPosition(objRowReference2)
             end 
         })
         transition.to( obj2, { time=transitionSpeed, alpha=1, y=obj1.y,
             onComplete = function() 
                 obj2.transitioning = false 
-                obj2.y = objYReference1.y
+                obj2.y = RowBehavior.getYPosition(objRowReference1)
             end 
         })
     end

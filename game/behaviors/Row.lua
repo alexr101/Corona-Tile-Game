@@ -80,8 +80,7 @@ Row.removeElectricity = function(options)
                   print('trying to replace column num: ' .. column)
 
                   if(Grid.matrix[row][column].info.name == 'electricity') then
-                    print('y: ' .. Grid.matrix[row][column].y)
-                    print(State.getColXPosition(column))
+                    
                     -- print('replace row: ' .. row)
                     -- print('replace column: ' .. column)
 
@@ -92,6 +91,11 @@ Row.removeElectricity = function(options)
                         row = row,
                         column = column
                     }
+                    
+                    print('y: ' .. Row.getYPosition(row))
+                    print(State.getColXPosition(column))
+                    print('replace row: ' .. row)
+                    print('replace column: ' .. column)
                     
                     Tiles.replace(replaceOptions)
                   end

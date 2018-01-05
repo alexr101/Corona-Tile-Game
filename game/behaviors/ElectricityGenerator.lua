@@ -27,9 +27,6 @@ function conductElectricity(obj, direction)
 
 end
 
--- []-[]-[]-[]-[]
-
-
 BehaviorElectricityGenerator.updateElectricity = function(obj)
     local row = obj.coordinates.row
     conductElectricity(obj, 'right')
