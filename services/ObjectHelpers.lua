@@ -61,7 +61,7 @@ ObjectHelpers.remove = function(obj, index)
       if(objInfo.consumable) then      
         local replaceTileFn = Tiles.replace({
           oldObj = obj,
-          newObjInfo = ObjectGenerator.DebugSpace,
+          newObjInfo = ObjectGenerator.EmptySpace,
           x = x,
           y = y,
           row = row,

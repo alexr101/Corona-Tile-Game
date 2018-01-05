@@ -85,13 +85,13 @@ Row.removeElectricity = function(options)
                     -- print('replace column: ' .. column)
 
                     local replaceOptions = {
-                        newObjInfo = ObjectGenerator.DebugSpace,
+                        newObjInfo = ObjectGenerator.EmptySpace,
                         x = State.getColXPosition(column),
                         y = Row.getYPosition(row),
                         row = row,
                         column = column
                     }
-                    
+
                     print('y: ' .. Row.getYPosition(row))
                     print(State.getColXPosition(column))
                     print('replace row: ' .. row)
