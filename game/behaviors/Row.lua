@@ -6,12 +6,21 @@ Row.update = function(row)
   -- Row.findGeneratorsAndUpdateElectricity({row: row})
 end
 
+Row.getYPosition = function(row)
+    local Config = require('game.Config')
+    local numbers = {}
+
+    for i = 0, Config.tiles-1, 1 do
+
+    end
+
+end
+
 -- removes electricity that is not coming from an electric conductor
 -- will find electricity block and search right and left to see if 
 -- if it comes from an electric conductor. 
 -- It will save each block column number so you don't have to check them again
 Row.removeElectricity = function(options)
-    local Config = require('game.Config')
     local ObjectGenerator = require('services.ObjectGenerator')
     local State = require('game.state')
     local Tiles = require('game.map.Tiles')
@@ -46,14 +55,13 @@ Row.removeElectricity = function(options)
 
                   if(Grid.matrix[row][column].info.name == 'electricity') then
                     print('y: ' .. Grid.matrix[row][column].y)
-                    print('replace row: ' .. row)
-                    print('replace column: ' .. column)
-                    Table.forEach(State.colXPositions, function (e)
-                        print(e)
-                    end)
+                    print(State.getColXPosition(column))
+                    -- print('replace row: ' .. row)
+                    -- print('replace column: ' .. column)
+
                     local replaceOptions = {
                         newObjInfo = ObjectGenerator.DebugSpace,
-                        x = State.colXPositions[column],
+                        x = State.getColXPosition(column),
                         y = Grid.matrix[row][column].y,
                         row = row,
                         column = column
