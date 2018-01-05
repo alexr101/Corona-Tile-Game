@@ -6,6 +6,16 @@ Row.update = function(row)
   -- Row.findGeneratorsAndUpdateElectricity({row: row})
 end
 
+Row.printRow = function(row)
+    local Config = require('game.Config')
+    local Grid = require('game.map.Grid')
+
+    for i = 0, Config.tiles-1, 1 do
+        local obj = Grid.matrix[row][i]
+        print('row # ' .. i .. ' name: ' .. obj.info.name)
+    end 
+end
+
 Row.getYPosition = function(row)
     local Config = require('game.Config')
     local Grid = require('game.map.Grid')

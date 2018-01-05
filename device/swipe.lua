@@ -42,6 +42,7 @@ swipe.handler = function(event)
         coordinates = { row = row, column = column }
       })
 
+      RowBehavior.printRow(row)
       RowBehavior.update(row)
       if(direction == 'up') then
         -- RowBehavior.update(row+1)
