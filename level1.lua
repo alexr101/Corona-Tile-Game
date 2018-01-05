@@ -60,7 +60,6 @@ function scene:create( event )
 
 	local horizontalRowLength = 6
 	local tileSize = Screen.width / horizontalRowLength
-	AppState.tileSize = tileSize
 	
 	player = Player.new(tileSize)
 	

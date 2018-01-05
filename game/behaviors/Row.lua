@@ -13,6 +13,7 @@ end
 Row.removeElectricity = function(options)
     local Config = require('game.Config')
     local ObjectGenerator = require('services.ObjectGenerator')
+    local State = require('game.state')
     local Tiles = require('game.map.Tiles')
     local Table = require('Utils.Table')
     local Grid = require('game.map.Grid')
@@ -47,9 +48,12 @@ Row.removeElectricity = function(options)
                     print('y: ' .. Grid.matrix[row][column].y)
                     print('replace row: ' .. row)
                     print('replace column: ' .. column)
+                    Table.forEach(State.colXPositions, function (e)
+                        print(e)
+                    end)
                     local replaceOptions = {
                         newObjInfo = ObjectGenerator.DebugSpace,
-                        x = Grid.matrix[row][column].x,
+                        x = State.colXPositions[column],
                         y = Grid.matrix[row][column].y,
                         row = row,
                         column = column
