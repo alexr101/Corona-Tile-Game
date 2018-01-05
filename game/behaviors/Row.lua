@@ -10,7 +10,7 @@ Row.update = function(row)
 
 end
 
-Row.forEachElement(row, elementName, cb)
+Row.forEachElement = function(row, elementName, cb)
     local Config = require('game.Config')
     local Grid = require('game.map.Grid')
 
