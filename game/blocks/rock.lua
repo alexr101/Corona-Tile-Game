@@ -4,6 +4,7 @@ return {
   name = "rockTile",
   collisionType = 'rock',
   conductsElectricity = false,
+  blocksElectricity = true,
   physics = {
     type = 'static',
     isSensor = false

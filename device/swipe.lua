@@ -41,11 +41,12 @@ swipe.handler = function(event)
         direction = direction,
         coordinates = { row = row, column = column }
       })
+
       RowBehavior.update(row)
       if(direction == 'up') then
-        RowBehavior.update(row+1)
+        -- RowBehavior.update(row+1)
       elseif(direction == 'down') then
-        RowBehavior.update(row-1)
+        -- RowBehavior.update(row-1)
       end
       -- RowBehavior.cleanup(row)
     end

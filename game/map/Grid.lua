@@ -117,7 +117,6 @@ Grid.swap = function(options)
         targetRow = targetRow - 1
     end
 
-    print(targetRow)
     local obj1 = Grid.matrix[row][column]
     local obj2 = Grid.matrix[targetRow][targetColumn] 
 
@@ -150,7 +149,7 @@ Grid.swap = function(options)
     -- transition the positions
     obj1.transitioning = true
     obj2.transitioning = true
-    local transitionSpeed = 100
+    local transitionSpeed = 1
 
     if direction == 'right' or direction == 'left' then
         transition.to( obj1, { time=transitionSpeed, alpha=1, x=obj2.x, 

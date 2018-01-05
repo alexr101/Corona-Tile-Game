@@ -1,9 +1,9 @@
 -- Add prototype func
 local Table = {}
 
-Table.forEach = function(table, cb)
-  for i = #table, 1, -1 do
-    cb(table[i])
+Table.forEach = function(tab, cb)
+  for i = 1, table.getn(tab), 1 do
+    cb(tab[i])
   end
 end
 
