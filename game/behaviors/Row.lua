@@ -2,8 +2,27 @@ local Row = {}
 
 
 Row.update = function(row) 
+    local electricityGeneratorBehavior = require('game.behaviors.ElectricityGenerator')
   Row.removeElectricity({ row = row })
-  -- Row.findGeneratorsAndUpdateElectricity({row: row})
+  Row.forEachElement(row, 'electricityGenerator', function(el)
+    electricityGeneratorBehavior.updateElectricity(el)
+  end)
+
+end
+
+Row.forEachElement(row, elementName, cb)
+    local Config = require('game.Config')
+    local Grid = require('game.map.Grid')
+
+    for i = 0, Config.tiles-1, 1 do
+        local obj = Grid.matrix[row][i]
+
+        if(obj.info.name == elementName) then
+            cb(obj)
+        end
+
+    end
+
 end
 
 Row.printRow = function(row)
