@@ -5,7 +5,11 @@ Row.update = function(row)
     local electricityGeneratorBehavior = require('game.behaviors.ElectricityGenerator')
   Row.removeElectricity({ row = row })
   Row.forEachElement(row, 'electricityGenerator', function(el)
-    electricityGeneratorBehavior.updateElectricity(el)
+    print(el.coordinates.column)
+      electricityGeneratorBehavior.updateElectricity({
+          row = row, 
+          column = el.coordinates.column
+      })
   end)
 
 end
@@ -96,7 +100,6 @@ Row.removeElectricity = function(options)
                 -- TODO: convert all verified tiles to empty spaces w a for loop :-)
                 for j = 1, table.getn(result.verifiedBlocks), 1 do
                   local column = result.verifiedBlocks[j]
-                  print('trying to replace column num: ' .. column)
 
                   if(Grid.matrix[row][column].info.name == 'electricity') then
                     
@@ -110,11 +113,6 @@ Row.removeElectricity = function(options)
                         row = row,
                         column = column
                     }
-
-                    print('y: ' .. Row.getYPosition(row))
-                    print(State.getColXPosition(column))
-                    print('replace row: ' .. row)
-                    print('replace column: ' .. column)
                     
                     Tiles.replace(replaceOptions)
                   end
@@ -150,7 +148,7 @@ function comesFromConductor(options)
     table.insert(verifiedBlocks, obj.coordinates.column)
 
     if(obj ~= nil and obj.info.name == 'electricityGenerator') then
-        print('continue: ' .. column .. ' ' .. obj.info.name .. ' electricity generator or electricity')
+        -- print('continue: ' .. column .. ' ' .. obj.info.name .. ' electricity generator or electricity')
         conductorFound = true
     elseif(obj ~= nil and obj.info.blocksElectricity == true) then
         return {

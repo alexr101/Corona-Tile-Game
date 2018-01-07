@@ -4,8 +4,14 @@ local Config = require('game.Config')
 local ObjectGenerator = require('services.ObjectGenerator')
 local Tiles = require('game.map.Tiles')
 
-function conductElectricity(obj, direction)
-    local obj = obj.node[direction]
+function conductElectricity(options)
+
+    local direction = options.direction
+    print(options.row)
+    print(options.column)
+    print(direction)
+
+    local obj = Grid.matrix[options.row][options.column].node[direction]
 
     if(obj ~= nil and obj.info.conductsElectricity == true and obj.info.name ~= 'electricity' and obj.info.name ~= 'electricityGenerator') then
         local replaceOptions = {
@@ -13,8 +19,8 @@ function conductElectricity(obj, direction)
             newObjInfo = ObjectGenerator.Electricity,
             x = obj.x,
             y = obj.y,
-            row = obj.coordinates.row,
-            column = obj.coordinates.column
+            row = options.row,
+            column = options.column
         }
         
         Tiles.replace(replaceOptions)
@@ -27,10 +33,20 @@ function conductElectricity(obj, direction)
 
 end
 
-BehaviorElectricityGenerator.updateElectricity = function(obj)
-    local row = obj.coordinates.row
-    conductElectricity(obj, 'right')
-    conductElectricity(obj, 'left')
+BehaviorElectricityGenerator.updateElectricity = function(options)
+    local row = options.row
+    local column = options.column
+
+    conductElectricity({
+        row = row,
+        column = column,
+        direction = 'right'
+    })
+    conductElectricity({
+        row = row,
+        column = column,
+        direction = 'left'
+    })
 
 end
 
