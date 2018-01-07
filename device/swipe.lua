@@ -14,6 +14,8 @@ swipe.handler = function(event)
       display.getCurrentStage():setFocus( target )
       target.isFocus = true
       print('clicked: ' .. target.info.name)
+      Node.seeAll({row = target.coordinates.row, column = target.coordinates.column })
+
   end
 
   if (event.phase == "ended") then

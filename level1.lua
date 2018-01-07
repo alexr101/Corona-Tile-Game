@@ -69,6 +69,7 @@ function scene:create( event )
 	Table.forEach(GameTables.tiles, function(element)
 		local ElectricityBehavior = require('game.behaviors.ElectricityGenerator')
 		if(element.info.name == 'electricityGenerator') then
+			print('found electricity generator at: ')
 			print(element.coordinates.row)
 			print(element.coordinates.column)
 			ElectricityBehavior.updateElectricity({

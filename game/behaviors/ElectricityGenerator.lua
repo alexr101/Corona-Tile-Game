@@ -6,26 +6,49 @@ local Tiles = require('game.map.Tiles')
 
 function conductElectricity(options)
 
+    local State = require('game.State')
+    local RowBehavior = require('game.behaviors.Row')
     local direction = options.direction
-    print(options.row)
-    print(options.column)
-    print(direction)
+    local row = options.row
+    local column = options.column
+    local obj
 
-    local obj = Grid.matrix[options.row][options.column].node[direction]
+    print('row conduct:' .. options.row)
+    print('column conduct:' .. options.column)
+    print('direction conduct:' .. direction)
 
-    if(obj ~= nil and obj.info.conductsElectricity == true and obj.info.name ~= 'electricity' and obj.info.name ~= 'electricityGenerator') then
-        local replaceOptions = {
-            oldObj = obj,
-            newObjInfo = ObjectGenerator.Electricity,
-            x = obj.x,
-            y = obj.y,
-            row = options.row,
-            column = options.column
-        }
-        
-        Tiles.replace(replaceOptions)
+    if(Grid.matrix[row][column] ~= nil) then
+        print('not nil')
+        obj = Grid.matrix[row][column].node[direction]
+    end
 
-        conductElectricity(obj, direction)
+    if(direction == 'right') then
+        column = column + 1
+    else
+        column = column - 1
+    end
+
+
+    if(obj ~= nil and obj.info.conductsElectricity == true and obj.info.name ~= 'electricityGenerator') then
+
+        if (obj.info.name ~= 'electricity') then
+            local replaceOptions = {
+                oldObj = obj,
+                newObjInfo = ObjectGenerator.Electricity,
+                x = State.getColXPosition(column),
+                y = RowBehavior.getYPosition(row),
+                row = row,
+                column = column
+            }
+            
+            Tiles.replace(replaceOptions)
+        end
+
+        conductElectricity({
+            row = row,
+            column = column,
+            direction = direction
+        })
     else 
         return
     end
@@ -36,6 +59,8 @@ end
 BehaviorElectricityGenerator.updateElectricity = function(options)
     local row = options.row
     local column = options.column
+    print('row update:' .. options.row)
+    print('column update:' .. options.column)
 
     conductElectricity({
         row = row,

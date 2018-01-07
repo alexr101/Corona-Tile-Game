@@ -5,7 +5,7 @@ Row.update = function(row)
     local electricityGeneratorBehavior = require('game.behaviors.ElectricityGenerator')
   Row.removeElectricity({ row = row })
   Row.forEachElement(row, 'electricityGenerator', function(el)
-    print(el.coordinates.column)
+    -- print(el.coordinates.column)
       electricityGeneratorBehavior.updateElectricity({
           row = row, 
           column = el.coordinates.column

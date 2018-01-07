@@ -36,8 +36,6 @@ State.setColXPosition = function()
     local x = (State.tileSize * i) + (State.tileSize*.5)
     table.insert( colXPosition, x)
   end
-
-  print( colXPosition[0] )
 end
 
 State.add = function(stat, amount)

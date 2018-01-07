@@ -138,7 +138,7 @@ Grid.swap = function(options)
     -- get close proximity objects for transition position references
     local objForYReference1
     local objForYReference2
-    print(targetColumn)
+    -- print(targetColumn)
     if (targetColumn > 1) then
         objRowReference1 = Grid.matrix[row][column-1].coordinates.row
         objRowReference2 = Grid.matrix[targetRow][targetColumn-1].coordinates.row
@@ -189,8 +189,6 @@ Grid.swap = function(options)
         row = row,
         column = column
     }
-
-    print(Grid.matrix[targetRow][targetColumn])
 
     -- do the actual swap
     local temp = Grid.matrix[row][column]
