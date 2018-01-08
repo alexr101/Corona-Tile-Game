@@ -13,7 +13,7 @@ end
 
 local Graphics = require('UI.graphics')
 local Math = require('Utils.math')
-local Memory = require('device.Memory')
+local Memory = require('device.memory')
 local Screen = require('device.Screen')
 local Table = require('Utils.Table')
 local zOrdering = require('UI.zOrdering')
@@ -69,9 +69,6 @@ function scene:create( event )
 	Table.forEach(GameTables.tiles, function(element)
 		local ElectricityBehavior = require('game.behaviors.ElectricityGenerator')
 		if(element.info.name == 'electricityGenerator') then
-			print('found electricity generator at: ')
-			print(element.coordinates.row)
-			print(element.coordinates.column)
 			ElectricityBehavior.updateElectricity({
 				row = element.coordinates.row, 
 				column = element.coordinates.column

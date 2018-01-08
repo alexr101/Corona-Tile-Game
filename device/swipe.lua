@@ -14,7 +14,7 @@ swipe.handler = function(event)
       display.getCurrentStage():setFocus( target )
       target.isFocus = true
       print('clicked: ' .. target.info.name)
-      Node.seeAll({row = target.coordinates.row, column = target.coordinates.column })
+      -- Node.seeAll({row = target.coordinates.row, column = target.coordinates.column })
 
   end
 
@@ -45,14 +45,13 @@ swipe.handler = function(event)
         coordinates = { row = row, column = column }
       })
 
-      RowBehavior.printRow(row)
+      -- RowBehavior.printRow(row)
       RowBehavior.update(row)
       if(direction == 'up') then
         RowBehavior.update(row+1)
       elseif(direction == 'down') then
         RowBehavior.update(row-1)
       end
-      -- RowBehavior.cleanup(row)
     end
 
     display.getCurrentStage():setFocus( nil )

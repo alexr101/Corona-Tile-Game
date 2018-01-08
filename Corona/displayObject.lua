@@ -7,7 +7,7 @@ function display.newRect( ... ) -- func with added method
       -- print( str )
   end
 
-  function rect:pastLimit = function(direction, limit)
+  function rect:pastLimit(direction, limit)
     if direction == 'right' then
       return self.x > limit
     elseif direction == 'left' then

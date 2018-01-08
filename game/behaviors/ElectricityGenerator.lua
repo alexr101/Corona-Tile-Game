@@ -13,12 +13,7 @@ function conductElectricity(options)
     local column = options.column
     local obj
 
-    print('row conduct:' .. options.row)
-    print('column conduct:' .. options.column)
-    print('direction conduct:' .. direction)
-
     if(Grid.matrix[row][column] ~= nil) then
-        print('not nil')
         obj = Grid.matrix[row][column].node[direction]
     end
 
@@ -27,7 +22,6 @@ function conductElectricity(options)
     else
         column = column - 1
     end
-
 
     if(obj ~= nil and obj.info.conductsElectricity == true and obj.info.name ~= 'electricityGenerator') then
 
@@ -59,8 +53,6 @@ end
 BehaviorElectricityGenerator.updateElectricity = function(options)
     local row = options.row
     local column = options.column
-    print('row update:' .. options.row)
-    print('column update:' .. options.column)
 
     conductElectricity({
         row = row,
