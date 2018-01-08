@@ -1,7 +1,7 @@
-local Sprites = require('sprites.sprites')  
-local GameTables = require('game.tables')
+local Sprites = require('Sprites.Sprites')  
+local GameTables = require('Game.Tables')
 
-local Config = require('game.config')
+local Config = require('Game.Config')
 local scaleSizes = {
   [1] = 0,
   [2] = 0,

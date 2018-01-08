@@ -1,13 +1,13 @@
 BehaviorElectricityGenerator = {}
-local Grid = require('game.map.Grid')
-local Config = require('game.Config')
-local ObjectGenerator = require('services.ObjectGenerator')
-local Tiles = require('game.map.Tiles')
+local Grid = require('Game.Map.Grid')
+local Config = require('Game.Config')
+local ObjectGenerator = require('Services.ObjectGenerator')
+local Tiles = require('Game.Map.Tiles')
 
 function conductElectricity(options)
 
-    local State = require('game.State')
-    local RowBehavior = require('game.behaviors.Row')
+    local State = require('Game.State')
+    local RowBehavior = require('Game.Behaviors.Row')
     local direction = options.direction
     local row = options.row
     local column = options.column

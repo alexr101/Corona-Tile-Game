@@ -1,4 +1,4 @@
-local GameTables = require('game.tables')
+local GameTables = require('Game.Tables')
 
 return {
   name = "debugSpace",

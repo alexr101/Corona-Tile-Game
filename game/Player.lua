@@ -1,5 +1,5 @@
 local Player = {}
-local Screen = require('device.Screen')
+local Screen = require('Device.Screen')
 local Graphics = require('UI.Graphics')
 
 Player.instance = {}

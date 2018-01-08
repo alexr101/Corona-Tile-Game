@@ -1,6 +1,6 @@
 local State = {}
-local Config = require('game.config')
-local Screen = require('device.screen')
+local Config = require('Game.Config')
+local Screen = require('Device.screen')
 
 State = {
   score = 100,

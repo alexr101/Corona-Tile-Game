@@ -21,7 +21,7 @@ end
 
 
 Node.seeAll = function(options)
-  local Grid = require('game.map.Grid')
+  local Grid = require('Game.Map.Grid')
   local row = options.row
   local column = options.column
   local obj = Grid.matrix[row][column]
@@ -46,7 +46,7 @@ Node.updatePositions = function(options)
   local row = options.row
   local column = options.column
   local directions = options.directions or {'all'}
-  local Grid = require('game.map.Grid')
+  local Grid = require('Game.Map.Grid')
   local Table = require('Utils.Table')
   local newNode = options.newNode
 

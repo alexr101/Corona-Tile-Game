@@ -1,6 +1,6 @@
 local scene = {}
 
-local config = require('game.Config')
+local Config = require('Game.Config')
 
 scene.width = display.actualContentWidth
 scene.height = display.actualContentHeight
@@ -19,7 +19,7 @@ function _scroll(axis, sceneGroup)
 	for i = numChildren, 1, -1 do
 		local obj = sceneGroup[i]
 		if obj ~= nil and obj.gui ~= true then
- 			obj[axis] = obj[axis] - config.levelSpeed
+ 			obj[axis] = obj[axis] - Config.levelSpeed
 		end
 	end
 end

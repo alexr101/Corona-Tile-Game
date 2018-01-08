@@ -1,11 +1,11 @@
 local Tiles = {}
-local matrix = require('game.map.matrix')
-local Swipe = require('device.Swipe')
+local matrix = require('Game.Map.Matrix')
+local Swipe = require('Device.Swipe')
 local Collisions = require('Physics.Collisions')
-local Node = require('game.map.node')
+local Node = require('Game.Map.Node')
 
 Tiles.fill = function()
-  local config = require('game.Config')
+  local config = require('Game.Config')
   local xMatrix = config.xMatrix
   local yMatrix = config.yMatrix
 
@@ -64,8 +64,8 @@ Tiles.create = function(obj, options)
 end
 
 Tiles.replace = function(options)
-  local AppState = require('game.state')
-  local Grid = require('game.map.Grid')
+  local AppState = require('Game.State')
+  local Grid = require('Game.Map.Grid')
 
   local oldObj = options.oldObj
   local newObjInfo = options.newObjInfo
@@ -99,7 +99,7 @@ end
 
 Tiles.init = function(table)
 
-  local config = require('game.config')
+  local config = require('Game.Config')
   local level = config.level
 
   local tile_Horizontal = display.newImageRect("assets/game-objects/rockTile.jpg", tileSize, tileSize)

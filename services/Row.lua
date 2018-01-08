@@ -1,6 +1,6 @@
 local Row = {}
-local Config = require('game.config')
-local Grid = require('game.map.Grid')
+local Config = require('Game.Config')
+local Grid = require('Game.Map.Grid')
 
 -- Row.searchFor = function(options)
 --     local row = options.rowNum

@@ -1,9 +1,9 @@
 local Grid = {}
-local ObjectGenerator = require('services.ObjectGenerator')
-local Screen = require('device.Screen')
-local Tiles = require('game.map.tiles')
-local Config = require('game.config')
-local Node = require('game.map.node')
+local ObjectGenerator = require('Services.ObjectGenerator')
+local Screen = require('Device.Screen')
+local Tiles = require('Game.Map.Tiles')
+local Config = require('Game.Config')
+local Node = require('Game.Map.Node')
 
 Grid.matrix = {}
 Grid.columns = 0
@@ -99,7 +99,7 @@ Grid.fillSpace = function(x, y)
 end
 
 Grid.swap = function(options)
-    local RowBehavior = require('game.behaviors.Row')
+    local RowBehavior = require('Game.Behaviors.Row')
     local direction = options.direction
     local coordinates = options.coordinates
 

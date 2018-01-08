@@ -1,5 +1,5 @@
 local swipe = {}
-local RowBehavior = require('game.behaviors.Row')
+local RowBehavior = require('Game.Behaviors.Row')
 
 -- I think self is the touched object
 -- TODO: Verify this
@@ -7,8 +7,8 @@ swipe.handler = function(event)
   local swipeOffset = 50
   local target = event.target
 
-  local Grid = require('game.map.Grid')
-  local Node = require('game.map.Node')
+  local Grid = require('Game.Map.Grid')
+  local Node = require('Game.Map.Node')
 
   if ( event.phase == "began" ) then    
       display.getCurrentStage():setFocus( target )

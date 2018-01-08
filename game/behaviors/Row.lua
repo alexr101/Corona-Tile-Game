@@ -2,7 +2,7 @@ local Row = {}
 
 
 Row.update = function(row) 
-    local electricityGeneratorBehavior = require('game.behaviors.ElectricityGenerator')
+    local electricityGeneratorBehavior = require('Game.behaviors.ElectricityGenerator')
   Row.removeElectricity({ row = row })
   Row.forEachElement(row, 'electricityGenerator', function(el)
       electricityGeneratorBehavior.updateElectricity({
@@ -14,8 +14,8 @@ Row.update = function(row)
 end
 
 Row.forEachElement = function(row, elementName, cb)
-    local Config = require('game.Config')
-    local Grid = require('game.map.Grid')
+    local Config = require('Game.Config')
+    local Grid = require('Game.Map.Grid')
 
     for i = 0, Config.tiles-1, 1 do
         local obj = Grid.matrix[row][i]
@@ -29,8 +29,8 @@ Row.forEachElement = function(row, elementName, cb)
 end
 
 Row.printRow = function(row)
-    local Config = require('game.Config')
-    local Grid = require('game.map.Grid')
+    local Config = require('Game.Config')
+    local Grid = require('Game.Map.Grid')
 
     for i = 0, Config.tiles-1, 1 do
         local obj = Grid.matrix[row][i]
@@ -39,8 +39,8 @@ Row.printRow = function(row)
 end
 
 Row.getYPosition = function(row)
-    local Config = require('game.Config')
-    local Grid = require('game.map.Grid')
+    local Config = require('Game.Config')
+    local Grid = require('Game.Map.Grid')
     local hashTable = {}
     local maxCount = 1
     local result
@@ -68,12 +68,12 @@ end
 -- if it comes from an electric conductor. 
 -- It will save each block column number so you don't have to check them again
 Row.removeElectricity = function(options)
-    local ObjectGenerator = require('services.ObjectGenerator')
-    local State = require('game.state')
-    local Tiles = require('game.map.Tiles')
+    local ObjectGenerator = require('Services.ObjectGenerator')
+    local State = require('Game.State')
+    local Tiles = require('Game.Map.Tiles')
     local Table = require('Utils.Table')
-    local Grid = require('game.map.Grid')
-    local Config = require('game.config')
+    local Grid = require('Game.Map.Grid')
+    local Config = require('Game.Config')
 
     local row = options.row
     local rowLength = Config.tiles 
@@ -129,7 +129,7 @@ end
 -- results = {verifiedblocks, conductorFound}
 function comesFromConductor(options)
     local Table = require('Utils.Table')
-    local Grid = require('game.map.Grid')
+    local Grid = require('Game.Map.Grid')
     local row = options.row
     local column = options.column
     local obj = Grid.matrix[row][column]

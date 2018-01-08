@@ -1,5 +1,5 @@
 local sprites = {}
-local data = require('sprites.data')
+local data = require('Sprites.Data')
 
 local function _getImageSheet(name)
 	local sheetFile = require('sprites.' .. data.files[name])

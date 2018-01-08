@@ -1,10 +1,11 @@
 local composer = require( "composer" )
-			composer.removeScene( "menu" )
+			composer.removeScene( "Menu" )
 local scene = composer.newScene()
-local Config = require('game.config')
+local Config = require('Game.config')
 
 local physics = require "physics"
 			physics.start(true)
+
 if(Config.debug) then
 	physics.setDrawMode( "hybrid" )
 else
@@ -13,17 +14,17 @@ end
 
 local Graphics = require('UI.graphics')
 local Math = require('Utils.math')
-local Memory = require('device.memory')
-local Screen = require('device.Screen')
+local Memory = require('Device.Memory')
+local Screen = require('Device.Screen')
 local Table = require('Utils.Table')
-local zOrdering = require('UI.zOrdering')
-local Player = require('game.Player')
-AppState = require('game.state')
+local zOrdering = require('UI.ZOrdering')
+local Player = require('Game.Player')
+AppState = require('Game.State')
 
-local Node = require('game.map.node')
-local GameTables = require('game.tables')
+local Node = require('Game.Map.Node')
+local GameTables = require('Game.Tables')
 
-local Sprites = require('sprites.Sprites')
+local Sprites = require('Sprites.Sprites')
 
 local AppContext = {}
 local timerTable = {}
@@ -41,7 +42,7 @@ function scene:create( event )
 	itemsGroup = display.newGroup()
 	blackTiles = display.newGroup()
 
-	local Grid = require('game.map.Grid')
+	local Grid = require('Game.Map.Grid')
 	local GameCollisions = require('Physics.Collisions')
 
 	-- local options1 = 
@@ -67,7 +68,7 @@ function scene:create( event )
 	Grid.addNodesToMatrix()
 
 	Table.forEach(GameTables.tiles, function(element)
-		local ElectricityBehavior = require('game.behaviors.ElectricityGenerator')
+		local ElectricityBehavior = require('Game.Behaviors.ElectricityGenerator')
 		if(element.info.name == 'electricityGenerator') then
 			ElectricityBehavior.updateElectricity({
 				row = element.coordinates.row, 

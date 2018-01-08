@@ -3,10 +3,10 @@ local ObjectHelpers = {}
 -- Optional: index
 -- otherwise treated as an object
 ObjectHelpers.remove = function(obj, index)
-  local Grid = require('game.map.Grid')
-  local Tiles = require('game.map.tiles')
-  local ObjectGenerator = require('services.ObjectGenerator')
-  local AppState = require('game.state')
+  local Grid = require('Game.Map.Grid')
+  local Tiles = require('Game.Map.Tiles')
+  local ObjectGenerator = require('Services.ObjectGenerator')
+  local AppState = require('Game.State')
 
   index = index or nil
 
