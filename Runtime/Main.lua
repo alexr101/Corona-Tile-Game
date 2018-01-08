@@ -5,7 +5,7 @@ local Row = require('Runtime.Row')
 
 Main.init = function()
 	Runtime:addEventListener( "enterFrame", Scroll.scene('y', State.sceneGroup) )
-	-- Runtime:addEventListener( "enterFrame", Row.remover(State.sceneGroup) )
+	Runtime:addEventListener( "enterFrame", Row.remover(State.sceneGroup) )
 end
 
 

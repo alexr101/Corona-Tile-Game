@@ -8,9 +8,7 @@ function _scroll(axis, sceneGroup)
 	if(#sceneGroup == 0) then numChildren = sceneGroup.numChildren end
 
 	SceneGroup.forEach(sceneGroup, function(obj)
-		if obj ~= nil then
- 			obj[axis] = obj[axis] - Config.levelSpeed
-		end
+		obj[axis] = obj[axis] - Config.levelSpeed
 	end)
 
 end
