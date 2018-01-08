@@ -112,7 +112,9 @@ function scene:show( event )
 
 		zOrdering.order(layers)
 
-		Screen.move('y', sceneGroup)
+		local RuntimeMain = require('Runtime.Main')
+		RuntimeMain.init()
+
 
 	end
 end
