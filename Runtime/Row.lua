@@ -5,10 +5,9 @@ function _remover(sceneGroup)
   local Screen = require('Device.Screen')
 
   SceneGroup.forEach(sceneGroup, function(obj)
-    if(obj.y > Screen.height + obj.height) then
-      print(obj.coordinates.column)
+    if(obj.coordinates.column == 0 and obj.y > Screen.height + obj.height) then
+      -- RowBehaviors.deleteRow(obj.coordinates.row)
     end
-  
   end)
 end
 
