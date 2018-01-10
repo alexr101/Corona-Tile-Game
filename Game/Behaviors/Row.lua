@@ -6,11 +6,15 @@ Row.delete = function(row)
     Row.forEach(row, function(obj)
         ObjectHelpers.remove(obj)
     end)
+end
 
+Row.newRow = function()
+    local Grid = require('Game.Map.Grid')
+    Grid.newRow()
 end
 
 Row.update = function(row)
-    local electricityGeneratorBehavior = require('Game.behaviors.ElectricityGenerator')
+    local electricityGeneratorBehavior = require('Game.Behaviors.ElectricityGenerator')
   Row.removeElectricity({ row = row })
   Row.forEachElement(row, 'electricityGenerator', function(obj)
       electricityGeneratorBehavior.updateElectricity({

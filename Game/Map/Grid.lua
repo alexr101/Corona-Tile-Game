@@ -4,8 +4,10 @@ local Screen = require('Device.Screen')
 local Tiles = require('Game.Map.Tiles')
 local Config = require('Game.Config')
 local Node = require('Game.Map.Node')
+local State = require('Game.State')
 
 Grid.matrix = {}
+Grid.topRow = 0
 Grid.columns = 0
 Grid.tileSize = 0
 Grid.rows = 0
@@ -18,28 +20,37 @@ end
 
 Grid.setup(Config.tiles)
 
-Grid.create = function (sceneGroup) 
+Grid.create = function ()
 
     for i = 0, Grid.rows, 1 do
-        Grid.matrix[i] = {} -- nested array right? :)
-
-        for j = 0, Grid.columns-1, 1 do
-            local x = (j * Grid.tileSize) + (Grid.tileSize*.5)
-            local y = Screen.height - ( Grid.tileSize * (i+1) ) + (Grid.tileSize*.5)
-
-            Grid.matrix[i][j] = Grid.fillSpace(x, y)
-            Grid.matrix[i][j].coordinates = {
-                row = i, 
-                column = j
-            }
-
-            sceneGroup:insert( Grid.matrix[i][j] )
-            
-            Grid.createOutOfGridObj(x, y, sceneGroup)
-        end
+        Grid.newRow()
     end
 
     return Grid.matrix
+end
+
+Grid.newRow = function(i)
+    local i = Grid.topRow
+    print(i)
+    Grid.matrix[i] = {} -- nested array right? :)
+
+    for j = 0, Grid.columns-1, 1 do
+        local x = (j * Grid.tileSize) + (Grid.tileSize*.5)
+        local y = Screen.height - ( Grid.tileSize * (i+1) ) + (Grid.tileSize*.5)
+        print(i)
+        Grid.matrix[i][j] = Grid.fillSpace(x, y)
+        Grid.matrix[i][j].coordinates = {
+            row = i,
+            column = j
+        }
+
+        State.sceneGroup:insert( Grid.matrix[i][j] )
+
+        Grid.createOutOfGridObj(x, y, State.sceneGroup)
+    end
+    print(i)
+    Grid.topRow = Grid.topRow + 1
+
 end
 
 Grid.addNodesToMatrix = function(matrix)
@@ -68,30 +79,30 @@ Grid.addNodesToMatrix = function(matrix)
     end
 end
 
-Grid.createOutOfGridObj = function(x, y, sceneGroup) 
+Grid.createOutOfGridObj = function(x, y, sceneGroup)
     local object = ObjectGenerator.randomOutOfGrid()
     local outOfGridOdds = math.random(1, 100)
-    
+
     if outOfGridOdds < 2 then
         local tile = Tiles.create(object, {
-            x = x, 
-            y = y, 
-            tileSize = Grid.tileSize, 
+            x = x,
+            y = y,
+            tileSize = Grid.tileSize,
         })
         tile.outOfGrid = true
         sceneGroup:insert( tile )
     end
 end
 
-Grid.fillSpace = function(x, y) 
+Grid.fillSpace = function(x, y)
 
     local object = ObjectGenerator.randomInGrid()
     local space = 'empty'
 
     space = Tiles.create(object, {
-        x = x, 
-        y = y, 
-        tileSize = Grid.tileSize, 
+        x = x,
+        y = y,
+        tileSize = Grid.tileSize,
         tables = object.tables
     })
 
@@ -119,11 +130,11 @@ Grid.swap = function(options)
     end
 
     local obj1 = Grid.matrix[row][column]
-    local obj2 = Grid.matrix[targetRow][targetColumn] 
+    local obj2 = Grid.matrix[targetRow][targetColumn]
 
     if obj1 == nil or obj2 == nil or obj1.transitioning == true or obj2.transitioning == true then
         print('invalid swipe')
-        return 
+        return
     end
 
     -- set direction in case you need to remove in services.ObjectHelpers.remove
@@ -153,28 +164,28 @@ Grid.swap = function(options)
     local transitionSpeed = 100
 
     if direction == 'right' or direction == 'left' then
-        transition.to( obj1, { time=transitionSpeed, alpha=1, x=obj2.x, 
-            onComplete = function() 
-                obj1.transitioning = false 
-            end 
+        transition.to( obj1, { time=transitionSpeed, alpha=1, x=obj2.x,
+            onComplete = function()
+                obj1.transitioning = false
+            end
         })
-        transition.to( obj2, { time=transitionSpeed, alpha=1, x=obj1.x, 
-            onComplete = function() 
-                obj2.transitioning = false 
-            end 
+        transition.to( obj2, { time=transitionSpeed, alpha=1, x=obj1.x,
+            onComplete = function()
+                obj2.transitioning = false
+            end
         })
-    else 
-        transition.to( obj1, { time=transitionSpeed, alpha=1, y=obj2.y, 
-            onComplete = function() 
-                obj1.transitioning = false 
+    else
+        transition.to( obj1, { time=transitionSpeed, alpha=1, y=obj2.y,
+            onComplete = function()
+                obj1.transitioning = false
                 obj1.y = RowBehavior.getYPosition(objRowReference2)
-            end 
+            end
         })
         transition.to( obj2, { time=transitionSpeed, alpha=1, y=obj1.y,
-            onComplete = function() 
-                obj2.transitioning = false 
+            onComplete = function()
+                obj2.transitioning = false
                 obj2.y = RowBehavior.getYPosition(objRowReference1)
-            end 
+            end
         })
     end
 
@@ -195,7 +206,7 @@ Grid.swap = function(options)
     Grid.matrix[row][column] = Grid.matrix[targetRow][targetColumn]
     Grid.matrix[targetRow][targetColumn] = temp
 
-    Node.updateSwapPositions({ 
+    Node.updateSwapPositions({
         row = row,
         column = column,
         targetColumn = targetColumn,
