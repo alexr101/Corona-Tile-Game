@@ -1,19 +1,13 @@
 local Row = {}
 
-function _remover(sceneGroup)
-  local SceneGroup = require('Services.SceneGroup')
+Row.remover = function(obj)
   local Screen = require('Device.Screen')
+  local removeLimit = obj.y > Screen.height + obj.height
 
-  SceneGroup.forEach(sceneGroup, function(obj)
-    if(obj.coordinates.column == 0 and obj.y > Screen.height + obj.height) then
-      -- RowBehaviors.deleteRow(obj.coordinates.row)
-    end
-  end)
+  if(obj.coordinates ~= nil and obj.coordinates.column == 0 and removeLimit) then
+    print('remove row')
+    -- RowBehaviors.deleteRow(obj.coordinates.row)
+  end
 end
-
-Row.remover = function(sceneGroup)
-  return function() _remover(sceneGroup) end
-end
-
 
 return Row

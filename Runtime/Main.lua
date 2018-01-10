@@ -9,9 +9,8 @@ local Row = require('Runtime.Row')
 
 Main.runAll = function()
   SceneGroup.forEach(State.sceneGroup, function(obj)
-		print(obj)
-		Scroll.single(obj, 'x')
-
+		Scroll.single(obj, 'y')
+		Row.remover(obj)
   end)
 end
 

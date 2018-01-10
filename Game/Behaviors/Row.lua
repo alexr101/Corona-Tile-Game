@@ -1,31 +1,43 @@
 local Row = {}
 
 
-Row.update = function(row) 
+Row.delete = function(row)
+
+
+end
+
+Row.update = function(row)
     local electricityGeneratorBehavior = require('Game.behaviors.ElectricityGenerator')
   Row.removeElectricity({ row = row })
   Row.forEachElement(row, 'electricityGenerator', function(el)
       electricityGeneratorBehavior.updateElectricity({
-          row = row, 
+          row = row,
           column = el.coordinates.column
       })
   end)
 
 end
 
-Row.forEachElement = function(row, elementName, cb)
+Row.forEach = function(row, cb)
     local Config = require('Game.Config')
     local Grid = require('Game.Map.Grid')
 
     for i = 0, Config.tiles-1, 1 do
         local obj = Grid.matrix[row][i]
 
-        if(obj.info.name == elementName) then
+        if(obj ~= nil) then
             cb(obj)
         end
 
     end
+end
 
+Row.forEachElement = function(row, elementName, cb)
+    Row.forEach(row, function(obj)
+        if(obj.info.name == elementName) then
+            cb(obj)
+        end
+    end)
 end
 
 Row.printRow = function(row)
@@ -35,7 +47,7 @@ Row.printRow = function(row)
     for i = 0, Config.tiles-1, 1 do
         local obj = Grid.matrix[row][i]
         print('row # ' .. i .. ' name: ' .. obj.info.name)
-    end 
+    end
 end
 
 Row.getYPosition = function(row)
@@ -47,7 +59,7 @@ Row.getYPosition = function(row)
 
     for i = 0, Config.tiles-1, 1 do
         local y = Grid.matrix[row][i].y
-        
+
         if(hashTable[y] == nil) then
             hashTable[y] = 1
         else
@@ -58,14 +70,14 @@ Row.getYPosition = function(row)
             maxCount = hashTable[y]
             result = y
         end
-    end 
+    end
 
     return result
 end
 
 -- removes electricity that is not coming from an electric conductor
--- will find electricity block and search right and left to see if 
--- if it comes from an electric conductor. 
+-- will find electricity block and search right and left to see if
+-- if it comes from an electric conductor.
 -- It will save each block column number so you don't have to check them again
 Row.removeElectricity = function(options)
     local ObjectGenerator = require('Services.ObjectGenerator')
@@ -76,21 +88,21 @@ Row.removeElectricity = function(options)
     local Config = require('Game.Config')
 
     local row = options.row
-    local rowLength = Config.tiles 
+    local rowLength = Config.tiles
     local verifiedBlocks = options.verifiedBlocks or {}
     local index = 0
 
     for i = 0, rowLength-1, 1 do
- 
+
         local gridObj = Grid.matrix[row][index]
 
         if(gridObj ~= nil and (gridObj.info.name == 'electricity' or gridObj.info.name == 'electricityGenerator')) then
 
             local result = comesFromConductor({ --results = {verifiedblocks, conductorFound}
-                firstObjVerified = false, 
+                firstObjVerified = false,
                 row = row,
                 column = index
-            }) 
+            })
 
             index = math.max(unpack(result.verifiedBlocks))
 
@@ -101,7 +113,7 @@ Row.removeElectricity = function(options)
                   local column = result.verifiedBlocks[j]
 
                   if(Grid.matrix[row][column].info.name == 'electricity') then
-                    
+
                     -- print('replace row: ' .. row)
                     -- print('replace column: ' .. column)
 
@@ -112,7 +124,7 @@ Row.removeElectricity = function(options)
                         row = row,
                         column = column
                     }
-                    
+
                     Tiles.replace(replaceOptions)
                   end
                 end
@@ -138,7 +150,7 @@ function comesFromConductor(options)
     local result = {
         verifiedBlocks = verifiedBlocks,
         conductorFound = conductorFound
-    } 
+    }
 
     if(obj == nil) then
         return result
@@ -153,13 +165,13 @@ function comesFromConductor(options)
         return {
             verifiedBlocks = verifiedBlocks,
             conductorFound = conductorFound
-        } 
+        }
 
     elseif(obj ~= nil and obj.node.right == nil)then
         return {
             verifiedBlocks = verifiedBlocks,
             conductorFound = conductorFound
-        } 
+        }
     end
 
     result = comesFromConductor({
