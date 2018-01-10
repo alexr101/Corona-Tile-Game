@@ -25,7 +25,7 @@ ObjectHelpers.remove = function(obj, index)
       row = obj.coordinates.row
       column = obj.coordinates.column
       objInfo = Grid.matrix[row][column].info
-    
+
 
       -- get close proximity objects for transition position references
       local objForVerticalReference
@@ -58,7 +58,7 @@ ObjectHelpers.remove = function(obj, index)
         timer.performWithDelay( 1, replaceTile )
       end
 
-      if(objInfo.consumable) then      
+      if(objInfo.consumable) then
         local replaceTileFn = Tiles.replace({
           oldObj = obj,
           newObjInfo = ObjectGenerator.EmptySpace,
@@ -71,7 +71,12 @@ ObjectHelpers.remove = function(obj, index)
         timer.performWithDelay( 1, replaceTileFn )
       end
     end
-  end  	
+  end
+end
+
+ObjectHelpers.remove = function(obj)
+  obj:removeSelf()
+  obj = nil
 end
 
 ObjectHelpers.pastLimit = function(self, direction, limit)

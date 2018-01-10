@@ -2,17 +2,20 @@ local Row = {}
 
 
 Row.delete = function(row)
-
+    local ObjectHelpers = require('Services.ObjectHelpers')
+    Row.forEach(row, function(obj)
+        ObjectHelpers.remove(obj)
+    end)
 
 end
 
 Row.update = function(row)
     local electricityGeneratorBehavior = require('Game.behaviors.ElectricityGenerator')
   Row.removeElectricity({ row = row })
-  Row.forEachElement(row, 'electricityGenerator', function(el)
+  Row.forEachElement(row, 'electricityGenerator', function(obj)
       electricityGeneratorBehavior.updateElectricity({
           row = row,
-          column = el.coordinates.column
+          column = obj.coordinates.column
       })
   end)
 
