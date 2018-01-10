@@ -75,8 +75,11 @@ ObjectHelpers.remove = function(obj, index)
 end
 
 ObjectHelpers.remove = function(obj)
-  obj:removeSelf()
-  obj = nil
+
+  if( obj.removeSelf ~= nil ) then
+    obj:removeSelf()
+    obj = nil
+  end
 end
 
 ObjectHelpers.pastLimit = function(self, direction, limit)

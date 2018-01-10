@@ -31,13 +31,18 @@ end
 
 Grid.newRow = function(i)
     local i = Grid.topRow
-    print(i)
     Grid.matrix[i] = {} -- nested array right? :)
 
     for j = 0, Grid.columns-1, 1 do
         local x = (j * Grid.tileSize) + (Grid.tileSize*.5)
-        local y = Screen.height - ( Grid.tileSize * (i+1) ) + (Grid.tileSize*.5)
-        print(i)
+        local y
+
+        if(i == 0) then
+            y = Screen.height - (Grid.tileSize * .5)
+        else
+            y = Grid.matrix[i-1][j].y - Grid.tileSize
+        end
+
         Grid.matrix[i][j] = Grid.fillSpace(x, y)
         Grid.matrix[i][j].coordinates = {
             row = i,
@@ -48,7 +53,7 @@ Grid.newRow = function(i)
 
         Grid.createOutOfGridObj(x, y, State.sceneGroup)
     end
-    print(i)
+
     Grid.topRow = Grid.topRow + 1
 
 end
@@ -97,9 +102,7 @@ end
 Grid.fillSpace = function(x, y)
 
     local object = ObjectGenerator.randomInGrid()
-    local space = 'empty'
-
-    space = Tiles.create(object, {
+    local space = Tiles.create(object, {
         x = x,
         y = y,
         tileSize = Grid.tileSize,
