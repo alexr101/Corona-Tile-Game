@@ -40,7 +40,7 @@ Node.seeAll = function(options)
   end
 end
 
-
+-- updatePositions({row, column})
 
 Node.updatePositions = function(options)
   local row = options.row

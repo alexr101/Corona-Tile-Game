@@ -10,7 +10,8 @@ end
 
 Row.newRow = function()
     local Grid = require('Game.Map.Grid')
-    Grid.newRow()
+    local row = Grid.newRow()
+    Row.update(row)
 end
 
 Row.update = function(row)

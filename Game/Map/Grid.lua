@@ -48,13 +48,23 @@ Grid.newRow = function(i)
             row = i,
             column = j
         }
+        Node.updatePositions({
+            row = i,
+            column = j
+        })
 
         State.sceneGroup:insert( Grid.matrix[i][j] )
 
         Grid.createOutOfGridObj(x, y, State.sceneGroup)
     end
 
+
     Grid.topRow = Grid.topRow + 1
+    return Grid.topRow-1
+end
+
+Grid.addRowNodes = function(row)
+
 
 end
 

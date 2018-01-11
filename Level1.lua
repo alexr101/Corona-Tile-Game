@@ -65,7 +65,7 @@ function scene:create( event )
 	player = Player.new(tileSize)
 	
 	local matrix = Grid.create(sceneGroup)
-	Grid.addNodesToMatrix()
+	-- Grid.addNodesToMatrix()
 
 	Table.forEach(GameTables.tiles, function(element)
 		local ElectricityBehavior = require('Game.Behaviors.ElectricityGenerator')
