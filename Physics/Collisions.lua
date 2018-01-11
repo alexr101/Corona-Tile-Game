@@ -7,7 +7,7 @@ local ObjectHelpers = require('Services.ObjectHelpers')
 
 Collisions.star = function( self, event )
     if ( event.phase == "began" and event.other == Player.instance ) then
-        ObjectHelpers.remove(self)
+        ObjectHelpers.replace(self)
         gameState.add('stars', 1)
     end
 end

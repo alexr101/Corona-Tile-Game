@@ -2,7 +2,7 @@ local ObjectHelpers = {}
 
 -- Optional: index
 -- otherwise treated as an object
-ObjectHelpers.remove = function(obj, index)
+ObjectHelpers.replace = function(obj, index)
   local Grid = require('Game.Map.Grid')
   local Tiles = require('Game.Map.Tiles')
   local ObjectGenerator = require('Services.ObjectGenerator')
@@ -21,6 +21,7 @@ ObjectHelpers.remove = function(obj, index)
     local objInfo
 
     -- TODO: why would coordinates be nil???
+    -- out of grid objects :-)
     if(obj.coordinates ~= nil) then
       row = obj.coordinates.row
       column = obj.coordinates.column
@@ -51,11 +52,6 @@ ObjectHelpers.remove = function(obj, index)
         x = objForHorizontalReference.x
       else
         y = objForVerticalReference.y
-      end
-
-      -- for testing
-      if(false) then
-        timer.performWithDelay( 1, replaceTile )
       end
 
       if(objInfo.consumable) then

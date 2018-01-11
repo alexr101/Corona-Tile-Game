@@ -98,7 +98,7 @@ Grid.createOutOfGridObj = function(x, y, sceneGroup)
     local object = ObjectGenerator.randomOutOfGrid()
     local outOfGridOdds = math.random(1, 100)
 
-    if outOfGridOdds < 2 then
+    if outOfGridOdds < 5 then
         local tile = Tiles.create(object, {
             x = x,
             y = y,

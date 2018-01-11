@@ -11,19 +11,24 @@ end
 Row.newRow = function()
     local Grid = require('Game.Map.Grid')
     local row = Grid.newRow()
-    Row.update(row)
+    Row.updateElectricity(row)
 end
 
 Row.update = function(row)
-    local electricityGeneratorBehavior = require('Game.Behaviors.ElectricityGenerator')
   Row.removeElectricity({ row = row })
-  Row.forEachElement(row, 'electricityGenerator', function(obj)
-      electricityGeneratorBehavior.updateElectricity({
-          row = row,
-          column = obj.coordinates.column
-      })
-  end)
+  Row.updateElectricity(row)
 
+end
+
+Row.updateElectricity = function(row)
+    local electricityGeneratorBehavior = require('Game.Behaviors.ElectricityGenerator')
+
+    Row.forEachElement(row, 'electricityGenerator', function(obj)
+        electricityGeneratorBehavior.updateElectricity({
+            row = row,
+            column = obj.coordinates.column
+        })
+    end)
 end
 
 Row.forEach = function(row, cb)
