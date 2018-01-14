@@ -19,41 +19,42 @@ swipe.handler = function(event)
   end
 
   if (event.phase == "ended") then
-    yEnd = event.y
-    xEnd = event.x
+    if(event.target.info.unmovable ~= true) then
+      yEnd = event.y
+      xEnd = event.x
 
 
-    local row = event.target.coordinates.row
-    local column = event.target.coordinates.column
-    local direction = ''
+      local row = event.target.coordinates.row
+      local column = event.target.coordinates.column
+      local direction = ''
 
-    -- Node.seeAll({row = row, column = column })
+      -- Node.seeAll({row = row, column = column })
 
-    if     xEnd > event.xStart + swipeOffset then
-      direction = 'right'
-    elseif xEnd < event.xStart - swipeOffset then
-      direction = 'left'
-    elseif yEnd < event.yStart - swipeOffset then
-      direction = 'up'
-    elseif yEnd > event.yStart + swipeOffset then
-      direction = 'down'
-    end
+      if     xEnd > event.xStart + swipeOffset then
+        direction = 'right'
+      elseif xEnd < event.xStart - swipeOffset then
+        direction = 'left'
+      elseif yEnd < event.yStart - swipeOffset then
+        direction = 'up'
+      elseif yEnd > event.yStart + swipeOffset then
+        direction = 'down'
+      end
 
-    if direction ~= '' then
-      Grid.swap({
-        direction = direction,
-        coordinates = { row = row, column = column }
-      })
+      if direction ~= '' then
+        Grid.swap({
+          direction = direction,
+          coordinates = { row = row, column = column }
+        })
 
-      -- RowBehavior.printRow(row)
-      RowBehavior.update(row)
-      if(direction == 'up') then
-        RowBehavior.update(row+1)
-      elseif(direction == 'down') then
-        RowBehavior.update(row-1)
+        -- RowBehavior.printRow(row)
+        RowBehavior.update(row)
+        if(direction == 'up') then
+          RowBehavior.update(row+1)
+        elseif(direction == 'down') then
+          RowBehavior.update(row-1)
+        end
       end
     end
-
     display.getCurrentStage():setFocus( nil )
     target.isFocus = nil
   end

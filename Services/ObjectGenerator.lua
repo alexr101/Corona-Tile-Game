@@ -9,7 +9,7 @@ ObjectGenerator.Rock = require('Game.Blocks.Rock')
 ObjectGenerator.RockCrumbling = require('Game.Blocks.RockCrumbling')
 ObjectGenerator.EmptySpace = require('Game.Blocks.EmptySpace')
 ObjectGenerator.DebugSpace = require('Game.Blocks.DebugSpace')
-
+ObjectGenerator.UnmovableSpace = require('Game.Blocks.UnmovableSpace')
 
 ObjectGenerator.objectsInGridArray = {
     ObjectGenerator.EmptySpace,

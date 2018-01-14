@@ -20,18 +20,51 @@ end
 
 Grid.setup(Config.tiles)
 
+local mockData = {
+
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+    { 'UnmovableSpace', 'Rock', 'Rock', 'Rock', 'Rock', 'UnmovableSpace' },
+    { 'UnmovableSpace', 'Rock', 'Rock', 'Rock', 'Rock', 'UnmovableSpace' },
+    { 'UnmovableSpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'UnmovableSpace' },
+    { 'UnmovableSpace', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'UnmovableSpace' },
+    { 'UnmovableSpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'UnmovableSpace' },
+    { 'UnmovableSpace', 'EmptySpace', 'Rock', 'ElectricityGenerator', 'EmptySpace', 'UnmovableSpace' },
+    { 'UnmovableSpace', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'UnmovableSpace' },
+    { 'EmptySpace', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'UnmovableSpace' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'ElectricityGenerator', 'Rock' },
+    { 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'ElectricityGenerator', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'EmptySpace', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'EmptySpace', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
+}
+
 Grid.create = function ()
 
     for i = 0, Grid.rows, 1 do
-        Grid.newRow({
-            'Rock',
-            'EmptySpace',
-            'EmptySpace',
-            'DebugSpace',
-            'RockCrumbling',
-            'EmptySpace',
-            'EmptySpace'
-        })
+        Grid.newRow(mockData[i+1])
     end
 
     return Grid.matrix
@@ -111,7 +144,7 @@ Grid.createOutOfGridObj = function(x, y, sceneGroup)
     local object = ObjectGenerator.randomOutOfGrid()
     local outOfGridOdds = math.random(1, 100)
 
-    if outOfGridOdds < 4 then
+    if outOfGridOdds < 1 then
         local tile = Tiles.create(object, {
             x = x,
             y = y,
