@@ -27,6 +27,10 @@ ObjectGenerator.objectsReactive = {
     ObjectGenerator.Electricity
 }
 
+ObjectGenerator.get = function(name)
+    return ObjectGenerator[name]
+end
+
 ObjectGenerator.randomOutOfGrid = function()
     return ObjectGenerator.objectsOutOfGridArray[ math.random(1, table.getn(ObjectGenerator.objectsOutOfGridArray) ) ]
 end

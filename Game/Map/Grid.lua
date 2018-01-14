@@ -43,7 +43,7 @@ Grid.newRow = function(i)
             y = Grid.matrix[i-1][j].y - Grid.tileSize
         end
 
-        Grid.matrix[i][j] = Grid.fillSpace(x, y)
+        Grid.matrix[i][j] = Grid.fillSpace(x, y, 'DebugSpace')
         Grid.matrix[i][j].coordinates = {
             row = i,
             column = j
@@ -98,7 +98,7 @@ Grid.createOutOfGridObj = function(x, y, sceneGroup)
     local object = ObjectGenerator.randomOutOfGrid()
     local outOfGridOdds = math.random(1, 100)
 
-    if outOfGridOdds < 5 then
+    if outOfGridOdds < 4 then
         local tile = Tiles.create(object, {
             x = x,
             y = y,
@@ -109,9 +109,9 @@ Grid.createOutOfGridObj = function(x, y, sceneGroup)
     end
 end
 
-Grid.fillSpace = function(x, y)
-
-    local object = ObjectGenerator.randomInGrid()
+Grid.fillSpace = function(x, y, name)
+    
+    local object = ObjectGenerator.get(name)
     local space = Tiles.create(object, {
         x = x,
         y = y,
