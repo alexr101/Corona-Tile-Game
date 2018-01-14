@@ -23,16 +23,26 @@ Grid.setup(Config.tiles)
 Grid.create = function ()
 
     for i = 0, Grid.rows, 1 do
-        Grid.newRow()
+        Grid.newRow({
+            'Rock',
+            'EmptySpace',
+            'EmptySpace',
+            'DebugSpace',
+            'RockCrumbling',
+            'EmptySpace',
+            'EmptySpace'
+        })
     end
 
     return Grid.matrix
 end
 
-Grid.newRow = function(i)
+Grid.newRow = function(data)
+    print(data)
     local i = Grid.topRow
     Grid.matrix[i] = {} -- nested array right? :)
 
+    print('start row')
     for j = 0, Grid.columns-1, 1 do
         local x = (j * Grid.tileSize) + (Grid.tileSize*.5)
         local y
@@ -43,7 +53,8 @@ Grid.newRow = function(i)
             y = Grid.matrix[i-1][j].y - Grid.tileSize
         end
 
-        Grid.matrix[i][j] = Grid.fillSpace(x, y, 'DebugSpace')
+        print(data[i+1])
+        Grid.matrix[i][j] = Grid.fillSpace(x, y, data[j+1])
         Grid.matrix[i][j].coordinates = {
             row = i,
             column = j
@@ -57,6 +68,8 @@ Grid.newRow = function(i)
 
         Grid.createOutOfGridObj(x, y, State.sceneGroup)
     end
+
+    print('finish row')
 
 
     Grid.topRow = Grid.topRow + 1
