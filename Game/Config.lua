@@ -1,6 +1,6 @@
 local config = {
   debug = false,
-  levelSpeed = -1,
+  levelSpeed = 0,
   xMatrix = 10,
   yMatrix = 7,
   tiles = 6,

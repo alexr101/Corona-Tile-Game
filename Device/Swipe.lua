@@ -13,7 +13,8 @@ swipe.handler = function(event)
   if ( event.phase == "began" ) then    
       display.getCurrentStage():setFocus( target )
       target.isFocus = true
-      print('clicked: ' .. target.info.name)
+      Grid.toJson()
+      -- print('clicked: ' .. target.info.name)
       -- Node.seeAll({row = target.coordinates.row, column = target.coordinates.column })
 
   end

@@ -14,7 +14,7 @@ end
 
 local Graphics = require('UI.graphics')
 local Math = require('Utils.math')
-local Memory = require('Device.Memory')
+-- local Memory = require('Device.Memory')
 local Screen = require('Device.Screen')
 local Table = require('Utils.Table')
 local zOrdering = require('UI.ZOrdering')

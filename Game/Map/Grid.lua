@@ -15,67 +15,79 @@ Grid.rows = 0
 Grid.setup = function(columns)
     Grid.columns = columns
     Grid.tileSize = Screen.width / Grid.columns
-    Grid.rows = math.ceil( ( Screen.height / Grid.tileSize ) + 3 )
+    Grid.rows = 9
+    -- Grid.rows = math.ceil( ( Screen.height / Grid.tileSize ) + 3 )
 end
 
 Grid.setup(Config.tiles)
 
 local mockData = {
-
+    { 
+        'Rock', 
+        'Rock', 
+        'Rock', 
+        'Rock', 
+        'Rock', 
+        'Rock' 
+    },
+    { 
+        'UnmovableSpace', 
+        'EmptySpace', 
+        'EmptySpace', 
+        'UnmovableSpace', 
+        'EmptySpace', 
+        'UnmovableSpace' 
+    },
+    { 
+        'UnmovableSpace', 
+        'EmptySpace', 
+        'EmptySpace', 
+        'UnmovableSpace', 
+        'EmptySpace', 
+        'UnmovableSpace' 
+    },
+    { 
+        'UnmovableSpace', 
+        'EmptySpace', 
+        'EmptySpace', 
+        'UnmovableSpace', 
+        'EmptySpace', 
+        'UnmovableSpace' 
+    },
+    
     { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'UnmovableSpace', 'Rock', 'Rock', 'Rock', 'Rock', 'UnmovableSpace' },
-    { 'UnmovableSpace', 'Rock', 'Rock', 'Rock', 'Rock', 'UnmovableSpace' },
-    { 'UnmovableSpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'UnmovableSpace' },
-    { 'UnmovableSpace', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'UnmovableSpace' },
-    { 'UnmovableSpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'UnmovableSpace' },
-    { 'UnmovableSpace', 'EmptySpace', 'Rock', 'ElectricityGenerator', 'EmptySpace', 'UnmovableSpace' },
-    { 'UnmovableSpace', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'UnmovableSpace' },
-    { 'EmptySpace', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'UnmovableSpace' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'ElectricityGenerator', 'Rock' },
-    { 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'ElectricityGenerator', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'EmptySpace', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'EmptySpace', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-    { 'Rock', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace', 'Rock' },
-}
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+}  
+
 
 Grid.create = function ()
 
     for i = 0, Grid.rows, 1 do
-        Grid.newRow(mockData[i+1])
+        Grid.newRow()
     end
 
     return Grid.matrix
 end
 
 Grid.newRow = function(data)
-    print(data)
     local i = Grid.topRow
     Grid.matrix[i] = {} -- nested array right? :)
 
-    print('start row')
     for j = 0, Grid.columns-1, 1 do
         local x = (j * Grid.tileSize) + (Grid.tileSize*.5)
         local y
@@ -86,8 +98,13 @@ Grid.newRow = function(data)
             y = Grid.matrix[i-1][j].y - Grid.tileSize
         end
 
-        print(data[i+1])
-        Grid.matrix[i][j] = Grid.fillSpace(x, y, data[j+1])
+        -- random or specified tile 
+        if(data == nil) then
+            Grid.matrix[i][j] = Grid.fillSpace(x, y)
+        else
+            Grid.matrix[i][j] = Grid.fillSpace(x, y, data[j+1])
+        end
+
         Grid.matrix[i][j].coordinates = {
             row = i,
             column = j
@@ -101,9 +118,6 @@ Grid.newRow = function(data)
 
         Grid.createOutOfGridObj(x, y, State.sceneGroup)
     end
-
-    print('finish row')
-
 
     Grid.topRow = Grid.topRow + 1
     return Grid.topRow-1
@@ -155,9 +169,31 @@ Grid.createOutOfGridObj = function(x, y, sceneGroup)
     end
 end
 
+Grid.printMap = function()
+    local RowBehavior = require('Game.Behaviors.Row')
+    for j = 0, Grid.rows, 1 do
+        RowBehavior.printRow(j)
+    end
+end
+
+Grid.toJson = function()
+    local RowBehavior = require('Game.Behaviors.Row')
+    for j = 0, Grid.rows, 1 do
+        RowBehavior.toJson(j)
+    end
+end
+
 Grid.fillSpace = function(x, y, name)
     
-    local object = ObjectGenerator.get(name)
+    local object
+
+    -- specified or random
+    if(name) then
+        object = ObjectGenerator.get(name)
+    else
+        object = ObjectGenerator.randomInGrid()
+    end
+
     local space = Tiles.create(object, {
         x = x,
         y = y,

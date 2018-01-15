@@ -14,7 +14,7 @@ Row.newRow = function()
         'EmptySpace',
         'EmptySpace',
         'EmptySpace',
-        'EmptySpace',
+        'Rock',
         'EmptySpace',
         'EmptySpace',
         'EmptySpace',
@@ -61,14 +61,34 @@ Row.forEachElement = function(row, elementName, cb)
     end)
 end
 
-Row.printRow = function(row)
+Row.toJson = function(row)
     local Config = require('Game.Config')
     local Grid = require('Game.Map.Grid')
+    local Table = require('Utils.Table')
+    local rowArr = {}
 
     for i = 0, Config.tiles-1, 1 do
         local obj = Grid.matrix[row][i]
-        print('row # ' .. i .. ' name: ' .. obj.info.name)
+        table.insert(rowArr, obj.info.name)
     end
+
+    Table.toJson(rowArr)
+
+end
+
+Row.printRow = function(row)
+    local Config = require('Game.Config')
+    local Grid = require('Game.Map.Grid')
+    local Table = require('Utils.Table')
+    local rowArr = {}
+
+    for i = 0, Config.tiles-1, 1 do
+        local obj = Grid.matrix[row][i]
+        table.insert(rowArr, obj.info.name)
+        -- print('row # ' .. i .. ' name: ' .. obj.info.name)
+    end
+
+    Table.printArr(rowArr)
 end
 
 Row.getYPosition = function(row)
