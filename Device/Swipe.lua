@@ -9,6 +9,8 @@ swipe.handler = function(event)
 
   local Grid = require('Game.Map.Grid')
   local Node = require('Game.Map.Node')
+  local Config = require('Game.Config')
+  local ObjectHelpers = require('Services.ObjectHelpers')
 
   if ( event.phase == "began" ) then    
       display.getCurrentStage():setFocus( target )
@@ -20,13 +22,14 @@ swipe.handler = function(event)
   end
 
   if (event.phase == "ended") then
-    if(event.target.info.unmovable ~= true) then
+
+    if(target.info.unmovable ~= true) then
       yEnd = event.y
       xEnd = event.x
 
 
-      local row = event.target.coordinates.row
-      local column = event.target.coordinates.column
+      local row = target.coordinates.row
+      local column = target.coordinates.column
       local direction = ''
 
       -- Node.seeAll({row = row, column = column })
@@ -56,6 +59,13 @@ swipe.handler = function(event)
         end
       end
     end
+
+    if(Config.levelBuilder) then
+      ObjectHelpers.replace(target, {
+        getNext = true
+      })
+    end
+
     display.getCurrentStage():setFocus( nil )
     target.isFocus = nil
   end

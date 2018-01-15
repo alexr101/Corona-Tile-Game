@@ -26,6 +26,17 @@ Table.toJson = function(table)
   return data
 end
 
+-- https://stackoverflow.com/questions/38282234/returning-the-index-of-a-value-in-a-lua-table
+Table.getIndex = function(table, value)
+  local index={}
+
+  for k,v in pairs(table) do
+    index[v]=k
+  end
+
+  return index[value]
+end
+
 Table.hasValue = function(table, val)
     
   for index, value in ipairs(table) do
