@@ -21,64 +21,30 @@ end
 
 Grid.setup(Config.tiles)
 
-local mockData = {
-    { 
-        'Rock', 
-        'Rock', 
-        'Rock', 
-        'Rock', 
-        'Rock', 
-        'Rock' 
-    },
-    { 
-        'UnmovableSpace', 
-        'EmptySpace', 
-        'EmptySpace', 
-        'UnmovableSpace', 
-        'EmptySpace', 
-        'UnmovableSpace' 
-    },
-    { 
-        'UnmovableSpace', 
-        'EmptySpace', 
-        'EmptySpace', 
-        'UnmovableSpace', 
-        'EmptySpace', 
-        'UnmovableSpace' 
-    },
-    { 
-        'UnmovableSpace', 
-        'EmptySpace', 
-        'EmptySpace', 
-        'UnmovableSpace', 
-        'EmptySpace', 
-        'UnmovableSpace' 
-    },
-    
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
+local mockData = {    
+    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' }
+
 }  
 
 
 Grid.create = function ()
 
     for i = 0, Grid.rows, 1 do
-        Grid.newRow()
+        Grid.newRow(mockData[i])
     end
 
     return Grid.matrix
@@ -98,10 +64,14 @@ Grid.newRow = function(data)
             y = Grid.matrix[i-1][j].y - Grid.tileSize
         end
 
+        print('print something')
         -- random or specified tile 
         if(data == nil) then
+            print('nil')
             Grid.matrix[i][j] = Grid.fillSpace(x, y)
         else
+            print('not nil')
+            print(data[j+1])
             Grid.matrix[i][j] = Grid.fillSpace(x, y, data[j+1])
         end
 
