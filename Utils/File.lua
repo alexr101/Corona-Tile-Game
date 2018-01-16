@@ -18,11 +18,12 @@ end
 File.read = function(dir, data)
     local path = system.pathForFile( dir, system.DocumentsDirectory )
     local file, errorString = io.open( path, "r" )
+    local content
     
     if not file then
         print( "File error: " .. errorString )
     else
-        local contents = file:read( "*a" )
+        contents = file:read( "*a" )
         print( "Contents of " .. path .. "\n" .. contents )
         io.close( file )
     end

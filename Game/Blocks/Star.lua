@@ -15,7 +15,7 @@ local scaleSizes = {
 }
 
 return  {
-  name = "star",
+  name = "Star",
   collisionType = 'star',
   physics = false,
   consumable = true,

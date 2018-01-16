@@ -1,7 +1,7 @@
 local GameTables = require('Game.Tables')
 
 return {
-  name = "debugSpace",
+  name = "DebugSpace",
   collisionType = 'none',
   conductsElectricity = true,
   physics = false,

@@ -1,7 +1,7 @@
 local GameTables = require('Game.Tables')
 
 return {
-  name = "electricityGenerator",
+  name = "ElectricityGenerator",
   collisionType = 'electricity',
   conductsElectricity = true,
   physics = {

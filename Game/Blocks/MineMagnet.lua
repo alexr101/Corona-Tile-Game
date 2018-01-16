@@ -1,7 +1,7 @@
 local GameTables = require('Game.Tables')
 
 return {
-  name = "mineMagnet",
+  name = "MineMagnet",
   collisionType = 'mine',
   outOfGrid = true,
   physics = {

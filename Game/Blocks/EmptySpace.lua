@@ -1,7 +1,7 @@
 local GameTables = require('Game.Tables')
 
 return {
-  name = "emptySpace",
+  name = "EmptySpace",
   collisionType = 'none',
   conductsElectricity = true,
   physics = false,

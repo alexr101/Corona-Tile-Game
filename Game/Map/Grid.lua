@@ -5,6 +5,8 @@ local Tiles = require('Game.Map.Tiles')
 local Config = require('Game.Config')
 local Node = require('Game.Map.Node')
 local State = require('Game.State')
+local File = require('Utils.File')
+local json = require('json')
 
 Grid.matrix = {}
 Grid.topRow = 0
@@ -21,30 +23,33 @@ end
 
 Grid.setup(Config.tiles)
 
-local mockData = {    
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' }
+local levelJson = File.read('/LevelData/test.json')
+local levelData = json.decode( levelJson )
+print(levelData[1][1])
 
-}  
+-- local mockData = {    
+--     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+--     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+--     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+--     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+--     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+--     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+--     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+--     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+--     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+--     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+--     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+--     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+--     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+--     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+--     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' }
+-- }  
 
 
 Grid.create = function ()
 
-    for i = 0, Grid.rows, 1 do
-        Grid.newRow(mockData[i])
+    for i = 1, Grid.rows, 1 do
+        Grid.newRow(levelData[i])
     end
 
     return Grid.matrix
@@ -54,7 +59,7 @@ Grid.newRow = function(data)
     local i = Grid.topRow
     Grid.matrix[i] = {} -- nested array right? :)
 
-    for j = 0, Grid.columns-1, 1 do
+    for j = 1, Grid.columns-1, 1 do
         local x = (j * Grid.tileSize) + (Grid.tileSize*.5)
         local y
 
@@ -64,14 +69,10 @@ Grid.newRow = function(data)
             y = Grid.matrix[i-1][j].y - Grid.tileSize
         end
 
-        print('print something')
         -- random or specified tile 
         if(data == nil) then
-            print('nil')
             Grid.matrix[i][j] = Grid.fillSpace(x, y)
         else
-            print('not nil')
-            print(data[j+1])
             Grid.matrix[i][j] = Grid.fillSpace(x, y, data[j+1])
         end
 
@@ -165,7 +166,6 @@ Grid.toTable = function()
 
     for j = 0, Grid.rows, 1 do
         local rowTable = RowBehavior.toTable(j)
-        print(table)
         table.insert(data, rowTable)
     end
 
@@ -179,9 +179,12 @@ Grid.fillSpace = function(x, y, name)
 
     -- specified or random
     if(name) then
+        print(name)
         object = ObjectGenerator.get(name)
+        print(object)
     else
         object = ObjectGenerator.randomInGrid()
+        print(object)
     end
 
     local space = Tiles.create(object, {
