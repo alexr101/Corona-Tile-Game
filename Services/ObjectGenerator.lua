@@ -56,15 +56,11 @@ ObjectGenerator.next = function(name)
         i = 1
     end
     
-    print(ObjectGenerator.allObjects[1].name)
-
     return ObjectGenerator.allObjects[i]
 end
 
 ObjectGenerator.get = function(name)
-    print()
     local name = string.upper( string.sub(name, 1, 1) ) .. string.sub(name, 2, string.len(name))
-    print(name)
     return ObjectGenerator[name]
 end
 

@@ -16,7 +16,7 @@ local scaleSizes = {
 }
 
 return  {
-  name = "electricity",
+  name = "Electricity",
   collisionType = 'electricity',
   physics = false,
   conductsElectricity = true,

@@ -27,7 +27,6 @@ Grid.setup(Config.tiles)
 
 local levelJson = File.read('/LevelData/test.json')
 local levelData = json.decode( levelJson )
-print( Table.printMatrix(levelData) )
 
 local mockData = {    
     { 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
@@ -86,7 +85,6 @@ Grid.newRow = function(data)
         if(data == nil) then
             Grid.matrix[i][j] = Grid.fillSpace(x, y)
         else
-            print(j+1)
             Grid.matrix[i][j] = Grid.fillSpace(x, y, data[j+1])
         end
 
@@ -187,6 +185,13 @@ Grid.toTable = function()
     return data
 end
 
+Grid.update = function()
+    local RowBehavior = require('Game.Behaviors.Row')
+    for i = 0, Grid.rows-1, 1 do
+        RowBehavior.update(i)
+    end
+end
+
 Grid.fillSpace = function(x, y, name)
     
     local object
@@ -248,7 +253,7 @@ Grid.swap = function(options)
     -- get close proximity objects for transition position references
     local objForYReference1
     local objForYReference2
-    -- print(targetColumn)
+
     if (targetColumn > 1) then
         objRowReference1 = Grid.matrix[row][column-1].coordinates.row
         objRowReference2 = Grid.matrix[targetRow][targetColumn-1].coordinates.row

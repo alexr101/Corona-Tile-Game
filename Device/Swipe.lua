@@ -6,12 +6,19 @@ local RowBehavior = require('Game.Behaviors.Row')
 swipe.handler = function(event)
   local swipeOffset = 50
   local target = event.target
+  local xStart = event.xStart
+  local yStart = event.yStart
+  local xCurrent = event.x
+  local yCurrent = event.y
 
   local Grid = require('Game.Map.Grid')
   local Node = require('Game.Map.Node')
   local Config = require('Game.Config')
+  local State = require('Game.State')
   local ObjectHelpers = require('Services.ObjectHelpers')
   local File = require('Utils.File')
+
+
 
   if ( event.phase == "began" ) then    
       display.getCurrentStage():setFocus( target )
@@ -22,25 +29,21 @@ swipe.handler = function(event)
   end
 
   if (event.phase == "ended") then
+    local row = target.coordinates.row
+    local column = target.coordinates.column
+    local direction = ''
 
     if(target.info.unmovable ~= true) then
-      yEnd = event.y
-      xEnd = event.x
-
-
-      local row = target.coordinates.row
-      local column = target.coordinates.column
-      local direction = ''
 
       -- Node.seeAll({row = row, column = column })
 
-      if     xEnd > event.xStart + swipeOffset then
+      if     xCurrent > xStart+ swipeOffset then
         direction = 'right'
-      elseif xEnd < event.xStart - swipeOffset then
+      elseif xCurrent < xStart - swipeOffset then
         direction = 'left'
-      elseif yEnd < event.yStart - swipeOffset then
+      elseif yCurrent < yStart - swipeOffset then
         direction = 'up'
-      elseif yEnd > event.yStart + swipeOffset then
+      elseif yCurrent > yStart + swipeOffset then
         direction = 'down'
       end
 
@@ -68,6 +71,9 @@ swipe.handler = function(event)
       local table = Grid.toTable()
       print(json)
       File.save('/LevelData/test.json', table)
+      RowBehavior.update(row)
+
+ 
     end
 
 

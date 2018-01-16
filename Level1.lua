@@ -35,9 +35,30 @@ function scene:create( event )
 	-- 
 	-- INSERT code here to initialize the scene
 	-- e.g. add display objects to 'sceneGroup', add touch listeners, etc.
-
 	local sceneGroup = self.view
 	AppState.sceneGroup = sceneGroup
+
+	local function touchListener( event )
+		local group = event.target
+		local newTouchX, newTouchY = event.x, event.y
+			
+		if (event.phase == "began") or (group.lastTouchPosX == nil) or (group.lastTouchPosY == nil) then
+			group.lastTouchPosX = newTouchX
+			group.lastTouchPosY = newTouchY
+			return
+		end
+		if (event.phase == "ended") or (event.phase == "cancelled") then
+			group.lastTouchPosY = nil
+			return
+		end
+		
+		local deltaY = (newTouchY - group.lastTouchPosY)
+		group.y = group.y + deltaY
+		
+		group.lastTouchPosY = newTouchY
+	end
+	 
+	AppState.sceneGroup:addEventListener( "touch", touchListener ) 
 
 	itemsGroup = display.newGroup()
 	blackTiles = display.newGroup()
@@ -65,18 +86,19 @@ function scene:create( event )
 	player = Player.new(tileSize)
 	
 	local matrix = Grid.create(sceneGroup)
+	Grid.update()
 	-- Grid.addNodesToMatrix()
 
-	Table.forEach(GameTables.tiles, function(element)
-		local ElectricityBehavior = require('Game.Behaviors.ElectricityGenerator')
-		if(element.info.name == 'electricityGenerator') then
-			ElectricityBehavior.updateElectricity({
-				row = element.coordinates.row, 
-				column = element.coordinates.column
-			})
+	-- Table.forEach(GameTables.tiles, function(element)
+	-- 	local ElectricityBehavior = require('Game.Behaviors.ElectricityGenerator')
+	-- 	if(element.info.name == 'ElectricityGenerator') then
+	-- 		ElectricityBehavior.updateElectricity({
+	-- 			row = element.coordinates.row, 
+	-- 			column = element.coordinates.column
+	-- 		})
 
-		end
-	end)
+	-- 	end
+	-- end)
 
 
 	-- AppState.currentGame.sceneGroup:insert(player)

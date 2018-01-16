@@ -6,7 +6,7 @@ return {
   conductsElectricity = true,
   physics = {
     type = 'static',
-    isSensor = true
+    isSensor = false
   },
   tables = { 
     GameTables.tiles,

@@ -53,8 +53,6 @@ ObjectHelpers.replace = function(obj, options)
       newObjInfo = ObjectGenerator.EmptySpace
     else
       newObjInfo = ObjectGenerator.next(obj.info.name)
-      print("old " .. obj.info.name)
-      print("new " .. newObjInfo.name)
     end
 
 

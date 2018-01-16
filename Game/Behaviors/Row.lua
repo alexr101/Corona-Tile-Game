@@ -29,10 +29,10 @@ Row.update = function(row)
 end
 
 Row.updateElectricity = function(row)
-    local electricityGeneratorBehavior = require('Game.Behaviors.ElectricityGenerator')
+    local ElectricityGeneratorBehavior = require('Game.Behaviors.ElectricityGenerator')
 
-    Row.forEachElement(row, 'electricityGenerator', function(obj)
-        electricityGeneratorBehavior.updateElectricity({
+    Row.forEachElement(row, 'ElectricityGenerator', function(obj)
+        ElectricityGeneratorBehavior.updateElectricity({
             row = row,
             column = obj.coordinates.column
         })
@@ -86,15 +86,11 @@ Row.toTable = function(row)
     local Grid = require('Game.Map.Grid')
     local Table = require('Utils.Table')
     local rowTable = {}
-    print(row)
     for i = 0, Config.tiles-1, 1 do
         local obj = Grid.matrix[row][i]
         table.insert(rowTable, obj.info.name)
-        print('column # ' .. i .. ' name: ' .. obj.info.name)
     end
 
-    -- Table.printArr(rowArr)
-    print(rowTable)
     return rowTable
 end
 
@@ -144,7 +140,7 @@ Row.removeElectricity = function(options)
 
         local gridObj = Grid.matrix[row][index]
 
-        if(gridObj ~= nil and (gridObj.info.name == 'electricity' or gridObj.info.name == 'electricityGenerator')) then
+        if(gridObj ~= nil and (gridObj.info.name == 'Electricity' or gridObj.info.name == 'ElectricityGenerator')) then
 
             local result = comesFromConductor({ --results = {verifiedblocks, conductorFound}
                 firstObjVerified = false,
@@ -160,7 +156,7 @@ Row.removeElectricity = function(options)
                 for j = 1, table.getn(result.verifiedBlocks), 1 do
                   local column = result.verifiedBlocks[j]
 
-                  if(Grid.matrix[row][column].info.name == 'electricity') then
+                  if(Grid.matrix[row][column].info.name == 'Electricity') then
 
                     -- print('replace row: ' .. row)
                     -- print('replace column: ' .. column)
@@ -206,7 +202,7 @@ function comesFromConductor(options)
 
     table.insert(verifiedBlocks, obj.coordinates.column)
 
-    if(obj ~= nil and obj.info.name == 'electricityGenerator') then
+    if(obj ~= nil and obj.info.name == 'ElectricityGenerator') then
         -- print('continue: ' .. column .. ' ' .. obj.info.name .. ' electricity generator or electricity')
         conductorFound = true
     elseif(obj ~= nil and obj.info.blocksElectricity == true) then
