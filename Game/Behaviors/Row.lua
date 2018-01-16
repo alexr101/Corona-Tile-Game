@@ -86,7 +86,8 @@ Row.toTable = function(row)
     local Grid = require('Game.Map.Grid')
     local Table = require('Utils.Table')
     local rowTable = {}
-
+    print(row)
+    print(Grid.matrix[0][0].info.name)
     for i = 0, Config.tiles-1, 1 do
         local obj = Grid.matrix[row][i]
         table.insert(rowTable, obj.info.name)
