@@ -11,11 +11,14 @@ swipe.handler = function(event)
   local Node = require('Game.Map.Node')
   local Config = require('Game.Config')
   local ObjectHelpers = require('Services.ObjectHelpers')
+  local File = require('Utils.File')
 
   if ( event.phase == "began" ) then    
       display.getCurrentStage():setFocus( target )
       target.isFocus = true
-      Grid.toJson()
+      local table = Grid.toTable()
+      print(json)
+      File.save('/LevelData/test.json', table)
       -- print('clicked: ' .. target.info.name)
       -- Node.seeAll({row = target.coordinates.row, column = target.coordinates.column })
 

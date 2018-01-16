@@ -148,9 +148,29 @@ end
 
 Grid.toJson = function()
     local RowBehavior = require('Game.Behaviors.Row')
+    local data = {}
+
     for j = 0, Grid.rows, 1 do
-        RowBehavior.toJson(j)
+        local json = RowBehavior.toJson(j)
+        table.insert(data, json)
     end
+
+
+    return data
+end
+
+Grid.toTable = function()
+    local RowBehavior = require('Game.Behaviors.Row')
+    local data = {}
+
+    for j = 0, Grid.rows, 1 do
+        local rowTable = RowBehavior.toTable(j)
+        print(table)
+        table.insert(data, rowTable)
+    end
+
+
+    return data
 end
 
 Grid.fillSpace = function(x, y, name)

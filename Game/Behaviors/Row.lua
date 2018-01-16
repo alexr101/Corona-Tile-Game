@@ -65,6 +65,8 @@ Row.toJson = function(row)
     local Config = require('Game.Config')
     local Grid = require('Game.Map.Grid')
     local Table = require('Utils.Table')
+    local File = require('Utils.File')
+
     local rowArr = {}
 
     for i = 0, Config.tiles-1, 1 do
@@ -72,23 +74,28 @@ Row.toJson = function(row)
         table.insert(rowArr, obj.info.name)
     end
 
-    Table.toJson(rowArr)
+    local json = Table.toJson(rowArr)
+    -- File.save('LevelData/test.json', json)
+
+    return json
 
 end
 
-Row.printRow = function(row)
+Row.toTable = function(row)
     local Config = require('Game.Config')
     local Grid = require('Game.Map.Grid')
     local Table = require('Utils.Table')
-    local rowArr = {}
+    local rowTable = {}
 
     for i = 0, Config.tiles-1, 1 do
         local obj = Grid.matrix[row][i]
-        table.insert(rowArr, obj.info.name)
-        -- print('row # ' .. i .. ' name: ' .. obj.info.name)
+        table.insert(rowTable, obj.info.name)
+        print('column # ' .. i .. ' name: ' .. obj.info.name)
     end
 
-    Table.printArr(rowArr)
+    -- Table.printArr(rowArr)
+    print(rowTable)
+    return rowTable
 end
 
 Row.getYPosition = function(row)

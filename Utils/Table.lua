@@ -22,7 +22,6 @@ Table.toJson = function(table)
 
   local data = json.encode( table, { indent=true } )
 
-  print(data)
   return data
 end
 
