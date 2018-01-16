@@ -8,6 +8,8 @@ local State = require('Game.State')
 local File = require('Utils.File')
 local json = require('json')
 
+local Table = require('Utils.Table')
+
 Grid.matrix = {}
 Grid.topRow = 0
 Grid.columns = 0
@@ -25,10 +27,10 @@ Grid.setup(Config.tiles)
 
 local levelJson = File.read('/LevelData/test.json')
 local levelData = json.decode( levelJson )
-print(levelData[1][1])
+print( Table.printMatrix(levelData) )
 
 local mockData = {    
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
+    { 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
@@ -42,17 +44,26 @@ local mockData = {
     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' }
+    { 'Rock', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' }
 }  
 
 
-Grid.create = function ()
+Grid.create = function (data)
 
-    for i = 0, Grid.rows-1, 1 do
-        -- Grid.newRow(levelData[i])
-        -- print(mockData[i+1][1])
-        Grid.newRow()
+    data = levelData
+    if(data) then
+        for i = 1, Grid.rows, 1 do
+            Grid.newRow(data[i])
+
+        end
+    else
+        -- random
+        for i = 0, Grid.rows, 1 do
+            Grid.newRow()
+        end
+
     end
+
 
     return Grid.matrix
 end
@@ -61,7 +72,7 @@ Grid.newRow = function(data)
     local i = Grid.topRow
     Grid.matrix[i] = {} -- nested array right? :)
 
-    for j = 1, Grid.columns-1, 1 do
+    for j = 0, Grid.columns-1, 1 do
         local x = (j * Grid.tileSize) + (Grid.tileSize*.5)
         local y
 
@@ -75,6 +86,7 @@ Grid.newRow = function(data)
         if(data == nil) then
             Grid.matrix[i][j] = Grid.fillSpace(x, y)
         else
+            print(j+1)
             Grid.matrix[i][j] = Grid.fillSpace(x, y, data[j+1])
         end
 
@@ -144,8 +156,8 @@ end
 
 Grid.printMap = function()
     local RowBehavior = require('Game.Behaviors.Row')
-    for j = 0, Grid.rows, 1 do
-        RowBehavior.printRow(j)
+    for i = 0, Grid.rows-1, 1 do
+        RowBehavior.printRow(i)
     end
 end
 
@@ -153,8 +165,8 @@ Grid.toJson = function()
     local RowBehavior = require('Game.Behaviors.Row')
     local data = {}
 
-    for j = 0, Grid.rows, 1 do
-        local json = RowBehavior.toJson(j)
+    for i = 0, Grid.rows-1, 1 do
+        local json = RowBehavior.toJson(i)
         table.insert(data, json)
     end
 
@@ -166,8 +178,8 @@ Grid.toTable = function()
     local RowBehavior = require('Game.Behaviors.Row')
     local data = {}
 
-    for j = 0, Grid.rows, 1 do
-        local rowTable = RowBehavior.toTable(j)
+    for i = 0, Grid.rows-1, 1 do
+        local rowTable = RowBehavior.toTable(i)
         table.insert(data, rowTable)
     end
 

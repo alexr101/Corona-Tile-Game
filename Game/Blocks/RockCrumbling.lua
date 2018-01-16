@@ -1,7 +1,7 @@
 local GameTables = require('Game.Tables')
 
 return {
-  name = "RockTileCrumbling",
+  name = "RockCrumbling",
   collisionType = 'rockCrumbling',
   conductsElectricity = false,
   blocksElectricity = true,

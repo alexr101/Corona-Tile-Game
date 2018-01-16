@@ -16,9 +16,6 @@ swipe.handler = function(event)
   if ( event.phase == "began" ) then    
       display.getCurrentStage():setFocus( target )
       target.isFocus = true
-      local table = Grid.toTable()
-      print(json)
-      File.save('/LevelData/test.json', table)
       -- print('clicked: ' .. target.info.name)
       -- Node.seeAll({row = target.coordinates.row, column = target.coordinates.column })
 
@@ -67,7 +64,13 @@ swipe.handler = function(event)
       ObjectHelpers.replace(target, {
         getNext = true
       })
+          
+      local table = Grid.toTable()
+      print(json)
+      File.save('/LevelData/test.json', table)
     end
+
+
 
     display.getCurrentStage():setFocus( nil )
     target.isFocus = nil
