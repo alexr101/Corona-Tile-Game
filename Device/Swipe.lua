@@ -39,7 +39,8 @@ swipe.handler = function(event)
       })
           
       local table = Grid.toTable()
-      File.save('/LevelData/test.json', table)
+      local levelFile = Config.levelBuilderFile
+      File.save('/LevelData/' .. levelFile, table)
       RowBehavior.update(row)
     elseif(target.info.unmovable ~= true) then
 

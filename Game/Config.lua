@@ -1,10 +1,11 @@
 local config = {
   debug = false,
   levelBuilder = true,
+  levelBuilderFile = 'level1.json',
+  gridData = 'json', -- json, data, random
   levelSpeed = 0,
-  xMatrix = 10,
-  yMatrix = 7,
   tiles = 6,
+  rows = 25,
 }
 
 return config
