@@ -33,7 +33,15 @@ swipe.handler = function(event)
     local column = target.coordinates.column
     local direction = ''
 
-    if(target.info.unmovable ~= true) then
+    if(Config.levelBuilder) then
+      ObjectHelpers.replace(target, {
+        getNext = true
+      })
+          
+      local table = Grid.toTable()
+      File.save('/LevelData/test.json', table)
+      RowBehavior.update(row)
+    elseif(target.info.unmovable ~= true) then
 
       -- Node.seeAll({row = row, column = column })
 
@@ -63,18 +71,7 @@ swipe.handler = function(event)
       end
     end
 
-    if(Config.levelBuilder) then
-      ObjectHelpers.replace(target, {
-        getNext = true
-      })
-          
-      local table = Grid.toTable()
-      print(json)
-      File.save('/LevelData/test.json', table)
-      RowBehavior.update(row)
 
- 
-    end
 
 
 

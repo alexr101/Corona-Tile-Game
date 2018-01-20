@@ -10,7 +10,7 @@ ObjectHelpers.replace = function(obj, options)
 
 
   
-    -- get metadata
+  -- get metadata
   local row
   local column
   local objInfo
@@ -56,7 +56,7 @@ ObjectHelpers.replace = function(obj, options)
     end
 
 
-
+    print("ObjectHelpers.replace: x: " .. x .. "y: " .. y )
     local replaceTileFn = Tiles.replace({
       oldObj = obj,
       newObjInfo = newObjInfo,

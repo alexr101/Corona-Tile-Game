@@ -38,27 +38,12 @@ function scene:create( event )
 	local sceneGroup = self.view
 	AppState.sceneGroup = sceneGroup
 
-	local function touchListener( event )
-		local group = event.target
-		local newTouchX, newTouchY = event.x, event.y
-			
-		if (event.phase == "began") or (group.lastTouchPosX == nil) or (group.lastTouchPosY == nil) then
-			group.lastTouchPosX = newTouchX
-			group.lastTouchPosY = newTouchY
-			return
-		end
-		if (event.phase == "ended") or (event.phase == "cancelled") then
-			group.lastTouchPosY = nil
-			return
-		end
-		
-		local deltaY = (newTouchY - group.lastTouchPosY)
-		group.y = group.y + deltaY
-		
-		group.lastTouchPosY = newTouchY
-	end
-	 
-	AppState.sceneGroup:addEventListener( "touch", touchListener ) 
+
+
+
+
+
+
 
 	itemsGroup = display.newGroup()
 	blackTiles = display.newGroup()
@@ -99,6 +84,31 @@ function scene:create( event )
 
 	-- 	end
 	-- end)
+
+	-- TODO: move every single object through a loop...
+	local function touchListener( event )
+
+
+		Grid.forEach(function(element)
+			local newTouchY = event.y
+				
+			if (event.phase == "began") or (element.lastTouchPosY == nil) then
+				element.lastTouchPosY = newTouchY
+				return
+			end
+			if (event.phase == "ended") or (event.phase == "cancelled") then
+				element.lastTouchPosY = nil
+				return
+			end
+
+			local deltaY = (newTouchY - element.lastTouchPosY)
+			element.y = element.y + deltaY
+			element.lastTouchPosY = newTouchY
+		end)
+
+	end
+		
+	AppState.sceneGroup:addEventListener( "touch", touchListener ) 
 
 
 	-- AppState.currentGame.sceneGroup:insert(player)

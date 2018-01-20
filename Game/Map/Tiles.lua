@@ -76,7 +76,9 @@ Tiles.replace = function(options)
 
   Grid.matrix[row][column]:removeSelf()
   Grid.matrix[row][column] = nil
-  
+
+  print("Tiles.replace: x: " .. x .. "y: " .. y)
+
   Grid.matrix[row][column] = Tiles.create(newObjInfo, {
       x = x, 
       y = y, 
@@ -87,6 +89,8 @@ Tiles.replace = function(options)
     row = row,
     column = column
   } 
+
+  print(Grid.matrix[0][0].y)
   
   Node.updatePositions({ 
     row = row, 

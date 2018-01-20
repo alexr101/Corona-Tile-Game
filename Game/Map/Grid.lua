@@ -49,7 +49,7 @@ local mockData = {
 
 Grid.create = function (data)
 
-    data = levelData
+    data = mockData
     if(data) then
         for i = 1, Grid.rows, 1 do
             Grid.newRow(data[i])
@@ -67,25 +67,34 @@ Grid.create = function (data)
     return Grid.matrix
 end
 
+Grid.forEach = function(cb)
+    for i = 0, Grid.rows-1, 1 do
+        for j = 0, Grid.columns-1, 1 do
+            cb(Grid.matrix[i][j])
+        end
+    end
+end
+
 Grid.newRow = function(data)
-    local i = Grid.topRow
+    local i = Grid.topRow -- starts at 0
     Grid.matrix[i] = {} -- nested array right? :)
 
     for j = 0, Grid.columns-1, 1 do
         local x = (j * Grid.tileSize) + (Grid.tileSize*.5)
         local y
 
+        -- get position dynamically
         if(i == 0) then
             y = Screen.height - (Grid.tileSize * .5)
         else
             y = Grid.matrix[i-1][j].y - Grid.tileSize
         end
 
-        -- random or specified tile 
+        -- generated or specified tile type
         if(data == nil) then
             Grid.matrix[i][j] = Grid.fillSpace(x, y)
         else
-            Grid.matrix[i][j] = Grid.fillSpace(x, y, data[j+1])
+            Grid.matrix[i][j] = Grid.fillSpace(x, y, data[j+1]) --j+1 because silly lua tables start at 1 :-)
         end
 
         Grid.matrix[i][j].coordinates = {
