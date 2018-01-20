@@ -22,8 +22,6 @@ end
 
 Main.init = function()
 	Runtime:addEventListener( "enterFrame", Main.runAll)
-	-- Runtime:addEventListener( "enterFrame", Scroll.scene('y', State.sceneGroup) )
-	-- Runtime:addEventListener( "enterFrame", Row.remover(State.sceneGroup) )
 end
 
 

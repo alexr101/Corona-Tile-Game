@@ -15,6 +15,14 @@ end
 Collisions.none = function( self, event )
 end
 
+Collisions.bounceRock = function( self, event )
+    if ( event.phase == "began" and event.other == Player.instance ) then
+        player:setLinearVelocity( 0, 0 )
+        player:applyLinearImpulse( 0, -.1, player.x, player.y )
+
+    end    
+end
+
 Collisions.electricity =  function( self, event )
     if ( event.phase == "began" and event.other == Player.instance ) then
     	AppState.active = false

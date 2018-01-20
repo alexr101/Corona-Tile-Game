@@ -294,7 +294,7 @@ Grid.swap = function(options)
     -- transition the positions
     obj1.transitioning = true
     obj2.transitioning = true
-    local transitionSpeed = 100
+    local transitionSpeed = 50
 
     if direction == 'right' or direction == 'left' then
         transition.to( obj1, { time=transitionSpeed, alpha=1, x=obj2.x,
