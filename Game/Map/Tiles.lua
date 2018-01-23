@@ -47,9 +47,28 @@ Tiles.create = function(obj, options)
   if(obj.outOfGrid == nil or obj.outOfGrid == false) then
     tile:addEventListener( "touch", Swipe.handler )
   end
+
+  if(obj.touchEvents) then
+
+    -- TODO: move every single object through a loop...
+    local function touchListener( event )
+      if(event.phase == "began") then
+        if(player.canBounce) then
+          player:setLinearVelocity( 0, 0 )
+          player:applyLinearImpulse( 0, -.1, player.x, player.y )
+        end
+      end
+    
+    end
+    
+    tile:addEventListener( "touch", touchListener ) 
+
+
+
+  end
   
   if(obj.physics) then
-    physics.addBody( tile, obj.physics.type, { friction=0.5, bounce=0 } )
+    physics.addBody( tile, obj.physics.type, { friction=0, bounce=0 } )
     tile.isSensor = obj.physics.isSensor
     
     tile.collision = Collisions[obj.collisionType]
@@ -109,7 +128,7 @@ Tiles.init = function(table)
   local tile_Horizontal = display.newImageRect("assets/game-objects/rockTile.jpg", tileSize, tileSize)
   tile_Horizontal.x = 150
   tile_Horizontal.y = 300
-  physics.addBody( tile_Horizontal, "static", { friction=0.5, bounce=0 } )	
+  physics.addBody( tile_Horizontal, "static", { friction=0, bounce=0 } )	
   table.insert(tileTable, tile_Horizontal)
 end
 

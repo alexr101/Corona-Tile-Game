@@ -17,10 +17,13 @@ end
 
 Collisions.bounceRock = function( self, event )
     if ( event.phase == "began" and event.other == Player.instance ) then
-        player:setLinearVelocity( 0, 0 )
-        player:applyLinearImpulse( 0, -.1, player.x, player.y )
+        player.canBounce = true
 
     end    
+
+    if ( event.phase == "ended" and event.other == Player.instance ) then
+        player.canBounce = false
+    end
 end
 
 Collisions.electricity =  function( self, event )
