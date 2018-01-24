@@ -4,8 +4,8 @@ local scene = composer.newScene()
 local Config = require('Game.config')
 
  physics = require "physics"
-			physics.start(true)
-			physics.setGravity( 0, 9.81)  -- 9.81 m/s*s in the positive x direction  
+			physics.start()
+			-- physics.setGravity( 0, 9.81)  -- 9.81 m/s*s in the positive x direction  
 
 
 if(Config.debug) then

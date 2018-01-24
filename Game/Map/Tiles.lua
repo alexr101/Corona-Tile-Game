@@ -68,7 +68,7 @@ Tiles.create = function(obj, options)
   end
   
   if(obj.physics) then
-    physics.addBody( tile, obj.physics.type, { friction=0, bounce=0 } )
+    physics.addBody( tile, obj.physics.type, { friction=1, bounce=0, density=1 } )
     tile.isSensor = obj.physics.isSensor
     
     tile.collision = Collisions[obj.collisionType]

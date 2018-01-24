@@ -6,7 +6,7 @@ return {
   conductsElectricity = false,
   blocksElectricity = true,
   physics = {
-    type = 'static',
+    type = 'kinematic',
     isSensor = false
   },
   tables = { 
