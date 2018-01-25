@@ -24,11 +24,15 @@ Grid.setup = function(columns)
 end
 
 Grid.setup(Config.tiles)
+local levelData
+if(Config.gridData == 'json') then
+    local levelJson = File.read('/LevelData/' .. Config.levelBuilderFile)
+    print(Config.levelBuilderFile)
+    levelData = json.decode( levelJson )
+end
 
-local levelJson = File.read('/LevelData/' .. Config.levelBuilderFile)
-local levelData = json.decode( levelJson )
 
-local mockData = {    
+local mockData = {
     { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
@@ -55,7 +59,7 @@ local mockData = {
     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
     { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace' }, -- 25
 
-}  
+}
 
 
 Grid.create = function (data)
@@ -222,7 +226,7 @@ Grid.update = function()
 end
 
 Grid.fillSpace = function(x, y, name)
-    
+
     local object
 
     -- specified or random
