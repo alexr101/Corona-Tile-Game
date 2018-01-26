@@ -22,6 +22,10 @@ Collisions.enemy = function( self, event )
         end
     end
 
+    if ( event.phase == "began" and event.other ~= Player.instance ) then
+        event.target.info.speed = event.target.info.speed * -1
+    end
+
 end
 
 

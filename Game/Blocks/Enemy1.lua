@@ -6,6 +6,8 @@ return {
   conductsElectricity = false,
   blocksElectricity = false,
   outOfGrid = true,
+  speed = 1,
+  enemy=true,
   effects = {
     'glow'
   },
