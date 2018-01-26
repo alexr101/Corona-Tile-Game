@@ -15,6 +15,16 @@ end
 Collisions.none = function( self, event )
 end
 
+Collisions.enemy = function( self, event )
+    if ( event.phase == "began" and event.other == Player.instance ) then
+        if(Player.instance.flickering == false) then
+            Graphics.damageFlicker(Player.instance)
+        end
+    end
+
+end
+
+
 Collisions.bounceRock = function( self, event )
     if ( event.phase == "began" and event.other == Player.instance ) then
         player.canBounce = true

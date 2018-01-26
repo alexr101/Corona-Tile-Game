@@ -2,6 +2,7 @@ local ObjectHelpers = {}
 
 -- Optional: index
 -- otherwise treated as an object
+-- replaces image
 ObjectHelpers.replace = function(obj, options)
   local Grid = require('Game.Map.Grid')
   local Tiles = require('Game.Map.Tiles')
@@ -58,29 +59,32 @@ ObjectHelpers.replace = function(obj, options)
 
 
     print("ObjectHelpers.replace: x: " .. x .. "y: " .. y )
-    local replaceTileFn = Tiles.replace({
-      oldObj = obj,
-      newObjInfo = newObjInfo,
-      x = obj.x,
-      y = obj.y,
-      row = row,
-      column = column
-    })
+ 
 
-    timer.performWithDelay( 1, replaceTileFn )
+    if(objInfo.consumable ) then
+      local replaceTileFn = Tiles.replace({
+        oldObj = obj,
+        newObjInfo = newObjInfo,
+        x = x,
+        y = y,
+        row = row,
+        column = column
+      })
 
-    -- if(objInfo.consumabl ) then
-    --   local replaceTileFn = Tiles.replace({
-    --     oldObj = obj,
-    --     newObjInfo = newObjInfo,
-    --     x = x,
-    --     y = y,
-    --     row = row,
-    --     column = column
-    --   })
+      timer.performWithDelay( 1, replaceTileFn )
+    else 
+      local replaceTileFn = Tiles.replace({
+        oldObj = obj,
+        newObjInfo = newObjInfo,
+        x = obj.x,
+        y = obj.y,
+        row = row,
+        column = column
+      })
+  
+      timer.performWithDelay( 1, replaceTileFn )
 
-    --   timer.performWithDelay( 1, replaceTileFn )
-    -- end
+    end
   end
 end
 

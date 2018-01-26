@@ -18,7 +18,7 @@ Tiles.fill = function()
   end
 end
 
-
+local tileSize = AppState.tileSize
 Tiles.create = function(obj, options)
   local x = options.x or 0
   local y = options.y or 0
@@ -56,7 +56,7 @@ Tiles.create = function(obj, options)
         if(player.canBounce) then
           print("bounce player bounce!")
           player:setLinearVelocity( 0, 0 )
-          player:applyLinearImpulse( 0, -.1, player.x, player.y )
+          player:applyLinearImpulse( 0, -100, player.x, player.y )
         end
         print("pressed tile")
       end
@@ -70,9 +70,17 @@ Tiles.create = function(obj, options)
   end
   
   if(obj.physics) then
-    physics.addBody( tile, obj.physics.type, { friction=10000, bounce=0, density=100 } )
+    local radius = obj.physics.radius or nil
+    if(radius) then
+        radius = tileSize * radius
+    end
+    physics.addBody( tile, obj.physics.type, { 
+      friction=10000, 
+      bounce=0, 
+      density=100,
+      radius = radius
+    } )
     tile.isSensor = obj.physics.isSensor
-
     tile.collision = Collisions[obj.collisionType]
     tile:addEventListener( "collision" )
   end	

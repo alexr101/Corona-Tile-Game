@@ -11,6 +11,7 @@ ObjectGenerator.EmptySpace = require('Game.Blocks.EmptySpace')
 ObjectGenerator.DebugSpace = require('Game.Blocks.DebugSpace')
 ObjectGenerator.UnmovableSpace = require('Game.Blocks.UnmovableSpace')
 ObjectGenerator.BounceRock = require('Game.Blocks.BounceRock')
+ObjectGenerator.Enemy1 = require('Game.Blocks.Enemy1')
 
 
 ObjectGenerator.objectsInGridArray = {
@@ -20,12 +21,13 @@ ObjectGenerator.objectsInGridArray = {
     ObjectGenerator.RockCrumbling,
     ObjectGenerator.ElectricityGenerator,
     ObjectGenerator.UnmovableSpace,
-    ObjectGenerator.BounceRock
+    ObjectGenerator.BounceRock,
 
 }
 
 ObjectGenerator.objectsOutOfGridArray = {
     ObjectGenerator.MineMagnet,
+    ObjectGenerator.Enemy1
 }
 
 ObjectGenerator.objectsReactive = {
@@ -38,9 +40,11 @@ ObjectGenerator.allObjects = {
     ObjectGenerator.Rock,
     ObjectGenerator.RockCrumbling,
     ObjectGenerator.ElectricityGenerator,
-    ObjectGenerator.Electricity,
+    -- ObjectGenerator.Electricity,
     ObjectGenerator.UnmovableSpace,
-    ObjectGenerator.BounceRock
+    ObjectGenerator.BounceRock,
+    -- ObjectGenerator.MineMagnet,
+    ObjectGenerator.Enemy1
 }
 
 
@@ -50,12 +54,14 @@ ObjectGenerator.names = {
     ObjectGenerator.Star.name,
     ObjectGenerator.Rock.name,
     ObjectGenerator.RockCrumbling.name,
+    ObjectGenerator.ElectricityGenerator.name,
+    
     ObjectGenerator.UnmovableSpace.name,
     ObjectGenerator.BounceRock.name,
 
-    ObjectGenerator.ElectricityGenerator.name,
     -- ObjectGenerator.Electricity.name,
-    ObjectGenerator.UnmovableSpace.name
+    -- ObjectGenerator.MineMagnet.name,
+    ObjectGenerator.Enemy1.name
 
 }
 
