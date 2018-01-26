@@ -1,5 +1,5 @@
 local config = {
-  debug = true,
+  debug = false,
   levelBuilder = false,
   levelBuilderFile = 'level1.json',
   gridData = 'json', -- json, mock, random

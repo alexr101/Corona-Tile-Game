@@ -1,7 +1,7 @@
 local composer = require( "composer" )
 			composer.removeScene( "Menu" )
 local scene = composer.newScene()
-local Config = require('Game.config')
+Config = require('Game.config')
 
   physics = require "physics"
 			physics.start()
@@ -14,19 +14,20 @@ else
 	physics.setDrawMode( "normal" )
 end
 
-local Graphics = require('UI.graphics')
-local Math = require('Utils.math')
+Graphics = require('UI.graphics')
+Math = require('Utils.math')
 -- local Memory = require('Device.Memory')
-local Screen = require('Device.Screen')
-local Table = require('Utils.Table')
-local zOrdering = require('UI.ZOrdering')
-local Player = require('Game.Player')
+Screen = require('Device.Screen')
+Table = require('Utils.Table')
+zOrdering = require('UI.ZOrdering')
+Player = require('Game.Player')
 AppState = require('Game.State')
+PhysicsUtil = require('Physics.Util')
 
-local Node = require('Game.Map.Node')
-local GameTables = require('Game.Tables')
+Node = require('Game.Map.Node')
+GameTables = require('Game.Tables')
 
-local Sprites = require('Sprites.Sprites')
+Sprites = require('Sprites.Sprites')
 
 local AppContext = {}
 local timerTable = {}
@@ -41,26 +42,6 @@ function scene:create( event )
 	-- e.g. add display objects to 'sceneGroup', add touch listeners, etc.
 	local sceneGroup = self.view
 	AppState.sceneGroup = sceneGroup
-
-	-- Player = {}
-	-- Player.instance = {}
-    -- Player.instance = display.newImageRect("assets/game-objects/player.png", tileSize, tileSize )
-	-- Player.instance.x = Screen.width * .58
-	-- Player.instance.y = Screen.height * .23
-	-- physics.addBody( Player.instance, { density = 1, friction=1, bounce=0, radius=tileSize*.3 } )
-	-- Graphics.radiate(player,{
-	-- 	alphaLow = .7,
-	-- 	alphaHigh = 1,
-	-- 	speedGlow = 1000,
-	-- 	speedDimmer = 500,
-	-- })
-	-- Player.isFixedRotation = true
-	-- Player.isSleepingAllowed = false
-	-- Player.isBullet = true
-	-- Player.xScale = 1 
-	-- Player.yScale = 1
-
-
 
 	itemsGroup = display.newGroup()
 	blackTiles = display.newGroup()
@@ -82,6 +63,8 @@ function scene:create( event )
 	-- orbText.y = Screen.height*.05
 	-- orbText.gui = true
 
+	PhysicsUtil.createBounds()
+	
 	local horizontalRowLength = 6
 	local tileSize = Screen.width / horizontalRowLength
 	
