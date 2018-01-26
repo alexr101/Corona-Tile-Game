@@ -20,48 +20,63 @@ graphics.radiate = function(obj, options)
       end
   end
 
-  function glow(obj)    
-    transition.to( obj, { 
-      time = speed,
-      alpha = alpha,
-      onComplete = function()
-        switchEffects()
-        glow(obj)      
-      end
-    })
+  function glow(obj) 
+    if(obj.flickering == false) then   
+      transition.to( obj, { 
+        time = speed,
+        alpha = alpha,
+        onComplete = function()
+          switchEffects()
+          glow(obj)      
+        end
+      })
+    else 
+      local fn = function() glow(obj) end
+      timer.performWithDelay(100, fn )
+    end
   end
 
   glow(obj)
 end
 
-graphics.damageFlicker = function()
-  local alphaHigh = 1
-  local alphaLow = .5
+graphics.damageFlicker = function(obj)
+  local alphaHigh = .5
+  local alphaLow = .3
   local alpha = alphaLow
-  local flickerAmount = 5
-  local speed = 300
+  local flickerAmount = 15
+  local speed = 100
 
-  function flicker()
-    transition.to( player, { 
-      time = speed, 
-      alpha = alpha, 
-      onComplete = function() 
-        switchEffects()
-        if (flickerAmount > 0) then 
-          flicker() 
-        end
-      end
-    })
-  end
+  obj.flickering = true
+
 
   function switchEffects()
     if(alpha == alphaLow) then
       alpha = alphaHigh
     else
       alpha = alphaLow
-      flickerAmount = flickerAmount + 1
+      flickerAmount = flickerAmount - 1
     end
   end
+
+  function flicker(obj)
+    transition.to( obj, { 
+      time = speed, 
+      alpha = alpha, 
+      onComplete = function() 
+        
+        if (flickerAmount > 0) then
+          switchEffects() 
+          flicker(obj) 
+        else
+          obj.flickering = false
+          obj.alpha = 1
+        end
+      end
+    })
+  end
+
+  flicker(obj)
+
 
 end
 
