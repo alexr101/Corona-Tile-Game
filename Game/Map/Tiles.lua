@@ -68,9 +68,10 @@ Tiles.create = function(obj, options)
   end
   
   if(obj.physics) then
-    physics.addBody( tile, obj.physics.type, { friction=1, bounce=0, density=1 } )
+    physics.addBody( tile, obj.physics.type, { friction=10000, bounce=0, density=100 } )
     tile.isSensor = obj.physics.isSensor
-    
+    tile.isSleepingAllowed = false
+    tile.isBullet = true
     tile.collision = Collisions[obj.collisionType]
     tile:addEventListener( "collision" )
   end	

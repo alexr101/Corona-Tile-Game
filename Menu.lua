@@ -20,7 +20,7 @@ local playBtn
 local function onPlayBtnRelease()
 
 	-- go to level1.lua scene
-	composer.gotoScene( "perspectiveTest", "fade", 500 )
+	composer.gotoScene( "Level1", "fade", 500 )
 
 	return true	-- indicates successful touch
 end

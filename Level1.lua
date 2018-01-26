@@ -3,7 +3,7 @@ local composer = require( "composer" )
 local scene = composer.newScene()
 local Config = require('Game.config')
 
- physics = require "physics"
+  physics = require "physics"
 			physics.start()
 			-- physics.setGravity( 0, 9.81)  -- 9.81 m/s*s in the positive x direction  
 
@@ -31,6 +31,8 @@ local Sprites = require('Sprites.Sprites')
 local AppContext = {}
 local timerTable = {}
 
+
+
 function scene:create( event )
 
 	-- Called when the scene's view does not exist.
@@ -40,10 +42,23 @@ function scene:create( event )
 	local sceneGroup = self.view
 	AppState.sceneGroup = sceneGroup
 
-
-
-
-
+	-- Player = {}
+	-- Player.instance = {}
+    -- Player.instance = display.newImageRect("assets/game-objects/player.png", tileSize, tileSize )
+	-- Player.instance.x = Screen.width * .58
+	-- Player.instance.y = Screen.height * .23
+	-- physics.addBody( Player.instance, { density = 1, friction=1, bounce=0, radius=tileSize*.3 } )
+	-- Graphics.radiate(player,{
+	-- 	alphaLow = .7,
+	-- 	alphaHigh = 1,
+	-- 	speedGlow = 1000,
+	-- 	speedDimmer = 500,
+	-- })
+	-- Player.isFixedRotation = true
+	-- Player.isSleepingAllowed = false
+	-- Player.isBullet = true
+	-- Player.xScale = 1 
+	-- Player.yScale = 1
 
 
 
@@ -131,11 +146,11 @@ function scene:show( event )
 		-- INSERT code here to make the scene come alive
 		-- e.g. start timers, begin animation, play audio, etc.
 
-		function returnPlayerToCenter()
-			player.y = player.y - 1
-		end
+		-- function returnPlayerToCenter()
+		-- 	player.y = player.y - 1
+		-- end
 
-		Runtime:addEventListener("enterFrame", returnPlayerToCenter)
+		-- Runtime:addEventListener("enterFrame", returnPlayerToCenter)
 
 		local layers = {
 			[1] = itemsGroup,

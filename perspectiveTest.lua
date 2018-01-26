@@ -39,8 +39,8 @@ player.angularDamping = 0.9 -- Angular damping rate
 player.angularMax = 10 -- Max angular velocity
 player.moveSpeed = 0 -- Current movement speed
 player.linearDamping = 0 -- Linear damping rate
-player.linearAcceleration = 1.05 -- Linear acceleration rate
-player.linearMax = 10 -- Max linear velocity
+player.linearAcceleration = 1.5 -- Linear acceleration rate
+player.linearMax = 15 -- Max linear velocity
 
 camera:add(player, 1) -- Add player to layer 1 of the camera
 
@@ -56,7 +56,7 @@ for i = 1, 100 do
     camera:add(scene[i], math.random(2, camera:layerCount()))
 end
 
-camera:setParallax(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3) -- Here we set parallax for each layer in descending order
+camera:setParallax(2, 1.9, 1.8, 1.7, 1.6, 1.5, 1.4, 1.3) -- Here we set parallax for each layer in descending order
 
 --------------------------------------------------------------------------------
 -- Movement Buttons
