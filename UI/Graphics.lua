@@ -10,18 +10,7 @@ graphics.radiate = function(obj, options)
   local alpha = alphaHigh
   local speed = speedGlow
 
-  function glow(obj)
-    transition.to( obj, { 
-      time = speedGlow, 
-      alpha = alpha, 
-      onComplete = function()
-        switchEffects()
-        glow()
-      end
-    })
-  end
-
-  function switchEffects()
+  local function switchEffects()
       if alpha == alphaLow then
         alpha = alphaHigh
         speed = speedGlow
@@ -29,6 +18,17 @@ graphics.radiate = function(obj, options)
         alpha = alphaLow
         speed = speedDimmer
       end
+  end
+
+  function glow(obj)    
+    transition.to( obj, { 
+      time = speed,
+      alpha = alpha,
+      onComplete = function()
+        switchEffects()
+        glow(obj)      
+      end
+    })
   end
 
   glow(obj)
