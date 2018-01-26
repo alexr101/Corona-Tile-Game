@@ -269,9 +269,10 @@ Grid.swap = function(options)
     local obj1 = Grid.matrix[row][column]
     local obj2 = Grid.matrix[targetRow][targetColumn]
 
-    if obj1 == nil or obj2 == nil or obj1.transitioning == true or obj2.transitioning == true then
+    if obj1 == nil or obj2 == nil or obj1.transitioning == true or obj2.transitioning == true or 
+       obj1.info.unmovable or obj2.info.unmovable then
         print('invalid swipe')
-        return
+        return false
     end
 
     -- set direction in case you need to remove in services.ObjectHelpers.remove
@@ -349,6 +350,8 @@ Grid.swap = function(options)
         targetColumn = targetColumn,
         targetRow = targetRow
     })
+
+    return true
 end
 
 return Grid

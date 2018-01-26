@@ -57,18 +57,21 @@ swipe.handler = function(event)
       end
 
       if direction ~= '' then
-        Grid.swap({
+        local swipeSuccessful = Grid.swap({
           direction = direction,
           coordinates = { row = row, column = column }
         })
 
-        -- RowBehavior.printRow(row)
-        RowBehavior.update(row)
-        if(direction == 'up') then
-          RowBehavior.update(row+1)
-        elseif(direction == 'down') then
-          RowBehavior.update(row-1)
+        if(swipeSuccessful) then
+          -- RowBehavior.printRow(row)
+          RowBehavior.update(row)
+          if(direction == 'up') then
+            RowBehavior.update(row+1)
+          elseif(direction == 'down') then
+            RowBehavior.update(row-1)
+          end
         end
+
       end
     end
 

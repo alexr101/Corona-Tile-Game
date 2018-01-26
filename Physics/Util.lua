@@ -1,8 +1,8 @@
 local Util = {}
 
-Util.createBounds = function(sides)
+Util.createBounds = function(options)
 
-  local sides = sides or {'all'}
+  local sides = options.onSides or {'all'}
 
   if ( Table.hasValue(sides, 'all') or Table.hasValue(sides, 'top') ) then
     local topWall = display.newRect (0, -1, Screen.width, 1)

@@ -63,7 +63,9 @@ function scene:create( event )
 	-- orbText.y = Screen.height*.05
 	-- orbText.gui = true
 
-	PhysicsUtil.createBounds()
+	PhysicsUtil.createBounds({
+		onSides = {'right', 'left'}
+	})
 	
 	local horizontalRowLength = 6
 	local tileSize = Screen.width / horizontalRowLength
