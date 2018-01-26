@@ -18,10 +18,12 @@ end
 Collisions.bounceRock = function( self, event )
     if ( event.phase == "began" and event.other == Player.instance ) then
         player.canBounce = true
+        print("player can bounce")
 
     end    
 
     if ( event.phase == "ended" and event.other == Player.instance ) then
+        print("player cant bounce")
         player.canBounce = false
     end
 end

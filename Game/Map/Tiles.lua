@@ -54,9 +54,11 @@ Tiles.create = function(obj, options)
     local function touchListener( event )
       if(event.phase == "began") then
         if(player.canBounce) then
+          print("bounce player bounce!")
           player:setLinearVelocity( 0, 0 )
           player:applyLinearImpulse( 0, -.1, player.x, player.y )
         end
+        print("pressed tile")
       end
     
     end
@@ -70,8 +72,7 @@ Tiles.create = function(obj, options)
   if(obj.physics) then
     physics.addBody( tile, obj.physics.type, { friction=10000, bounce=0, density=100 } )
     tile.isSensor = obj.physics.isSensor
-    tile.isSleepingAllowed = false
-    tile.isBullet = true
+
     tile.collision = Collisions[obj.collisionType]
     tile:addEventListener( "collision" )
   end	
