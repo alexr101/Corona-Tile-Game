@@ -25,6 +25,10 @@ Tiles.create = function(obj, options)
   local tileSize = options.tileSize or 0
   local tables = obj.tables or {}
 
+  if(obj.name == 'Enemy1') then
+    print(obj)
+  end
+  -- print(infoCopy.name)
   local tile
 
   if(obj.sprite) then
@@ -54,11 +58,9 @@ Tiles.create = function(obj, options)
     local function touchListener( event )
       if(event.phase == "began") then
         if(player.canBounce) then
-          print("bounce player bounce!")
           player:setLinearVelocity( 0, 0 )
           player:applyLinearImpulse( 0, -100, player.x, player.y )
         end
-        print("pressed tile")
       end
     
     end

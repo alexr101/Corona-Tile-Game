@@ -78,7 +78,7 @@ end
 
 ObjectGenerator.get = function(name)
     local name = string.upper( string.sub(name, 1, 1) ) .. string.sub(name, 2, string.len(name))
-    return ObjectGenerator[name]
+    return Table.deepCopy( ObjectGenerator[name] )
 end
 
 ObjectGenerator.randomOutOfGrid = function()
