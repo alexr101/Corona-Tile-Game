@@ -51,26 +51,35 @@ Collisions.enemy = function( self, event )
 
         if(event.other.coordinates) then
 
-  
+            print('collided w tile in y ' .. event.other.y)
 
-            if(event.target.touchingRow and event.other.coordinates.row and 
-               event.target.touchingRow < event.other.coordinates.row or
-               event.target.touchingRow == event.other.coordinates.row and
-               event.target.touchingColumn == event.other.coordinates.column) then
+            local isWall = event.other.isWall
+            local higherCollision = event.target.touchingRow and event.other.y and event.target.lastCollisionY < event.other.y
+            local collidingWithSameObj = event.target.lastCollisionY == event.other.y and event.target.lastCollisionX == event.other.x
+            
+            print(event.target.turningAroundOnSameObj)
 
+            if collidingWithSameObj and event.target.turningAroundOnSameObj == false then
+                print('same obj so youre on edge. turn around')
+                event.target.turningAroundOnSameObj = true
                 event.target.info.speed = event.target.info.speed * -1
                 event.target:applyLinearImpulse( 0, -100, event.target.x, event.target.y )
-
+            elseif higherCollision then
+                event.target.turningAroundOnSameObj = false
+                event.target.info.speed = event.target.info.speed * -1
+                event.target:applyLinearImpulse( event.target.info.speed * -200, -200, event.target.x, event.target.y )
             end
+
             
-            print('collided w tile in row ' .. event.other.coordinates.row)
-            event.target.touchingRow = event.other.coordinates.row
-            event.target.touchingColumn = event.other.coordinates.column
+            
+            event.target.lastCollisionY = event.other.y
+            event.target.lastCollisionX = event.other.x
 
         end
     end
 
-    if ( event.phase == "began" and event.other ~= Player.instance and event.other.info == nil) then
+    if ( event.phase == "began" and event.other.isWall) then
+        event.target.turningAroundOnSameObj = false
         event.target.info.speed = event.target.info.speed * -1
     end
 
