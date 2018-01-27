@@ -2,13 +2,14 @@ local graphics = {}
 
 graphics.radiate = function(obj, options)
 
-  local alphaHigh = options.alphaHigh
-  local alphaLow = options.alphaLow
-  local speedGlow = options.speedGlow
-  local speedDimmer = options.speedDimmer
+  local alphaHigh = options.alphaHigh or 1
+  local alphaLow = options.alphaLow or .7
+  local speedGlow = options.speedGlow or 1000
+  local speedDimmer = options.speedDimmer or 600
 
   local alpha = alphaHigh
   local speed = speedGlow
+  obj.flickering = false
 
   local function switchEffects()
       if alpha == alphaLow then
@@ -21,6 +22,7 @@ graphics.radiate = function(obj, options)
   end
 
   function glow(obj) 
+
     if(obj.flickering == false) then   
       transition.to( obj, { 
         time = speed,

@@ -53,7 +53,6 @@ ObjectHelpers.replace = function(obj, options)
     if(options == nil or options.getNext == nil) then
       newObjInfo = ObjectGenerator.EmptySpace
     else
-      print(obj.info.name)
       newObjInfo = ObjectGenerator.next(obj.info.name)
     end
 

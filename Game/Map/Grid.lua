@@ -27,7 +27,6 @@ Grid.setup(Config.tiles)
 local levelData
 if(Config.gridData == 'json') then
     local levelJson = File.read('/LevelData/' .. Config.levelBuilderFile)
-    print(Config.levelBuilderFile)
     levelData = json.decode( levelJson )
 end
 
@@ -65,7 +64,6 @@ local mockData = {
 Grid.create = function (data)
 
     local data
-    print(Config.gridData)
 
     if(Config.gridData == 'mock') then
         data = mockData

@@ -24,11 +24,6 @@ Tiles.create = function(obj, options)
   local y = options.y or 0
   local tileSize = options.tileSize or 0
   local tables = obj.tables or {}
-
-  if(obj.name == 'Enemy1') then
-    print(obj)
-  end
-  -- print(infoCopy.name)
   local tile
 
   if(obj.sprite) then
@@ -52,6 +47,12 @@ Tiles.create = function(obj, options)
     tile:addEventListener( "touch", Swipe.handler )
   end
 
+  if(obj.effects) then
+    for i = 1, table.getn(obj.effects), 1 do
+      Graphics[obj.effects[i]](tile, {})
+    end
+  end
+
   if(obj.touchEvents) then
 
     -- TODO: move every single object through a loop...
@@ -73,12 +74,13 @@ Tiles.create = function(obj, options)
   
   if(obj.physics) then
     local radius = obj.physics.radius or nil
+    local bounce = obj.physics.bounce or 0
     if(radius) then
         radius = tileSize * radius
     end
     physics.addBody( tile, obj.physics.type, { 
       friction=10000, 
-      bounce=0, 
+      bounce=bounce, 
       density=100,
       radius = radius
     } )
@@ -120,8 +122,6 @@ Tiles.replace = function(options)
     row = row,
     column = column
   } 
-
-  print(Grid.matrix[0][0].y)
   
   Node.updatePositions({ 
     row = row, 

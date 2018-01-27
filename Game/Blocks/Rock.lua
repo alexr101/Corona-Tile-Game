@@ -5,6 +5,7 @@ return {
   collisionType = 'rock',
   conductsElectricity = false,
   blocksElectricity = true,
+  enemyCollider = true,
   physics = {
     type = 'static',
     isSensor = false

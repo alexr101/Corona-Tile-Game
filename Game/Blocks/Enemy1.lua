@@ -9,11 +9,12 @@ return {
   speed = 1,
   enemy=true,
   effects = {
-    'glow'
+    'radiate'
   },
   physics = {
     type = 'dynamic',
     isSensor = false,
+    bounce = .2,
     radius = .3
   },
   tables = { 

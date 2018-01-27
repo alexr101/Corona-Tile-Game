@@ -1,6 +1,5 @@
 local Player = {}
 local Screen = require('Device.Screen')
-local Graphics = require('UI.Graphics')
 
 Player.instance = {}
 
@@ -10,7 +9,7 @@ Player.new = function(tileSize)
 	Player.instance.y = Screen.height * .23
 	physics.addBody( Player.instance, { density = 10, friction=1, bounce=0, radius=tileSize*.3 } )
 
-	Graphics.radiate(Player.instance,{
+	Graphics.radiate(Player.instance, {
 		alphaLow = .7,
 		alphaHigh = 1,
 		speedGlow = 1000,
@@ -18,7 +17,7 @@ Player.new = function(tileSize)
 	})
 	Player.instance.isSleepingAllowed = false
 	-- Player.instance.isBullet = true
-	Graphics.damageFlicker(Player.instance)
+	-- Graphics.damageFlicker(Player.instance)
 
 
 	return Player.instance

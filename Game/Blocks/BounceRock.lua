@@ -5,6 +5,7 @@ return {
   collisionType = 'bounceRock',
   conductsElectricity = false,
   blocksElectricity = true,
+  enemyCollider = true,
   touchEvents = {'bouncePlayer'},
   physics = {
     type = 'static',

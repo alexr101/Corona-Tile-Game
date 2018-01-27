@@ -22,7 +22,55 @@ Collisions.enemy = function( self, event )
         end
     end
 
-    if ( event.phase == "began" and event.other ~= Player.instance ) then
+
+    -- collide w block
+    --[[
+
+    scenario 1
+        edge of block - you collide with same block while you fall
+
+    on event.began 
+
+        set coordinates of touchedblock
+
+    on next event.began
+
+        if coordinates ~= previousCoordinates then
+            reverse
+        end
+
+
+
+
+    ]]--
+
+
+
+    if ( event.phase == "began" and event.other ~= Player.instance and event.other.info and event.other.info.enemyCollider ) then
+        print('event began')
+
+        if(event.other.coordinates) then
+
+  
+
+            if(event.target.touchingRow and event.other.coordinates.row and 
+               event.target.touchingRow < event.other.coordinates.row or
+               event.target.touchingRow == event.other.coordinates.row and
+               event.target.touchingColumn == event.other.coordinates.column) then
+
+                event.target.info.speed = event.target.info.speed * -1
+                event.target:applyLinearImpulse( 0, -100, event.target.x, event.target.y )
+
+            end
+            
+            print('collided w tile in row ' .. event.other.coordinates.row)
+            event.target.touchingRow = event.other.coordinates.row
+            event.target.touchingColumn = event.other.coordinates.column
+
+        end
+    end
+
+    if ( event.phase == "began" and event.other ~= Player.instance and event.other.info == nil) then
         event.target.info.speed = event.target.info.speed * -1
     end
 
@@ -32,12 +80,10 @@ end
 Collisions.bounceRock = function( self, event )
     if ( event.phase == "began" and event.other == Player.instance ) then
         player.canBounce = true
-        print("player can bounce")
 
     end    
 
     if ( event.phase == "ended" and event.other == Player.instance ) then
-        print("player cant bounce")
         player.canBounce = false
     end
 end
