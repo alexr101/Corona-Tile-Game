@@ -23,51 +23,40 @@ Collisions.enemy = function( self, event )
     end
 
 
-    -- collide w block
-    --[[
-
-    scenario 1
-        edge of block - you collide with same block while you fall
-
-    on event.began 
-
-        set coordinates of touchedblock
-
-    on next event.began
-
-        if coordinates ~= previousCoordinates then
-            reverse
-        end
-
-
-
-
-    ]]--
-
-
-
     if ( event.phase == "began" and event.other ~= Player.instance and event.other.info and event.other.info.enemyCollider ) then
-        print('event began')
-
+        if(event.target.turningAroundOnSameObj) then
+            print('turningAroundOnSameObj')
+            print(event.target.turningAroundOnSameObj)
+        end
         if(event.other.coordinates) then
 
-            print('collided w tile in y ' .. event.other.y)
+            -- print('collided w tile in y ' .. event.other.y)
+            -- if(event.target.lastCollisionY) then
+            --     print('last collided w tile in y ' .. event.target.lastCollisionY)
+            --     print(event.target.lastCollisionY < event.other.y)
+            -- end
 
             local isWall = event.other.isWall
-            local higherCollision = event.target.touchingRow and event.other.y and event.target.lastCollisionY < event.other.y
+            local higherCollision = event.target.lastCollisionY and event.other.y and event.target.lastCollisionY > event.other.y
             local collidingWithSameObj = event.target.lastCollisionY == event.other.y and event.target.lastCollisionX == event.other.x
             
-            print(event.target.turningAroundOnSameObj)
+                print(event.other.info.name)
 
-            if collidingWithSameObj and event.target.turningAroundOnSameObj == false then
+            if higherCollision then
+                print('higher collision')
+
+                event.target.turningAroundOnSameObj = false
+                event.target.info.speed = event.target.info.speed * -1
+                event.target:applyLinearImpulse( 0, 200, event.target.x, event.target.y )
+
+            elseif collidingWithSameObj and event.target.turningAroundOnSameObj == false then
                 print('same obj so youre on edge. turn around')
                 event.target.turningAroundOnSameObj = true
                 event.target.info.speed = event.target.info.speed * -1
-                event.target:applyLinearImpulse( 0, -100, event.target.x, event.target.y )
-            elseif higherCollision then
-                event.target.turningAroundOnSameObj = false
-                event.target.info.speed = event.target.info.speed * -1
-                event.target:applyLinearImpulse( event.target.info.speed * -200, -200, event.target.x, event.target.y )
+                event.target:applyLinearImpulse( 0, 0, event.target.x, event.target.y )
+            -- elseif higherCollision then
+
+                -- event.target:applyLinearImpulse( 0, 0, event.target.x, event.target.y )
             end
 
             
@@ -79,6 +68,7 @@ Collisions.enemy = function( self, event )
     end
 
     if ( event.phase == "began" and event.other.isWall) then
+        print('is wall turn around')
         event.target.turningAroundOnSameObj = false
         event.target.info.speed = event.target.info.speed * -1
     end

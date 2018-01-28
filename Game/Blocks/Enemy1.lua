@@ -6,7 +6,7 @@ return {
   conductsElectricity = false,
   blocksElectricity = false,
   outOfGrid = true,
-  speed = 1,
+  speed = 2,
   enemy=true,
   effects = {
     'radiate'
