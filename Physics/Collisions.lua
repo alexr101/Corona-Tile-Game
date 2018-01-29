@@ -24,10 +24,7 @@ Collisions.enemy = function( self, event )
 
 
     if ( event.phase == "began" and event.other ~= Player.instance and event.other.info and event.other.info.enemyCollider ) then
-        if(event.target.turningAroundOnSameObj) then
-            print('turningAroundOnSameObj')
-            print(event.target.turningAroundOnSameObj)
-        end
+
         if(event.other.coordinates) then
 
             -- print('collided w tile in y ' .. event.other.y)
@@ -48,12 +45,15 @@ Collisions.enemy = function( self, event )
                 event.target.turningAroundOnSameObj = false
                 event.target.info.speed = event.target.info.speed * -1
                 event.target:applyLinearImpulse( 0, 200, event.target.x, event.target.y )
+                event.target:setLinearVelocity(0,0)
 
             elseif collidingWithSameObj and event.target.turningAroundOnSameObj == false then
                 print('same obj so youre on edge. turn around')
                 event.target.turningAroundOnSameObj = true
                 event.target.info.speed = event.target.info.speed * -1
-                event.target:applyLinearImpulse( 0, 0, event.target.x, event.target.y )
+                event.target:applyLinearImpulse( 0, -200, event.target.x, event.target.y )
+                event.target:setLinearVelocity(0,0)
+
             -- elseif higherCollision then
 
                 -- event.target:applyLinearImpulse( 0, 0, event.target.x, event.target.y )

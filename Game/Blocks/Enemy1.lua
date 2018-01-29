@@ -8,6 +8,7 @@ return {
   outOfGrid = true,
   speed = 2,
   enemy=true,
+  enemyCollider = true,
   effects = {
     'radiate'
   },
