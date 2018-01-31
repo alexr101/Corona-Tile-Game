@@ -16,7 +16,7 @@ Main.runAll = function()
 		Scroll.single(obj, 'y')
 		Enemy.movement(obj)
 		
-		if(Config.levelBuilder == false) then
+		if(Config.levelBuilder.activated == false) then
 			Row.remover(obj)
 			ExtraObj.remover(obj)
 		end

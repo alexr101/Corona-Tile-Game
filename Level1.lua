@@ -90,7 +90,7 @@ function scene:create( event )
 	-- TODO: move every single object through a loop...
 	local function touchListener( event )
 
-		if(Config.levelBuilder) then
+		if(Config.levelBuilder.activated) then
 			Grid.forEach(function(element)
 				local newTouchY = event.y
 					

@@ -33,13 +33,13 @@ swipe.handler = function(event)
     local column = target.coordinates.column
     local direction = ''
 
-    if(Config.levelBuilder) then
+    if(Config.levelBuilder.activated) then
       ObjectHelpers.replace(target, {
         getNext = true
       })
           
       local table = Grid.toTable()
-      local levelFile = Config.levelBuilderFile
+      local levelFile = Config.levelBuilder.file
       File.save('/LevelData/' .. levelFile, table)
       RowBehavior.update(row)
     elseif(target.info.unmovable ~= true) then

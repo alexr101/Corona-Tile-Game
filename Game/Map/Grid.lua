@@ -26,7 +26,7 @@ end
 Grid.setup(Config.tiles)
 local levelData
 if(Config.gridData == 'json') then
-    local levelJson = File.read('/LevelData/' .. Config.levelBuilderFile)
+    local levelJson = File.read('/LevelData/' .. Config.levelBuilder.file)
     levelData = json.decode( levelJson )
 end
 
