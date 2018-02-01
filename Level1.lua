@@ -14,6 +14,9 @@ else
 	physics.setDrawMode( "normal" )
 end
 
+widget = require("widget");
+
+LevelBuilder = require('LevelBuilder.main')
 Graphics = require('UI.graphics')
 Math = require('Utils.math')
 -- local Memory = require('Device.Memory')
@@ -45,6 +48,8 @@ function scene:create( event )
 
 	itemsGroup = display.newGroup()
 	blackTiles = display.newGroup()
+
+	LevelBuilder.initControls()
 
 	local Grid = require('Game.Map.Grid')
 	local GameCollisions = require('Physics.Collisions')

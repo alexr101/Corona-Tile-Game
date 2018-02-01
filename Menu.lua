@@ -45,14 +45,13 @@ function scene:create( event )
 	-- titleLogo.y = 100
 
 	-- create a widget button (which will loads level1.lua on release)
-	playBtn = widget.newButton{
+	playBtn = widget.newButton({
 		label="Start",
 		labelColor = { default={255}, over={128} },
-		default="button.png",
-		over="button-over.png",
+
 		width=154, height=100,
 		onRelease = onPlayBtnRelease	-- event listener function
-	}
+	})
 	playBtn.x = display.contentWidth*0.5
 	playBtn.y = display.contentHeight - 125
 
@@ -61,7 +60,7 @@ function scene:create( event )
 end
 
 function scene:show( event )
-	local sceneGroup = self.view
+	local sceneGroup = self.vie
 	local phase = event.phase
 
 	if phase == "will" then

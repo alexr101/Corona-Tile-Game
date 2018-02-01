@@ -3,7 +3,7 @@ local config = {
   levelBuilder = {
     activated = false,
     file = 'level1.json',
-    createModes = { 'inGrid', 'outOfGrid' },
+    createMode = 'inGrid', -- 'inGrid' or 'outOfGrid' -- TODO: add buttons to add grid objects in or out of grid based on this enumerator
   },
   gridData = 'json', -- json, mock, random
   levelSpeed = 0,
