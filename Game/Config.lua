@@ -5,8 +5,8 @@ local config = {
     file = 'level1.json',
     createMode = 'inGrid', -- 'inGrid' or 'outOfGrid' -- TODO: add buttons to add grid objects in or out of grid based on this enumerator
   },
-  gridData = 'json', -- json, mock, random
-  levelSpeed = 0,
+  gridData = 'random', -- json, mock, random
+  levelSpeed = -.5,
   tiles = 6,
   rows = 25,
 }

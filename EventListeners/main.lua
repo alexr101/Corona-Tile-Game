@@ -24,7 +24,7 @@ local function moveMap( event )
 end	
 
 EventListeners.init = function()
-	AppState.sceneGroup:addEventListener( "touch", moveMap ) 
+	-- AppState.sceneGroup:addEventListener( "touch", moveMap ) 
 end
 
 return EventListeners

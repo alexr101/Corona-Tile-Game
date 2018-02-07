@@ -23,7 +23,7 @@ function conductElectricity(options)
         column = column - 1
     end
 
-    if(obj ~= nil and obj.info.conductsElectricity == true and obj.info.name ~= 'electricityGenerator') then
+    if(obj ~= nil and obj.info.conductsElectricity == true and obj.info.name ~= 'ElectricityGenerator') then
 
         if (obj.info.name ~= 'electricity') then
             local replaceOptions = {

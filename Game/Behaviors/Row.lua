@@ -10,15 +10,7 @@ end
 
 Row.newRow = function()
     local Grid = require('Game.Map.Grid')
-    local row = Grid.newRow({
-        'EmptySpace',
-        'EmptySpace',
-        'EmptySpace',
-        'Rock',
-        'EmptySpace',
-        'EmptySpace',
-        'EmptySpace',
-    })
+    local row = Grid.newRow()
     Row.updateElectricity(row)
 end
 

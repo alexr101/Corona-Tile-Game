@@ -13,6 +13,8 @@ PhysicsUtil = require('Physics.Util')
 Math = require('Utils.math')
 Node = require('Game.Map.Node')
 GameTables = require('Game.Tables')
+RowBehaviors = require('Game.Behaviors.Row')
+
 Screen = require('Device.Screen')
 Sprites = require('Sprites.Sprites')
 Table = require('Utils.Table')
