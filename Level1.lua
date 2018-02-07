@@ -51,7 +51,7 @@ function scene:show( event )
 	elseif phase == "did" then
 
 		-- TODO: move into zOrder class
-		local layers = {
+		local gameViewLayers = {
 			[1] = itemsGroup,
 			[2] = blackTiles,
 			[3] = player,
@@ -61,9 +61,7 @@ function scene:show( event )
 		
 		RuntimeMain = require('Runtime.Main')
 		RuntimeMain.init()
-		zOrdering.orderLayers(layers)
-
-
+		zOrdering.order(gameViewLayers)
 
 	end
 end

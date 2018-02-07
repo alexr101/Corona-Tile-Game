@@ -2,9 +2,9 @@ local Row = {}
 
 
 Row.delete = function(row)
-    local ObjectHelpers = require('Services.ObjectHelpers')
+    local ObjectService = require('Services.ObjectService')
     Row.forEach(row, function(obj)
-        ObjectHelpers.remove(obj)
+        ObjectService.remove(obj)
     end)
 end
 

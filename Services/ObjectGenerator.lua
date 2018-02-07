@@ -13,7 +13,7 @@ ObjectGenerator.UnmovableSpace = require('Game.Blocks.UnmovableSpace')
 ObjectGenerator.BounceRock = require('Game.Blocks.BounceRock')
 ObjectGenerator.Enemy1 = require('Game.Blocks.Enemy1')
 
-
+-- TODO: Refactor this mess
 ObjectGenerator.objectsInGridArray = {
     ObjectGenerator.EmptySpace,
     ObjectGenerator.Star,

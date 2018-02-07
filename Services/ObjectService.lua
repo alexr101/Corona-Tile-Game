@@ -1,9 +1,9 @@
-local ObjectHelpers = {}
+local ObjectService = {}
 
 -- Optional: index
 -- otherwise treated as an object
 -- replaces image
-ObjectHelpers.replace = function(obj, options)
+ObjectService.replace = function(obj, options)
   local Grid = require('Game.Map.Grid')
   local Tiles = require('Game.Map.Tiles')
   local ObjectGenerator = require('Services.ObjectGenerator')
@@ -57,7 +57,7 @@ ObjectHelpers.replace = function(obj, options)
     end
 
 
-    print("ObjectHelpers.replace: x: " .. x .. "y: " .. y )
+    print("ObjectService.replace: x: " .. x .. "y: " .. y )
  
 
     if(objInfo.consumable ) then
@@ -87,7 +87,7 @@ ObjectHelpers.replace = function(obj, options)
   end
 end
 
-ObjectHelpers.remove = function(obj)
+ObjectService.remove = function(obj)
 
   if( obj.removeSelf ~= nil ) then
     obj:removeSelf()
@@ -95,7 +95,7 @@ ObjectHelpers.remove = function(obj)
   end
 end
 
-ObjectHelpers.pastLimit = function(self, direction, limit)
+ObjectService.pastLimit = function(self, direction, limit)
   if direction == 'right' then
     return self.x > limit
   elseif direction == 'left' then
@@ -109,4 +109,4 @@ ObjectHelpers.pastLimit = function(self, direction, limit)
   return nil
 end
 
-return ObjectHelpers
+return ObjectService

@@ -15,7 +15,7 @@ swipe.handler = function(event)
   local Node = require('Game.Map.Node')
   local Config = require('Game.Config')
   local State = require('Game.State')
-  local ObjectHelpers = require('Services.ObjectHelpers')
+  local ObjectService = require('Services.ObjectService')
   local File = require('Utils.File')
 
 
@@ -34,7 +34,7 @@ swipe.handler = function(event)
     local direction = ''
 
     if(Config.levelBuilder.activated) then
-      ObjectHelpers.replace(target, {
+      ObjectService.replace(target, {
         getNext = true
       })
           

@@ -272,7 +272,7 @@ Grid.swap = function(options)
         return false
     end
 
-    -- set direction in case you need to remove in services.ObjectHelpers.remove
+    -- set direction in case you need to remove in services.ObjectService.remove
     if direction == 'right' or direction == 'left' then
         obj1.moving = 'horizontally'
         obj2.moving = 'horizontally'
