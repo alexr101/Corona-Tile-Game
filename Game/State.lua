@@ -14,6 +14,10 @@ State.get = function()
   return State.game
 end
 
+State.setSceneGroup = function(group)
+  State.sceneGroup = group
+end
+
 
 State.resetGame = function()
   currentGame.score = 0
@@ -45,11 +49,10 @@ State.add = function(stat, amount)
   -- orbText.text = orbs
 end
 
-State.setup = function()
+State.init = function()
   State.setTileSize()
   State.setColXPosition()
 end
-State.setup()
 
 return State
 

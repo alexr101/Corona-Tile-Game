@@ -1,126 +1,44 @@
 local composer = require( "composer" )
 			composer.removeScene( "Menu" )
 local scene = composer.newScene()
-Config = require('Game.config')
 
-  physics = require "physics"
-			physics.start()
-			physics.setGravity( 0, 9.81)  -- 9.81 m/s*s in the positive x direction  
-
-
-if(Config.debug) then
-	physics.setDrawMode( "hybrid" )
-else
-	physics.setDrawMode( "normal" )
-end
-
-widget = require("widget");
-
-LevelBuilder = require('LevelBuilder.main')
-Graphics = require('UI.graphics')
-Math = require('Utils.math')
--- local Memory = require('Device.Memory')
-Screen = require('Device.Screen')
-Table = require('Utils.Table')
-zOrdering = require('UI.ZOrdering')
-Player = require('Game.Player')
 AppState = require('Game.State')
+Config = require('Game.config')
+EventListeners = require('EventListeners.main')
+GameCollisions = require('Physics.Collisions')
+Graphics = require('UI.graphics')
+Grid = require('Game.Map.Grid')
+Player = require('Game.Player')
 PhysicsUtil = require('Physics.Util')
-
+Math = require('Utils.math')
 Node = require('Game.Map.Node')
 GameTables = require('Game.Tables')
-
+Screen = require('Device.Screen')
 Sprites = require('Sprites.Sprites')
+Table = require('Utils.Table')
+zOrdering = require('UI.ZOrdering')
 
-local AppContext = {}
-local timerTable = {}
-
-
+physics = require 'physics'
+physics.start()
+physics.setGravity( 0, 9.81)  -- 9.81 m/s*s in the positive x direction  
 
 function scene:create( event )
 
-	-- Called when the scene's view does not exist.
-	-- 
-	-- INSERT code here to initialize the scene
-	-- e.g. add display objects to 'sceneGroup', add touch listeners, etc.
 	local sceneGroup = self.view
-	AppState.sceneGroup = sceneGroup
+				itemsGroup = display.newGroup()
+				blackTiles = display.newGroup()
 
-	itemsGroup = display.newGroup()
-	blackTiles = display.newGroup()
-
-	LevelBuilder.initControls()
-
-	local Grid = require('Game.Map.Grid')
-	local GameCollisions = require('Physics.Collisions')
-
-	-- local options1 = 
-	-- {
-	--     text = orbs,
-	--     width = 120,     --required for multi-line and alignment
-	--     align = "left",
-	--     font = native.systemFont,
-	--     fontSize = 18
-	-- }
-	-- orbText = display.newText( options1 )
-	-- orbText:setFillColor( 1, 1, 1 )
-	-- orbText.x = Screen.width*.26
-	-- orbText.y = Screen.height*.05
-	-- orbText.gui = true
+	AppState.init()
+	AppState.setSceneGroup( sceneGroup )
+	Grid.create(sceneGroup)
+	Grid.updateUI()
+	EventListeners.init()
 
 	PhysicsUtil.createBounds({
 		onSides = {'right', 'left'}
-	})
-	
-	local horizontalRowLength = 6
-	local tileSize = Screen.width / horizontalRowLength
-	
-	player = Player.new(tileSize)
-	
-	local matrix = Grid.create(sceneGroup)
-	Grid.update()
-	-- Grid.addNodesToMatrix()
+	})	
 
-	-- Table.forEach(GameTables.tiles, function(element)
-	-- 	local ElectricityBehavior = require('Game.Behaviors.ElectricityGenerator')
-	-- 	if(element.info.name == 'ElectricityGenerator') then
-	-- 		ElectricityBehavior.updateElectricity({
-	-- 			row = element.coordinates.row, 
-	-- 			column = element.coordinates.column
-	-- 		})
-
-	-- 	end
-	-- end)
-
-	-- TODO: move every single object through a loop...
-	local function touchListener( event )
-
-		if(Config.levelBuilder.activated) then
-			Grid.forEach(function(element)
-				local newTouchY = event.y
-					
-				if (event.phase == "began") or (element.lastTouchPosY == nil) then
-					element.lastTouchPosY = newTouchY
-					return
-				end
-				if (event.phase == "ended") or (event.phase == "cancelled") then
-					element.lastTouchPosY = nil
-					return
-				end
-
-				local deltaY = (newTouchY - element.lastTouchPosY)
-				element.y = element.y + deltaY
-				element.lastTouchPosY = newTouchY
-			end)
-		end
-
-	end
-		
-	AppState.sceneGroup:addEventListener( "touch", touchListener ) 
-
-
-	-- AppState.currentGame.sceneGroup:insert(player)
-	-- sceneGroup:insert( player )	
+	player = Player.new(AppState.tileSize)
 end
 
 
@@ -131,17 +49,8 @@ function scene:show( event )
 	if phase == "will" then	
 
 	elseif phase == "did" then
-		-- Called when the scene is now on screen
-		-- 
-		-- INSERT code here to make the scene come alive
-		-- e.g. start timers, begin animation, play audio, etc.
 
-		-- function returnPlayerToCenter()
-		-- 	player.y = player.y - 1
-		-- end
-
-		-- Runtime:addEventListener("enterFrame", returnPlayerToCenter)
-
+		-- TODO: move into zOrder class
 		local layers = {
 			[1] = itemsGroup,
 			[2] = blackTiles,
@@ -149,11 +58,11 @@ function scene:show( event )
 			[4] = orbText,
 			[5] = player
 		}
-
-		zOrdering.order(layers)
-
-		local RuntimeMain = require('Runtime.Main')
+		
+		RuntimeMain = require('Runtime.Main')
 		RuntimeMain.init()
+		zOrdering.orderLayers(layers)
+
 
 
 	end

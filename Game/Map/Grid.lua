@@ -7,7 +7,6 @@ local Node = require('Game.Map.Node')
 local State = require('Game.State')
 local File = require('Utils.File')
 local json = require('json')
-
 local Table = require('Utils.Table')
 
 Grid.matrix = {}
@@ -216,7 +215,7 @@ Grid.toTable = function()
     return data
 end
 
-Grid.update = function()
+Grid.updateUI = function()
     local RowBehavior = require('Game.Behaviors.Row')
     for i = 0, Grid.rows-1, 1 do
         RowBehavior.update(i)
