@@ -1,5 +1,5 @@
 local Sprites = require('Sprites.Main')  
-local GameTables = require('Game.Tables')
+local GameTables = require('Game.State').tables
 local Screen = require('Device.Screen')
 
 local Config = require('Game.config')

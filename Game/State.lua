@@ -14,7 +14,14 @@ State = {
   active = false,
   tileSize = 0,
   sceneGroup = {},
+  tables = {
+    tiles = {},
+    enemies = {},
+    items = {},
+    orbs = {}
+  }
 }
+
 
 State.get = function()
   return State.game

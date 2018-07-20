@@ -11,7 +11,6 @@ Player = require('Game.Player')
 PhysicsMain = require('Physics.Main')
 Math = require('Utils.math')
 Node = require('Game.Map.Node')
-GameTables = require('Game.Tables')
 RowBehaviors = require('Game.Behaviors.Row')
 
 Screen = require('Device.Screen')

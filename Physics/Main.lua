@@ -4,7 +4,6 @@
 --
 -----------------------------------------------------------------------------------------
 
-
 local Main = {}
 
 -- Create screen border physics bounds. options.onSides vals = 'all', 'right', 'left', 'top', 'bottom'

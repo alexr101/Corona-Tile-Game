@@ -1,4 +1,4 @@
-local GameTables = require('Game.Tables')
+local GameTables = require('Game.State').tables
 
 return {
   name = "BounceRock",
