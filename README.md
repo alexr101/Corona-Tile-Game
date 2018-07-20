@@ -34,4 +34,5 @@ app refresh then set config.gridData to 'json'.
 * Runtime - Handles all functionality executed on every frame. Split up into Object Oriented Runtime Behaviors
 * Sprites - Creates Sprites, and makes its sheets and sequences available by object name. (ie Sprite.electricity.sheet) Used in Game Blocks to give each object its own sprite and sequence properties on creation. This gives better flexibility to use these when needed.
 * UI - Handles UI related procedures. ie GraphicEffects
+* Util - Utilities for general tasks. Split up by general functionality (ie File, Math, etc)
 
