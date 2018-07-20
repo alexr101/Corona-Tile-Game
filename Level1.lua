@@ -5,11 +5,10 @@ local scene = composer.newScene()
 AppState = require('Game.State')
 Config = require('Game.config')
 EventListeners = require('EventListeners.main')
-GameCollisions = require('Physics.Collisions')
 Graphics = require('UI.GraphicEffects')
 Grid = require('Game.Map.Grid')
 Player = require('Game.Player')
-PhysicsUtil = require('Physics.Util')
+PhysicsMain = require('Physics.Main')
 Math = require('Utils.math')
 Node = require('Game.Map.Node')
 GameTables = require('Game.Tables')
@@ -36,7 +35,7 @@ function scene:create( event )
 	Grid.updateUI()
 	EventListeners.init()
 
-	PhysicsUtil.createBounds({
+	PhysicsMain.createBounds({
 		onSides = {'right', 'left'}
 	})	
 

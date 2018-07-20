@@ -1,7 +1,7 @@
 local Tiles = {}
 local matrix = require('Game.Map.Matrix')
 local Swipe = require('Device.Swipe')
-local Collisions = require('Physics.Collisions')
+local Collisions = require('Physics.CollisionHandlers')
 local Node = require('Game.Map.Node')
 
 Tiles.fill = function()

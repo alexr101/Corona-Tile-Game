@@ -35,4 +35,7 @@ app refresh then set config.gridData to 'json'.
 * Sprites - Creates Sprites, and makes its sheets and sequences available by object name. (ie Sprite.electricity.sheet) Used in Game Blocks to give each object its own sprite and sequence properties on creation. This gives better flexibility to use these when needed.
 * UI - Handles UI related procedures. ie GraphicEffects
 * Util - Utilities for general tasks. Split up by general functionality (ie File, Math, etc)
+* Physics
+    * CollisionHandlers - Object Specific Collision Handler functions
+    * Main - General Physic Classes
 

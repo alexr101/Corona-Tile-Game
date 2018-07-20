@@ -1,6 +1,15 @@
-local Util = {}
+-----------------------------------------------------------------------------------------
+--
+-- General Physics Class
+--
+-----------------------------------------------------------------------------------------
 
-Util.createBounds = function(options)
+
+local Main = {}
+
+-- Create screen border physics bounds. options.onSides vals = 'all', 'right', 'left', 'top', 'bottom'
+-- ie createBounds( { onSides = {'right', 'left'} } )
+Main.createBounds = function(options)
 
   local sides = options.onSides or {'all'}
 
@@ -35,4 +44,4 @@ Util.createBounds = function(options)
 end
 
 
-return Util
+return Main

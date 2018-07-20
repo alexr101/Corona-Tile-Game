@@ -1,3 +1,9 @@
+-----------------------------------------------------------------------------------------
+--
+-- Object Specific Collision Handlers
+--
+-----------------------------------------------------------------------------------------
+
 local Collisions = {}
 local object = require('Services.ObjectService')
 local gameState = require('Game.State')
@@ -5,6 +11,7 @@ local Graphics = require('UI.GraphicEffects')
 local Player = require('Game.Player')
 local ObjectService = require('Services.ObjectService')
 
+-- Consume star
 Collisions.star = function( self, event )
     if ( event.phase == "began" and event.other == Player.instance ) then
         ObjectService.replace(self)
@@ -15,14 +22,17 @@ end
 Collisions.none = function( self, event )
 end
 
+-- Enemy damage and redirection
 Collisions.enemy = function( self, event )
+    -- Damage player
     if ( event.phase == "began" and event.other == Player.instance ) then
         if(Player.instance.flickering == false) then
             Graphics.damageFlicker(Player.instance)
+            -- healt-- ?
         end
     end
 
-
+    -- Handle redirections
     if ( event.phase == "began" and event.other ~= Player.instance and event.other.info and event.other.info.enemyCollider ) then
 
         if(event.other.coordinates) then
@@ -62,7 +72,6 @@ end
 Collisions.bounceRock = function( self, event )
     if ( event.phase == "began" and event.other == Player.instance ) then
         player.canBounce = true
-
     end    
 
     if ( event.phase == "ended" and event.other == Player.instance ) then
@@ -70,26 +79,26 @@ Collisions.bounceRock = function( self, event )
     end
 end
 
+-- End game on touching electricity
 Collisions.electricity =  function( self, event )
     if ( event.phase == "began" and event.other == Player.instance ) then
     	AppState.active = false
     end
 end
 
+-- Nothing...
 Collisions.rock = function( self, event )
     if ( event.phase == "began" and event.other == Player.instance ) then
-
     end
-
     if ( event.phase == "ended" and event.other == Player.instance ) then
     end
 end
 
+-- Crumbles Crumbling Rock :)
 Collisions.rockCrumbling = function( self, event )
     if ( event.phase == "began" and event.other == Player.instance ) then
         -- self.rockHealth = self.rockHealth - 1
     end
-
 end
 
 -- Collisions.enemy = function( self, event )
@@ -101,6 +110,7 @@ end
 --     end
 -- end
 
+-- Enemy Mine Damage
 Collisions.mine = function( self, event )
     if ( event.phase == "began" and event.other == Player.instance ) then
         ObjectService.remove(self)
