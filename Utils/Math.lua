@@ -1,7 +1,14 @@
-local math = {}
+-----------------------------------------------------------------------------------------
+--
+-- Math Util
+--
+-----------------------------------------------------------------------------------------
 
-math.isEven = function(number)
+
+local Math = {}
+
+Math.isEven = function(number)
 	return number%2 == 0
 end
 
-return math
+return Math

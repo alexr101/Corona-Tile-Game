@@ -1,4 +1,9 @@
--- Add prototype func
+-----------------------------------------------------------------------------------------
+--
+-- Table Util
+--
+-----------------------------------------------------------------------------------------
+
 local Table = {}
 
 Table.forEach = function(tab, cb)
@@ -17,6 +22,7 @@ Table.length = function(table)
   return count
 end
 
+-- Copy all layers of a table 
 Table.deepCopy = function(object)
     local lookup_table = {}
     local function _copy(object)
@@ -35,7 +41,7 @@ Table.deepCopy = function(object)
     return _copy(object)
 end
 
-
+-- Convert a table to JSON.
 Table.toJson = function(table)
   local json = require( "json" )
 
@@ -44,6 +50,7 @@ Table.toJson = function(table)
   return data
 end
 
+-- Get index of value in table
 -- https://stackoverflow.com/questions/38282234/returning-the-index-of-a-value-in-a-lua-table
 Table.getIndex = function(table, value)
   local index={}
@@ -55,8 +62,7 @@ Table.getIndex = function(table, value)
   return index[value]
 end
 
-Table.hasValue = function(table, val)
-    
+Table.hasValue = function(table, val)   
   for index, value in ipairs(table) do
       if value == val then
           return true
@@ -66,6 +72,7 @@ Table.hasValue = function(table, val)
   return false
 end
 
+-- Print all elements in arr 
 Table.printArr = function(arr)
   for i = 1, table.getn(arr), 1 do
     local element = arr[i]
@@ -74,6 +81,7 @@ Table.printArr = function(arr)
 
 end
 
+-- Print matrix. ie matrix = [ [1,2], [2,3], [3,5] ]
 Table.printMatrix = function(matrix)
 
   for i = 1, table.getn(matrix), 1 do
@@ -90,6 +98,7 @@ Table.printMatrix = function(matrix)
   end
 end
 
+-- wut?
 Table.print = function(table)
 
   for index, data in ipairs(table) do
@@ -101,6 +110,5 @@ Table.print = function(table)
   end
 
 end
-
 
 return Table

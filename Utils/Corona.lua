@@ -1,3 +1,12 @@
+-----------------------------------------------------------------------------------------
+--
+-- Corona Specific Utilities
+--
+-----------------------------------------------------------------------------------------
+
+local CoronaUtil = {}
+
+-- "Swap" an image (refresh)
 local swapImage = function(oldImage, imageFile, width, height)
     local newImage = display.newImageRect(imageFile, width, height)
 
@@ -8,3 +17,5 @@ local swapImage = function(oldImage, imageFile, width, height)
 
     return newImage
 end
+
+return CoronaUtil

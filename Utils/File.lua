@@ -1,6 +1,13 @@
+-----------------------------------------------------------------------------------------
+--
+-- File I/O Util
+--
+-----------------------------------------------------------------------------------------
+
 local File = {}
 local json = require('json')
 
+-- Save a file to local directory
 -- https://docs.coronalabs.com/guide/data/readWriteFiles/index.html#reading-files
 File.save = function(dir, data)
     local path = system.pathForFile( dir, system.DocumentsDirectory )
@@ -15,6 +22,7 @@ File.save = function(dir, data)
     end    
 end
 
+-- Read a file from a local directory
 File.read = function(dir, data)
     local path = system.pathForFile( dir, system.DocumentsDirectory )
     local file, errorString = io.open( path, "r" )
@@ -29,7 +37,6 @@ File.read = function(dir, data)
     end
 
     return contents
-
 end
 
 return File
