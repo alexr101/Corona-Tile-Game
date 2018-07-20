@@ -15,6 +15,7 @@ local Scroll = require('Runtime.Scroll')
 local Row = require('Runtime.Row')
 local FreeFloatingObj = require('Runtime.FreeFloatingObj')
 local Enemy = require('Runtime.Enemy')
+local ZOrdering = require('Runtime.ZOrdering')
 
 local Config = require('Game.Config')
 
@@ -32,9 +33,17 @@ Main.sceneGroupLoop = function()
 end
 
 -- Starts a runtime event with the main runAll functions
-Main.init = function()
+Main.init = function(options)
 	Runtime:addEventListener( "enterFrame", Main.sceneGroupLoop)
+
+	if(options) then
+		if(options.ZOrderGroups) then
+			local orderFn = function() ZOrdering.order(options.ZOrderGroups) end
+			Runtime:addEventListener("enterFrame", orderFn)
+		end
+	end
 end
+
 
 
 return Main

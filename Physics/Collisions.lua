@@ -1,7 +1,7 @@
 local Collisions = {}
 local object = require('Services.ObjectService')
 local gameState = require('Game.State')
-local Graphics = require('UI.Graphics')
+local Graphics = require('UI.GraphicEffects')
 local Player = require('Game.Player')
 local ObjectService = require('Services.ObjectService')
 

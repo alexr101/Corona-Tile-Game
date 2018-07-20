@@ -6,7 +6,7 @@ AppState = require('Game.State')
 Config = require('Game.config')
 EventListeners = require('EventListeners.main')
 GameCollisions = require('Physics.Collisions')
-Graphics = require('UI.graphics')
+Graphics = require('UI.GraphicEffects')
 Grid = require('Game.Map.Grid')
 Player = require('Game.Player')
 PhysicsUtil = require('Physics.Util')
@@ -52,7 +52,6 @@ function scene:show( event )
 
 	elseif phase == "did" then
 
-		-- TODO: move into zOrder class
 		local gameViewLayers = {
 			[1] = itemsGroup,
 			[2] = blackTiles,
@@ -60,10 +59,10 @@ function scene:show( event )
 			[4] = orbText,
 			[5] = player
 		}
-		
 		RuntimeMain = require('Runtime.Main')
-		RuntimeMain.init()
-		zOrdering.order(gameViewLayers)
+		RuntimeMain.init({
+			ZOrderGroups = gameViewLayers
+		})
 
 	end
 end

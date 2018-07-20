@@ -1,5 +1,13 @@
+-----------------------------------------------------------------------------------------
+--
+-- Graphic Effects
+--
+-----------------------------------------------------------------------------------------
+
+
 local graphics = {}
 
+-- brighness of objects radiates. Performed w transitions
 graphics.radiate = function(obj, options)
 
   local alphaHigh = options.alphaHigh or 1
@@ -22,7 +30,6 @@ graphics.radiate = function(obj, options)
   end
 
   function glow(obj) 
-
     if(obj.flickering == false) then   
       transition.to( obj, { 
         time = speed,
@@ -33,6 +40,7 @@ graphics.radiate = function(obj, options)
         end
       })
     else 
+      -- try again in 100 ms
       local fn = function() glow(obj) end
       timer.performWithDelay(100, fn )
     end
@@ -41,6 +49,7 @@ graphics.radiate = function(obj, options)
   glow(obj)
 end
 
+-- Quick damage flicker. Performed w transitions
 graphics.damageFlicker = function(obj)
   local alphaHigh = .5
   local alphaLow = .3
@@ -49,7 +58,6 @@ graphics.damageFlicker = function(obj)
   local speed = 100
 
   obj.flickering = true
-
 
   function switchEffects()
     if(alpha == alphaLow) then
