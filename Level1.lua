@@ -17,7 +17,6 @@ RowBehaviors = require('Game.Behaviors.Row')
 Screen = require('Device.Screen')
 Sprites = require('Sprites.Main')
 Table = require('Utils.Table')
-zOrdering = require('UI.ZOrdering')
 
 physics = require 'physics'
 physics.start()
