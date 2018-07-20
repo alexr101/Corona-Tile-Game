@@ -53,10 +53,6 @@ LevelBuilder.initControls = function()
   createModeTxt.text = "Create Mode: " .. Config.levelBuilder.createMode
   createModeTxt.x = 0
   createModeTxt.y = createModeBtn.height + 10
-
-
- 
-
 end
 
 return LevelBuilder

@@ -1,5 +1,5 @@
 local composer = require( "composer" )
-			composer.removeScene( "Menu" )
+		composer.removeScene( "Menu" )
 local scene = composer.newScene()
 
 AppState = require('Game.State')
