@@ -1,5 +1,13 @@
+-----------------------------------------------------------------------------------------
+--
+-- Handle Rows and all objects inside of them
+--
+-----------------------------------------------------------------------------------------
+
+
 local Row = {}
 
+-- Remove a row from UI & memory. Create a new Row upon completion.
 Row.remover = function(obj)
   local removeLimit = obj.y > Screen.height + (AppState.tileSize)
 
