@@ -1,13 +1,10 @@
-local data = {}
+-----------------------------------------------------------------------------------------
+--
+-- A list of all the sprite sequences
+--
+-----------------------------------------------------------------------------------------
 
-data.files = {
-	star = 'general',
-	starPic = 'general',
-	electricity = 'general',
-	smoke = 'general'
-}
-
-data.sequences = {
+return {
 	electricity = {
 		{
 			name = "Main",
@@ -45,5 +42,3 @@ data.sequences = {
 		}
 	}
 }
-
-return data

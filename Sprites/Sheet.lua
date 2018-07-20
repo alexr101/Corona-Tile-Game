@@ -314,7 +314,6 @@ SheetInfo.sheet =
 
 SheetInfo.frameIndex =
 {
-
     ["Electricity1"] = 1,
     ["Electricity2"] = 2,
     ["Electricity3"] = 3,
@@ -343,10 +342,12 @@ SheetInfo.frameIndex =
     ["Star6"] = 26,
 }
 
+-- Came w TexturePacker
 function SheetInfo:getSheet()
     return self.sheet;
 end
 
+-- Came w TexturePacker
 function SheetInfo:getFrameIndex(name)
     return self.frameIndex[name];
 end

@@ -1,4 +1,4 @@
-local Sprites = require('Sprites.Sprites')  
+local Sprites = require('Sprites.Main')  
 local GameTables = require('Game.Tables')
 local Screen = require('Device.Screen')
 

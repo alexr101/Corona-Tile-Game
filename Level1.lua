@@ -16,7 +16,7 @@ GameTables = require('Game.Tables')
 RowBehaviors = require('Game.Behaviors.Row')
 
 Screen = require('Device.Screen')
-Sprites = require('Sprites.Sprites')
+Sprites = require('Sprites.Main')
 Table = require('Utils.Table')
 zOrdering = require('UI.ZOrdering')
 

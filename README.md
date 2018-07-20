@@ -28,3 +28,9 @@ rows
 To use the level builder go to Game.Config and set config.LevelBuilder.active to true and config.gridData to 'mock'. 
 You will start with a blank level. You can click on any spot to change tile type. If you'd like to the level you created on 
 app refresh then set config.gridData to 'json'.
+
+## Architecture
+
+* Runtime - Handles all functionality executed on every frame. Split up into Object Oriented Runtime Behaviors
+* Sprites - Creates Sprites, and makes its sheets and sequences available by object name. (ie Sprite.electricity.sheet) Used in Game Blocks to give object obj.sprite and obj.sequence properties.
+
