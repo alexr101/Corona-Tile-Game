@@ -1,3 +1,9 @@
+-----------------------------------------------------------------------------------------
+--
+-- Game Specific State
+--
+-----------------------------------------------------------------------------------------
+
 local State = {}
 local Config = require('Game.Config')
 local Screen = require('Device.screen')
@@ -14,10 +20,22 @@ State.get = function()
   return State.game
 end
 
+-- update any value in STATE if it exists
+-- ie updateTable = { score = 1 }
+State.update = function(updateTable)
+  for stateKey, stateVal in ipairs(State) do
+    for key, val in ipairs(updateTable) do
+      -- our key matches with State obj key, so we are free to update that state value
+      if stateKey === key then
+        State[stateKey] = val;
+      end
+    end
+  end
+end
+
 State.setSceneGroup = function(group)
   State.sceneGroup = group
 end
-
 
 State.resetGame = function()
   currentGame.score = 0
