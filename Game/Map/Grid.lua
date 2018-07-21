@@ -123,7 +123,6 @@ Grid.newRow = function(data)
             column = j
         }
 
-        Grid.matrix[i][j].node = Node.new()
         Grid.updateNodeConnections({
             row = i,
             column = j
@@ -149,7 +148,8 @@ Grid.updateNodeConnections = function(options)
     local directions = options.directions or {'all'}
     local obj = Grid.matrix[row][column]
 
-    if(obj.node == nil) then
+    -- necessary - we have to create a new node for some reason...fill out here when you find out
+    if(options.newNode == nil or options.newNode == true) then
         Grid.matrix[row][column].node = Node.new()
     end
     
