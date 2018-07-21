@@ -10,16 +10,16 @@ local json = require('json')
 local Table = require('Utils.Table')
 
 Grid.matrix = {}
-Grid.topRow = 0
-Grid.columns = 0
+Grid.topRow = 0 -- row at the top of grid. Changes as we create more
+Grid.columnsQty = 0
 Grid.tileSize = 0
-Grid.rows = 0
+Grid.rowQty = 0
 
 Grid.setup = function(columns)
-    Grid.columns = columns
-    Grid.tileSize = Screen.width / Grid.columns
-    Grid.rows = Config.rows
-    -- Grid.rows = math.ceil( ( Screen.height / Grid.tileSize ) + 3 )
+    Grid.columnsQty = columns
+    Grid.tileSize = Screen.width / Grid.columnsQty
+    Grid.rowQty = Config.rows
+    -- Grid.rowQty = math.ceil( ( Screen.height / Grid.tileSize ) + 3 )
 end
 
 Grid.setup(Config.tiles)
@@ -60,6 +60,9 @@ local mockData = {
 }
 
 
+-- Creates a grid row by row.
+-- You have to provide it the 'name' of each row
+-- dataformat { {'block', 'block', block}, {etc...}, {etc...} }
 Grid.create = function (data)
 
     local data
@@ -73,24 +76,21 @@ Grid.create = function (data)
     end
 
     if(data) then
-        for i = 1, Grid.rows, 1 do
+        for i = 1, Grid.rowQty, 1 do
             Grid.newRow(data[i])
         end
-    else
-        -- random
-        for i = 0, Grid.rows, 1 do
+    else -- random
+        for i = 0, Grid.rowQty, 1 do
             Grid.newRow()
         end
-
     end
-
 
     return Grid.matrix
 end
 
 Grid.forEach = function(cb)
-    for i = 0, Grid.rows-1, 1 do
-        for j = 0, Grid.columns-1, 1 do
+    for i = 0, Grid.rowQty-1, 1 do
+        for j = 0, Grid.columnsQty-1, 1 do
             cb(Grid.matrix[i][j])
         end
     end
@@ -98,13 +98,13 @@ end
 
 Grid.newRow = function(data)
     local i = Grid.topRow -- starts at 0
-    Grid.matrix[i] = {} -- nested array right? :)
+    Grid.matrix[i] = {} -- nested array right? oh lua :)
 
-    for j = 0, Grid.columns-1, 1 do
-        local x = (j * Grid.tileSize) + (Grid.tileSize*.5)
+    for j = 0, Grid.columnsQty-1, 1 do
+        local x = (Grid.tileSize * j) + (Grid.tileSize*.5) -- .5 because x-anchor is in center of Tile
         local y
 
-        -- get position dynamically
+        -- get position dynamically because once the grid is running you have to reference by topRow 
         if(i == 0) then
             y = Screen.height - (Grid.tileSize * .5)
         else
@@ -115,14 +115,16 @@ Grid.newRow = function(data)
         if(data == nil) then
             Grid.matrix[i][j] = Grid.fillSpace(x, y)
         else
-            Grid.matrix[i][j] = Grid.fillSpace(x, y, data[j+1]) --j+1 because silly lua tables start at 1 :-)
+            Grid.matrix[i][j] = Grid.fillSpace(x, y, data[j+1]) --j+1 because silly lua tables start at 1 
         end
 
         Grid.matrix[i][j].coordinates = {
             row = i,
             column = j
         }
-        Node.updatePositions({
+
+        Grid.matrix[i][j].node = Node.new()
+        Grid.updateNodeConnections({
             row = i,
             column = j
         })
@@ -136,36 +138,77 @@ Grid.newRow = function(data)
     return Grid.topRow-1
 end
 
+-- updateNodeConnections({row, column})
+-- Update all 4 positions of a node
+-- by reading what's above, below, to its right and left!
+-- 1) row and column of the originating tile, and 
+-- 2) (optional) the directions to update
+Grid.updateNodeConnections = function(options)
+    local row = options.row
+    local column = options.column
+    local directions = options.directions or {'all'}
+    local obj = Grid.matrix[row][column]
+
+    if(obj.node == nil) then
+        Grid.matrix[row][column].node = Node.new()
+    end
+    
+    -- up
+    if (Grid.matrix[row+1] ~= nil and (Table.hasValue(directions, 'all') or Table.hasValue(directions, 'up') ) ) then
+        local objAbove = Grid.matrix[row+1][column]
+        obj.node.up = objAbove
+        objAbove.node.down = obj
+    end
+    -- down
+    if (Grid.matrix[row-1] ~= nil and (Table.hasValue(directions, 'all') or Table.hasValue(directions, 'down') ) ) then
+        local objBelow = Grid.matrix[row-1][column]
+        obj.node.down = objBelow
+        objBelow.node.up = obj
+    end
+    -- left
+    if (Grid.matrix[row][column+1] ~= nil and (Table.hasValue(directions, 'all') or Table.hasValue(directions, 'left') ) ) then
+        local objToRight = Grid.matrix[row][column+1]
+        obj.node.right = objToRight
+        objToRight.node.left = obj
+    end
+    -- right
+    if (Grid.matrix[row][column-1] ~= nil and (Table.hasValue(directions, 'all') or Table.hasValue(directions, 'right') ) ) then
+        local objToLeft = Grid.matrix[row][column-1]
+        obj.node.left = objToLeft
+        objToLeft.node.right = obj
+    end
+  end
+
 Grid.addRowNodes = function(row)
 
 
 end
 
-Grid.addNodesToMatrix = function(matrix)
-    local matrix = Grid.matrix or matrix
+-- Grid.addNodesToMatrix = function(matrix)
+--     local matrix = Grid.matrix or matrix
 
-    for i = 0, Grid.rows, 1 do
-        local row = Grid.matrix[i]
+--     for i = 0, Grid.rowQty, 1 do
+--         local row = Grid.matrix[i]
 
-        for j= 0, table.getn(row), 1 do
-            local newNode = Node.new()
-            Grid.matrix[i][j].node = newNode
+--         for j= 0, table.getn(row), 1 do
+--             local newNode = Node.new()
+--             Grid.matrix[i][j].node = newNode
 
-            if matrix[i][j-1] then
-                Grid.matrix[i][j].node.left = row[j-1]
-            end
-            if matrix[i][j+1] then
-                Grid.matrix[i][j].node.right = row[j+1]
-            end
-            if matrix[i - 1] then
-                Grid.matrix[i][j].node.down = matrix[i-1][j]
-            end
-            if matrix[i + 1] then
-                Grid.matrix[i][j].node.up = matrix[i+1][j]
-            end
-        end
-    end
-end
+--             if matrix[i][j-1] then
+--                 Grid.matrix[i][j].node.left = row[j-1]
+--             end
+--             if matrix[i][j+1] then
+--                 Grid.matrix[i][j].node.right = row[j+1]
+--             end
+--             if matrix[i - 1] then
+--                 Grid.matrix[i][j].node.down = matrix[i-1][j]
+--             end
+--             if matrix[i + 1] then
+--                 Grid.matrix[i][j].node.up = matrix[i+1][j]
+--             end
+--         end
+--     end
+-- end
 
 Grid.createOutOfGridObj = function(x, y, sceneGroup)
     local object = ObjectGenerator.randomOutOfGrid()
@@ -184,7 +227,7 @@ end
 
 Grid.printMap = function()
     local RowBehavior = require('Game.Behaviors.Row')
-    for i = 0, Grid.rows-1, 1 do
+    for i = 0, Grid.rowQty-1, 1 do
         RowBehavior.printRow(i)
     end
 end
@@ -193,7 +236,7 @@ Grid.toJson = function()
     local RowBehavior = require('Game.Behaviors.Row')
     local data = {}
 
-    for i = 0, Grid.rows-1, 1 do
+    for i = 0, Grid.rowQty-1, 1 do
         local json = RowBehavior.toJson(i)
         table.insert(data, json)
     end
@@ -206,7 +249,7 @@ Grid.toTable = function()
     local RowBehavior = require('Game.Behaviors.Row')
     local data = {}
 
-    for i = 0, Grid.rows-1, 1 do
+    for i = 0, Grid.rowQty-1, 1 do
         local rowTable = RowBehavior.toTable(i)
         table.insert(data, rowTable)
     end
@@ -217,11 +260,12 @@ end
 
 Grid.updateUI = function()
     local RowBehavior = require('Game.Behaviors.Row')
-    for i = 0, Grid.rows-1, 1 do
+    for i = 0, Grid.rowQty-1, 1 do
         RowBehavior.update(i)
     end
 end
 
+-- fill space with data from ObjGenerator, and generate a Tile with it
 Grid.fillSpace = function(x, y, name)
 
     local object
@@ -341,11 +385,13 @@ Grid.swap = function(options)
     Grid.matrix[row][column] = Grid.matrix[targetRow][targetColumn]
     Grid.matrix[targetRow][targetColumn] = temp
 
-    Node.updateSwapPositions({
+    Grid.updateNodeConnections({ 
         row = row,
         column = column,
-        targetColumn = targetColumn,
-        targetRow = targetRow
+      })
+    Grid.updateNodeConnections({ 
+        row = targetRow,
+        column = targetColumn,
     })
 
     return true

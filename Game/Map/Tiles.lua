@@ -122,11 +122,11 @@ Tiles.replace = function(options)
     row = row,
     column = column
   } 
-  
-  Node.updatePositions({ 
+
+  Grid.matrix[row][column].node = Node.new()
+  Grid.updateNodeConnections({ 
     row = row, 
-    column = column,
-    directions = {'all'}
+    column = column
   })
 
   AppState.sceneGroup:insert(Grid.matrix[row][column])
