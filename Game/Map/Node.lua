@@ -8,6 +8,7 @@ Node = {
   right = nil
 }
 
+-- create a new node
 Node.new = function(val)
   local newNode = {}
 	local node_mt = { __index = Node }
@@ -18,8 +19,7 @@ Node.new = function(val)
   return newNode
 end
 
-
-
+-- print all node properties
 Node.seeAll = function(options)
   local Grid = require('Game.Map.Grid')
   local row = options.row
@@ -41,7 +41,10 @@ Node.seeAll = function(options)
 end
 
 -- updatePositions({row, column})
-
+-- Update all 4 positions of a node
+-- by reading what's above, below, to its right and left!
+-- 1) row and column of the originating tile, and 
+-- 2) (optional) the directions to update
 Node.updatePositions = function(options)
   local row = options.row
   local column = options.column
@@ -80,6 +83,7 @@ Node.updatePositions = function(options)
   end
 end
 
+-- Update the position of BOTH swiped tiles by using Node.updatePositions
 Node.updateSwapPositions = function(options)
   local row = options.row
   local column = options.column
@@ -97,6 +101,8 @@ Node.updateSwapPositions = function(options)
   })
 end
 
+-- Creates a row of Nodes
+-- limit = rowlength
 Node.createRow = function(limit)
   if(limit == 0) then return nil end
 
