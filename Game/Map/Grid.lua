@@ -104,32 +104,34 @@ Grid.newRow = function(data)
         local x = (Grid.tileSize * j) + (Grid.tileSize*.5) -- .5 because x-anchor is in center of Tile
         local y
 
-        -- get position dynamically because once the grid is running you have to reference by topRow 
+        -- get position dynamically because once the grid is running you have to reference by topRow.y, wherever that may be
         if(i == 0) then
             y = Screen.height - (Grid.tileSize * .5)
         else
             y = Grid.matrix[i-1][j].y - Grid.tileSize
         end
 
-        -- generated or specified tile type
+        -- Fill with content and images
         if(data == nil) then
             Grid.matrix[i][j] = Grid.fillSpace(x, y)
         else
             Grid.matrix[i][j] = Grid.fillSpace(x, y, data[j+1]) --j+1 because silly lua tables start at 1 
         end
 
+        -- Set up row and column properties
         Grid.matrix[i][j].coordinates = {
             row = i,
             column = j
         }
-
+        -- Create node property and setup its connections
+        Grid.matrix[i][j].node = Node.new()
         Grid.updateNodeConnections({
             row = i,
             column = j
         })
 
         State.sceneGroup:insert( Grid.matrix[i][j] )
-
+        -- This MIGHT create an out Of Grid Obj based on set probablities
         Grid.createOutOfGridObj(x, y, State.sceneGroup)
     end
 
@@ -137,8 +139,8 @@ Grid.newRow = function(data)
     return Grid.topRow-1
 end
 
--- updateNodeConnections({row, column})
--- Update all 4 positions of a node
+-- Grid.updateNodeConnections({row, column})
+-- Update all 4 positions of a node. Create node property if it doesn't exist
 -- by reading what's above, below, to its right and left!
 -- 1) row and column of the originating tile, and 
 -- 2) (optional) the directions to update
@@ -148,11 +150,6 @@ Grid.updateNodeConnections = function(options)
     local directions = options.directions or {'all'}
     local obj = Grid.matrix[row][column]
 
-    -- necessary - we have to create a new node for some reason...fill out here when you find out
-    if(options.newNode == nil or options.newNode == true) then
-        Grid.matrix[row][column].node = Node.new()
-    end
-    
     -- up
     if (Grid.matrix[row+1] ~= nil and (Table.hasValue(directions, 'all') or Table.hasValue(directions, 'up') ) ) then
         local objAbove = Grid.matrix[row+1][column]
@@ -177,38 +174,7 @@ Grid.updateNodeConnections = function(options)
         obj.node.left = objToLeft
         objToLeft.node.right = obj
     end
-  end
-
-Grid.addRowNodes = function(row)
-
-
 end
-
--- Grid.addNodesToMatrix = function(matrix)
---     local matrix = Grid.matrix or matrix
-
---     for i = 0, Grid.rowQty, 1 do
---         local row = Grid.matrix[i]
-
---         for j= 0, table.getn(row), 1 do
---             local newNode = Node.new()
---             Grid.matrix[i][j].node = newNode
-
---             if matrix[i][j-1] then
---                 Grid.matrix[i][j].node.left = row[j-1]
---             end
---             if matrix[i][j+1] then
---                 Grid.matrix[i][j].node.right = row[j+1]
---             end
---             if matrix[i - 1] then
---                 Grid.matrix[i][j].node.down = matrix[i-1][j]
---             end
---             if matrix[i + 1] then
---                 Grid.matrix[i][j].node.up = matrix[i+1][j]
---             end
---         end
---     end
--- end
 
 Grid.createOutOfGridObj = function(x, y, sceneGroup)
     local object = ObjectGenerator.randomOutOfGrid()
@@ -267,7 +233,6 @@ end
 
 -- fill space with data from ObjGenerator, and generate a Tile with it
 Grid.fillSpace = function(x, y, name)
-
     local object
 
     -- specified or random
@@ -385,10 +350,13 @@ Grid.swap = function(options)
     Grid.matrix[row][column] = Grid.matrix[targetRow][targetColumn]
     Grid.matrix[targetRow][targetColumn] = temp
 
+    Grid.matrix[row][column].node = Node.new()
     Grid.updateNodeConnections({ 
         row = row,
         column = column,
-      })
+    })
+
+    Grid.matrix[targetRow][targetColumn].node = Node.new()
     Grid.updateNodeConnections({ 
         row = targetRow,
         column = targetColumn,

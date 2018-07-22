@@ -1,23 +1,18 @@
+-----------------------------------------------------------------------------------------
+--
+-- Tile handles creating Corona objects, w events, and info.
+--
+-----------------------------------------------------------------------------------------
+
 local Tiles = {}
 local matrix = require('Game.Map.Matrix')
 local Swipe = require('Device.Swipe')
 local Collisions = require('Physics.CollisionHandlers')
 local Node = require('Game.Map.Node')
 
-Tiles.fill = function()
-  local config = require('Game.Config')
-  local xMatrix = config.xMatrix
-  local yMatrix = config.yMatrix
-
-  local grid = matrix.create()
-
-  for i = 1, xMatrix do
-    for j = 1, yMatrix do
-      grid[i][j] = 's'
-    end
-  end
-end
-
+-- Very important function
+-- Takes all parameters and create a new Corona Object w events, physics, etc
+-- Adds tile.info with all game-specific properties. 
 local tileSize = AppState.tileSize
 Tiles.create = function(obj, options)
   local x = options.x or 0
@@ -67,9 +62,6 @@ Tiles.create = function(obj, options)
     end
     
     tile:addEventListener( "touch", touchListener ) 
-
-
-
   end
   
   if(obj.physics) then
@@ -96,56 +88,39 @@ Tiles.create = function(obj, options)
   return tile
 end
 
+-- Take an existing tile and replace it with a new game obj. 
 Tiles.replace = function(options)
   local AppState = require('Game.State')
   local Grid = require('Game.Map.Grid')
 
-  local oldObj = options.oldObj
+  -- Gather all data
   local newObjInfo = options.newObjInfo
   local x = options.x
   local y = options.y
   local row = options.row
   local column = options.column
 
+  -- remove old obj
   Grid.matrix[row][column]:removeSelf()
   Grid.matrix[row][column] = nil
 
-  print("Tiles.replace: x: " .. x .. "y: " .. y)
-
+  -- create new obj & add it to Grid
   Grid.matrix[row][column] = Tiles.create(newObjInfo, {
       x = x, 
       y = y, 
       tileSize = AppState.tileSize, 
   })
-
   Grid.matrix[row][column].coordinates = {
     row = row,
     column = column
   } 
-
+  Grid.matrix[row][column].node = Node.new()
   Grid.updateNodeConnections({ 
     row = row, 
     column = column
   })
 
-
-
   AppState.sceneGroup:insert(Grid.matrix[row][column])
 end
-
-Tiles.init = function(table)
-
-  local config = require('Game.Config')
-  local level = config.level
-
-  local tile_Horizontal = display.newImageRect("assets/game-objects/rockTile.jpg", tileSize, tileSize)
-  tile_Horizontal.x = 150
-  tile_Horizontal.y = 300
-  physics.addBody( tile_Horizontal, "static", { friction=0, bounce=0 } )	
-  table.insert(tileTable, tile_Horizontal)
-end
-
-
-
 
 return Tiles

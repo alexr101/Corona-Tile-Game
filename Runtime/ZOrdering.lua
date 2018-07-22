@@ -1,3 +1,10 @@
+-----------------------------------------------------------------------------------------
+--
+-- Handle zOrder of game objects
+--
+-----------------------------------------------------------------------------------------
+
+
 local zOrdering = {}
 local Util = require('Utils.Main');
 
@@ -5,7 +12,6 @@ local Util = require('Utils.Main');
 -- ie groupsArr = {[1]=group1, [2]=group2}
 zOrdering.order = function(groupsArr)
   for k, group in Util.sorterIter(groupsArr) do
-    print(group)
     group:toFront()
   end
 end
