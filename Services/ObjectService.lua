@@ -1,30 +1,31 @@
+-----------------------------------------------------------------------------------------
+--
+-- Object Helper Functions
+--
+-----------------------------------------------------------------------------------------
+
 local ObjectService = {}
 
 -- Optional: index
 -- otherwise treated as an object
--- replaces image
+-- This should probably just be in Tiles
 ObjectService.replace = function(obj, options)
   local Grid = require('Game.Map.Grid')
   local Tiles = require('Game.Map.Tiles')
   local ObjectGenerator = require('Services.ObjectGenerator')
   local AppState = require('Game.State')
 
+  local objIsNotOutOfGrid = obj.coordinates ~= nil
 
-  
-  -- get metadata
-  local row
-  local column
-  local objInfo
-
-  -- TODO: why would coordinates be nil???
-  -- out of grid objects :-)
-  if(obj.coordinates ~= nil) then
-    row = obj.coordinates.row
-    column = obj.coordinates.column
-    objInfo = Grid.matrix[row][column].info
+  if(objIsNotOutOfGrid) then
+    -- GET OBJ METADATA
+    local row = obj.coordinates.row
+    local column = obj.coordinates.column
+    local objInfo = Grid.matrix[row][column].info
 
 
-    -- get close proximity objects for transition position references
+    -- GET CLOSE PROXIMITY OBJ FOR X & Y POSITION REFERENCES SINCE OUR OBJ WILL BE NIL FOR A SEC
+    -- WE WILL LOSE ITS MOVEMENT FLOW WITH THE REST OF THE GRID
     local objForVerticalReference
     local objForHorizontalReference
 
@@ -40,26 +41,25 @@ ObjectService.replace = function(obj, options)
         objForVerticalReference = Grid.matrix[row][column+1]
     end
 
-    -- Set x and y positions
+    -- GET X & Y POSITIONS
     local x = obj.x
     local y = obj.y
-
-    if (obj.moving == 'horizontally') then
-      x = objForHorizontalReference.x
-    else
-      y = objForVerticalReference.y
+    if(!objInfo.consumable) then
+      if (obj.moving == 'horizontally') then
+        x = objForHorizontalReference.x
+      else
+        y = objForVerticalReference.y
+      end
     end
 
+    -- GET OBJ INFO
     if(options == nil or options.getNext == nil) then
       newObjInfo = ObjectGenerator.EmptySpace
     else
-      newObjInfo = ObjectGenerator.next(obj.info.name)
-    end
+      newObjInfo = ObjectGenerator.next(obj.info.name) -- used for levelbuilder mode
+    end 
 
-
-    print("ObjectService.replace: x: " .. x .. "y: " .. y )
- 
-
+    -- REPLACE THE OBJ
     if(objInfo.consumable ) then
       local replaceTileFn = Tiles.replace({
         oldObj = obj,
@@ -71,30 +71,19 @@ ObjectService.replace = function(obj, options)
       })
 
       timer.performWithDelay( 1, replaceTileFn )
-    else 
-      local replaceTileFn = Tiles.replace({
-        oldObj = obj,
-        newObjInfo = newObjInfo,
-        x = obj.x,
-        y = obj.y,
-        row = row,
-        column = column
-      })
-  
-      timer.performWithDelay( 1, replaceTileFn )
-
     end
   end
 end
 
+-- Delete object. The Corona way :)
 ObjectService.remove = function(obj)
-
   if( obj.removeSelf ~= nil ) then
     obj:removeSelf()
     obj = nil
   end
 end
 
+-- Is the object past a certain x or y coordinate limit?
 ObjectService.pastLimit = function(self, direction, limit)
   if direction == 'right' then
     return self.x > limit

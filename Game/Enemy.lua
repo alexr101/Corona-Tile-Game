@@ -1,3 +1,9 @@
+
+
+
+
+-- TODO: Move to Runtime
+
 local enemy = {}
 
 enemy.behavior = function()

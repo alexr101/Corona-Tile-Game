@@ -1,6 +1,8 @@
 -----------------------------------------------------------------------------------------
 --
--- 
+-- Object Generator Service
+--
+-- Handles keeping track of all obj metadata types and info for our game
 --
 -----------------------------------------------------------------------------------------
 
@@ -28,18 +30,14 @@ ObjectGenerator.objectsInGridArray = {
     ObjectGenerator.ElectricityGenerator,
     ObjectGenerator.UnmovableSpace,
     ObjectGenerator.BounceRock,
-
 }
-
 ObjectGenerator.objectsOutOfGridArray = {
     ObjectGenerator.MineMagnet,
     ObjectGenerator.Enemy1
 }
-
 ObjectGenerator.objectsReactive = {
     ObjectGenerator.Electricity
 }
-
 ObjectGenerator.allObjects = {
     ObjectGenerator.EmptySpace,
     ObjectGenerator.Star,
@@ -52,9 +50,6 @@ ObjectGenerator.allObjects = {
     -- ObjectGenerator.MineMagnet,
     ObjectGenerator.Enemy1
 }
-
-
-
 ObjectGenerator.names = {
     ObjectGenerator.EmptySpace.name,
     ObjectGenerator.Star.name,
@@ -71,6 +66,8 @@ ObjectGenerator.names = {
 
 }
 
+-- Get the next object out of the list of object types
+-- Used for levelbuilder
 ObjectGenerator.next = function(name)
     local Table = require('Utils.Table')
     local i = Table.getIndex(ObjectGenerator.names, name) + 1

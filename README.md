@@ -38,4 +38,11 @@ app refresh then set config.gridData to 'json'.
 * Physics
     * CollisionHandlers - Object Specific Collision Handler functions
     * Main - General Physic Classes
+* Map - It's made up of 3 components that work together to create the node connected, tile based grid map.
+    * Grid - It is responsible for creating the Grid map. Keeps track of rows and column numbers. The Tile & Node system is interwoven into creation just so we don't have to re-iterate through the whole Grid to add these connections. It has helper functions like "UpdateNodeConnections" for handling user tile swaps and keeping track of connections too. It has helper function like "CreateOutOfGridObj" & "FillSpace" to fill Tiles with their UI graphics, events & properties.
+    * Node - Simple Node that connections to up, right, down & left Nodes.
+    * Tile - Fill a grid space with it's own properties that include images, event handlers, tile type properties, and Corona Objects.
+* Services - These are more like helper functions used for different game objects.
+    * ObjectGenerator - Keeps a list of all gameObj Types and meta-data properties so we can reference them when filling up our Tiles
+
 

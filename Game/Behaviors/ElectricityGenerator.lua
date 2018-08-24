@@ -27,7 +27,6 @@ function conductElectricity(options)
 
         if (obj.info.name ~= 'electricity') then
             local replaceOptions = {
-                oldObj = obj,
                 newObjInfo = ObjectGenerator.Electricity,
                 x = State.getColXPosition(column),
                 y = RowBehavior.getYPosition(row),

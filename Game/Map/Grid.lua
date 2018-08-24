@@ -1,3 +1,13 @@
+-----------------------------------------------------------------------------------------
+--
+-- Grid is the highest class to create the game map
+-- 
+-- The layers below it are
+--      Node - handles connecting every piece in the map with Grid.matrix[i][j].node
+--      Tiles - this is the actual content inside of each matrix block. Create the corona obj, events, block info, etc
+--
+-----------------------------------------------------------------------------------------
+
 local Grid = {}
 local ObjectGenerator = require('Services.ObjectGenerator')
 local Screen = require('Device.Screen')
@@ -21,8 +31,8 @@ Grid.setup = function(columns)
     Grid.rowQty = Config.rows
     -- Grid.rowQty = math.ceil( ( Screen.height / Grid.tileSize ) + 3 )
 end
-
 Grid.setup(Config.tiles)
+
 local levelData
 if(Config.gridData == 'json') then
     local levelJson = File.read('/LevelData/' .. Config.levelBuilder.file)
