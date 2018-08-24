@@ -1,5 +1,6 @@
 local EventListeners = {}
 
+-- This allow you to move the map by dragging. Only usable on levelBuilder
 local function moveMap( event )
 
 	if(Config.levelBuilder) then

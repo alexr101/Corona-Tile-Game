@@ -44,7 +44,7 @@ ObjectService.replace = function(obj, options)
     -- GET X & Y POSITIONS
     local x = obj.x
     local y = obj.y
-    if(!objInfo.consumable) then
+    if(not objInfo.consumable) then
       if (obj.moving == 'horizontally') then
         x = objForHorizontalReference.x
       else

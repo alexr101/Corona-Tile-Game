@@ -44,5 +44,9 @@ app refresh then set config.gridData to 'json'.
     * Tile - Fill a grid space with it's own properties that include images, event handlers, tile type properties, and Corona Objects.
 * Services - These are more like helper functions used for different game objects.
     * ObjectGenerator - Keeps a list of all gameObj Types and meta-data properties so we can reference them when filling up our Tiles
+* LevelBuilder - Used to create levels. When this mode is activated this class handlers the controls for editing our map. The actual functionality is spread out throughout the app through the levelBuilder flag.
+* Device - Classes for device specific things like screen and memory
+
+
 
 

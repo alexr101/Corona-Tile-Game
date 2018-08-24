@@ -1,5 +1,10 @@
-local memory = {}
+-----------------------------------------------------------------------------------------
+--
+-- DEVICE MEMORY HELPER FUNCTIONS
+--
+-----------------------------------------------------------------------------------------
 
+local memory = {}
 
 function _printMemUsage()
   local memUsed = (collectgarbage("count"))

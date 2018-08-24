@@ -1,3 +1,10 @@
+-----------------------------------------------------------------------------------------
+--
+-- SWIPE EVENT HANDLER
+--
+-----------------------------------------------------------------------------------------
+
+
 local swipe = {}
 local RowBehavior = require('Game.Behaviors.Row')
 
@@ -74,10 +81,6 @@ swipe.handler = function(event)
 
       end
     end
-
-
-
-
 
     display.getCurrentStage():setFocus( nil )
     target.isFocus = nil
