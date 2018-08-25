@@ -123,9 +123,9 @@ Grid.newRow = function(data)
 
         -- Fill with content and images
         if(data == nil) then
-            Grid.matrix[i][j] = Grid.fillSpace(x, y)
+            Grid.matrix[i][j] = Grid.fillTile(x, y)
         else
-            Grid.matrix[i][j] = Grid.fillSpace(x, y, data[j+1]) --j+1 because silly lua tables start at 1 
+            Grid.matrix[i][j] = Grid.fillTile(x, y, data[j+1]) --j+1 because silly lua tables start at 1 
         end
 
         -- Set up row and column properties
@@ -249,7 +249,7 @@ Grid.updateUI = function()
 end
 
 -- fill space with data from ObjGenerator, and generate a Tile with it
-Grid.fillSpace = function(x, y, name)
+Grid.fillTile = function(x, y, name)
     local object
 
     -- specified or random
@@ -292,7 +292,7 @@ Grid.getTargetCoordinates = function(direction, coordinates)
     }
 end
 
-Grid.swipeValid = function(obj1, obj2)
+Grid.isSwipeValid = function(obj1, obj2)
     local objNil = obj1 == nil or obj2 == nil
     local objTransitioning = obj1.transitioning == true or obj2.transitioning == true
     local objUnmovable =  obj1.info.unmovable or obj2.info.unmovable
@@ -321,7 +321,7 @@ Grid.swap = function(options)
     local obj1 = Grid.matrix[row][column]
     local obj2 = Grid.matrix[targetRow][targetColumn]
 
-    if not Grid.swipeValid(obj1, obj2) then
+    if not Grid.isSwipeValid(obj1, obj2) then
         print('invalid swipe')
         return false
     end
@@ -335,25 +335,13 @@ Grid.swap = function(options)
         obj2.moving = 'vertically'
     end
 
-    -- get close proximity objects for transition position references
-    local objForYReference1
-    local objForYReference2
-
-    if (targetColumn > 1) then
-        objRowReference1 = Grid.matrix[row][column-1].coordinates.row
-        objRowReference2 = Grid.matrix[targetRow][targetColumn-1].coordinates.row
-    else
-        objRowReference1 = Grid.matrix[row][column+1].coordinates.row
-        objRowReference2 = Grid.matrix[targetRow][targetColumn+1].coordinates.row
-    end
-
     Grid.swapPerformTransition({
-        obj1 = obj1,
-        obj2 = obj2,
+        row = row,
+        column = column,
+        targetRow = targetRow,
+        targetColumn = targetColumn,
         speed = 80,
         direction = direction,
-        objRowReference1 = objRowReference1,
-        objRowReference2 = objRowReference2
     })
 
     Grid.swapInternalCoordinates({
@@ -379,18 +367,36 @@ Grid.swap = function(options)
     return true
 end
 
+Grid.getRowNeighbour = function(options)
+    if options.column > 1 then 
+        return Grid.matrix[options.row][options.column-1].coordinates.row
+    else   
+        return Grid.matrix[options.row][options.column+1].coordinates.row
+    end
+end
+
+
+
 -- Perform the actual swap transition of objects w Corona transition.to()
 Grid.swapPerformTransition = function(options)
     local RowBehavior = require('Game.Behaviors.Row')
-    local obj1 = options.obj1
-    local obj2 = options.obj2
+    local obj1 = Grid.matrix[options.row][options.column]
+    local obj2 = Grid.matrix[options.targetRow][options.targetColumn]
     local direction = options.direction
-    local objForYReference1 = options.objRowReference1
-    local objForYReference2 = options.objRowReference2
+    local transitionSpeed = options.speed
+
+    -- If vertical swap get neighbord nodes to get their coordinates at the end of transition. Cause transition doesn't account for moving y position
+    local obj1RowNeighbour = Grid.getRowNeighbour({
+        row = options.row, 
+        column = options.column
+    })
+    local obj2RowNeighbour = Grid.getRowNeighbour({
+        row = options.targetRow, 
+        column = options.targetColumn
+    })
 
     obj1.transitioning = true
     obj2.transitioning = true
-    local transitionSpeed = options.speed
 
     if direction == 'right' or direction == 'left' then
         transition.to( obj1, { time=transitionSpeed, alpha=1, x=obj2.x,
@@ -407,13 +413,13 @@ Grid.swapPerformTransition = function(options)
         transition.to( obj1, { time=transitionSpeed, alpha=1, y=obj2.y,
             onComplete = function()
                 obj1.transitioning = false
-                obj1.y = RowBehavior.getYPosition(objRowReference2)
+                obj1.y = RowBehavior.getYPosition(obj2RowNeighbour)
             end
         })
         transition.to( obj2, { time=transitionSpeed, alpha=1, y=obj1.y,
             onComplete = function()
                 obj2.transitioning = false
-                obj2.y = RowBehavior.getYPosition(objRowReference1)
+                obj2.y = RowBehavior.getYPosition(obj1RowNeighbour)
             end
         })
     end

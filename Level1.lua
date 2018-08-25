@@ -30,6 +30,7 @@ function scene:create( event )
 	AppState.init()
 	AppState.setSceneGroup( sceneGroup )
 	Grid.create(sceneGroup)
+	
 	Grid.updateUI()
 	EventListeners.init()
 
