@@ -134,8 +134,7 @@ Grid.newRow = function(data)
             column = j
         }
         -- Create node property and setup its connections
-        Grid.matrix[i][j].node = Node.new()
-        Grid.updateNodeConnections({
+        Grid.newNodeConnection({
             row = i,
             column = j
         })
@@ -147,6 +146,14 @@ Grid.newRow = function(data)
 
     Grid.topRow = Grid.topRow + 1
     return Grid.topRow-1
+end
+
+Grid.newNodeConnection = function(options)
+    Grid.matrix[options.row][options.column].node = Node.new()
+    Grid.updateNodeConnections({ 
+        row = options.row,
+        column = options.column,
+    })
 end
 
 -- Grid.updateNodeConnections({row, column})
@@ -262,15 +269,12 @@ Grid.fillSpace = function(x, y, name)
     return space
 end
 
-Grid.swap = function(options)
-    local RowBehavior = require('Game.Behaviors.Row')
-    local direction = options.direction
-    local coordinates = options.coordinates
-
-    local row = coordinates.row
-    local column = coordinates.column
-    local targetRow = row
-    local targetColumn = column
+-- Get the coordinates of the tile you want to swap to
+-- direction = 'up', 'right', 'down', 'left'
+-- coordinates = row, column of target
+Grid.getTargetCoordinates = function(direction, coordinates)
+    local targetRow = coordinates.row
+    local targetColumn = coordinates.column
 
     if direction == 'right' then
         targetColumn = targetColumn + 1
@@ -282,11 +286,42 @@ Grid.swap = function(options)
         targetRow = targetRow - 1
     end
 
+    return {
+        row = targetRow,
+        column = targetColumn
+    }
+end
+
+Grid.swipeValid = function(obj1, obj2)
+    local objNil = obj1 == nil or obj2 == nil
+    local objTransitioning = obj1.transitioning == true or obj2.transitioning == true
+    local objUnmovable =  obj1.info.unmovable or obj2.info.unmovable
+
+    if objNil or objTransitioning or objUnmovable then
+        return false
+    else
+        return true
+    end
+end
+
+-- SWAP 2 TILES
+-- direction = 'up', 'right', 'down', 'left'
+-- coordinates = row, column of target
+Grid.swap = function(options)
+    local direction = options.direction
+
+    local coordinates = options.coordinates
+    local row = coordinates.row
+    local column = coordinates.column
+
+    local targetCoordinates = Grid.getTargetCoordinates(direction, { row = row, column = column })
+    local targetRow = targetCoordinates.row
+    local targetColumn = targetCoordinates.column
+
     local obj1 = Grid.matrix[row][column]
     local obj2 = Grid.matrix[targetRow][targetColumn]
 
-    if obj1 == nil or obj2 == nil or obj1.transitioning == true or obj2.transitioning == true or 
-       obj1.info.unmovable or obj2.info.unmovable then
+    if not Grid.swipeValid(obj1, obj2) then
         print('invalid swipe')
         return false
     end
@@ -312,10 +347,50 @@ Grid.swap = function(options)
         objRowReference2 = Grid.matrix[targetRow][targetColumn+1].coordinates.row
     end
 
-    -- transition the positions
+    Grid.swapPerformTransition({
+        obj1 = obj1,
+        obj2 = obj2,
+        speed = 80,
+        direction = direction,
+        objRowReference1 = objRowReference1,
+        objRowReference2 = objRowReference2
+    })
+
+    Grid.swapInternalCoordinates({
+        row = row,
+        column = column,
+        targetRow = targetRow,
+        targetColumn = targetColumn
+    })
+
+    -- do the actual swap
+    local temp = Grid.matrix[row][column]
+    Grid.matrix[row][column] = Grid.matrix[targetRow][targetColumn]
+    Grid.matrix[targetRow][targetColumn] = temp
+
+    Grid.newNodeConnection({
+        row = row,
+        column = column,
+    })
+    Grid.newNodeConnection({
+        row = targetRow,
+        column = targetColumn,
+    })
+    return true
+end
+
+-- Perform the actual swap transition of objects w Corona transition.to()
+Grid.swapPerformTransition = function(options)
+    local RowBehavior = require('Game.Behaviors.Row')
+    local obj1 = options.obj1
+    local obj2 = options.obj2
+    local direction = options.direction
+    local objForYReference1 = options.objRowReference1
+    local objForYReference2 = options.objRowReference2
+
     obj1.transitioning = true
     obj2.transitioning = true
-    local transitionSpeed = 80
+    local transitionSpeed = options.speed
 
     if direction == 'right' or direction == 'left' then
         transition.to( obj1, { time=transitionSpeed, alpha=1, x=obj2.x,
@@ -342,37 +417,17 @@ Grid.swap = function(options)
             end
         })
     end
+end
 
-
-    -- take care of internal coordinates
-    Grid.matrix[row][column].coordinates = {
-        row = targetRow,
-        column = targetColumn
+Grid.swapInternalCoordinates = function(options)
+    Grid.matrix[options.row][options.column].coordinates = {
+        row = options.targetRow,
+        column = options.targetColumn
     }
-
-    Grid.matrix[targetRow][targetColumn].coordinates = {
-        row = row,
-        column = column
+    Grid.matrix[options.targetRow][options.targetColumn].coordinates = {
+        row = options.row,
+        column = options.column
     }
-
-    -- do the actual swap
-    local temp = Grid.matrix[row][column]
-    Grid.matrix[row][column] = Grid.matrix[targetRow][targetColumn]
-    Grid.matrix[targetRow][targetColumn] = temp
-
-    Grid.matrix[row][column].node = Node.new()
-    Grid.updateNodeConnections({ 
-        row = row,
-        column = column,
-    })
-
-    Grid.matrix[targetRow][targetColumn].node = Node.new()
-    Grid.updateNodeConnections({ 
-        row = targetRow,
-        column = targetColumn,
-    })
-
-    return true
 end
 
 return Grid
