@@ -44,6 +44,12 @@ Main.init = function(options)
 	end
 end
 
+Main.removeAll = function()
+	Runtime:removeEventListener( "enterFrame", Main.sceneGroupLoop)
+	local orderFn = function() ZOrdering.order(options.ZOrderGroups) end
+	Runtime:removeEventListener("enterFrame", orderFn)
+end
+
 
 
 return Main

@@ -12,6 +12,8 @@ PhysicsMain = require('Physics.Main')
 Math = require('Utils.math')
 Node = require('Game.Map.Node')
 RowBehaviors = require('Game.Behaviors.Row')
+LevelMenu = require('Menus.Level')
+LevelData = require('Game.Data.LevelData')
 
 Screen = require('Device.Screen')
 Sprites = require('Sprites.Main')
@@ -24,18 +26,25 @@ physics.setGravity( 0, 9.81)  -- 9.81 m/s*s in the positive x direction
 function scene:create( event )
 
 	local sceneGroup = self.view
-				itemsGroup = display.newGroup()
-				blackTiles = display.newGroup()
+	movableGroup = display.newGroup()
+	staticGroup = display.newGroup()
 
 	AppState.init()
-	AppState.setSceneGroup( sceneGroup )
-	Grid.create(sceneGroup)
+	AppState.setSceneGroup(sceneGroup)
+
+	-- Create Grid
+	local levelData = LevelData.getLevelData()
+	Grid.init(Config.tiles)
+	Grid.create(levelData)
 	Grid.updateUI()
+
 	EventListeners.init()
 	PhysicsMain.createBounds({
 		onSides = {'right', 'left'}
 	})
+	
 	player = Player.new(AppState.tileSize)
+	LevelMenu.initControls()
 
 	if(Config.levelBuilder.activated) then
 		local LevelBuilder = require('LevelBuilder.main')
@@ -80,6 +89,8 @@ function scene:hide( event )
 		--
 		-- INSERT code here to pause the scene
 		-- e.g. stop timers, stop animation, unload sounds, etc.)
+		Grid.delete()
+		RuntimeMain.removeAll()
 		physics.stop()
 	elseif phase == "did" then
 		-- Called when the scene is now off screen

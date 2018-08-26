@@ -16,7 +16,6 @@ local Config = require('Game.Config')
 local Node = require('Game.Map.Node')
 local State = require('Game.State')
 local File = require('Utils.File')
-local json = require('json')
 local Table = require('Utils.Table')
 
 Grid.matrix = {}
@@ -25,66 +24,18 @@ Grid.columnsQty = 0
 Grid.tileSize = 0
 Grid.rowQty = 0
 
-Grid.setup = function(columns)
+Grid.init = function(columns)
     Grid.columnsQty = columns
     Grid.tileSize = Screen.width / Grid.columnsQty
     Grid.rowQty = Config.rows
     -- Grid.rowQty = math.ceil( ( Screen.height / Grid.tileSize ) + 3 )
 end
-Grid.setup(Config.tiles)
-
-local levelData
-if(Config.gridData == 'json') then
-    local levelJson = File.read('/LevelData/' .. Config.levelBuilder.file)
-    levelData = json.decode( levelJson )
-end
-
-
-local mockData = {
-    { 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace' }, -- 10
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace' }, -- 20
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace', 'EmptySpace' },
-    { 'EmptySpace', 'EmptySpace', 'EmptySpace', 'Rock', 'EmptySpace', 'EmptySpace' }, -- 25
-
-}
 
 
 -- Creates a grid row by row.
 -- You have to provide it the 'name' of each row
 -- dataformat { {'block', 'block', block}, {etc...}, {etc...} }
 Grid.create = function (data)
-
-    local data
-
-    if(Config.gridData == 'mock') then
-        data = mockData
-    elseif(Config.gridData == 'json') then
-        data = levelData
-    elseif(Config.gridData == 'random') then
-        data = nil
-    end
-
     if(data) then
         for i = 1, Grid.rowQty, 1 do
             Grid.newRow(data[i])
@@ -94,7 +45,6 @@ Grid.create = function (data)
             Grid.newRow()
         end
     end
-
     return Grid.matrix
 end
 
@@ -206,6 +156,13 @@ Grid.createOutOfGridObj = function(x, y, sceneGroup)
         tile.outOfGrid = true
         sceneGroup:insert( tile )
     end
+end
+
+Grid.delete = function()
+    local ObjectService = require('Services.ObjectService')
+    Grid.forEach(function(obj)
+        ObjectService.remove(obj)
+    end)
 end
 
 Grid.printMap = function()

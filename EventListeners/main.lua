@@ -4,7 +4,7 @@ local EventListeners = {}
 -- Loop through the GRID elements
 -- If you move the Grid itself BoxPhysics won't move
 local function moveMap( event )
-	if(Config.levelBuilder.) then
+	if(Config.levelBuilder.activated) then
 		Grid.forEach(function(element)
 			if (event.phase == "began") then
 				element.startEventY = event.y
