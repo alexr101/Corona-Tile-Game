@@ -8,18 +8,18 @@
 
 local ObjectGenerator = {}
 
-ObjectGenerator.MineMagnet = require('Game.Blocks.MineMagnet')
-ObjectGenerator.Star = require('Game.Blocks.Star')
-ObjectGenerator.Electricity = require('Game.Blocks.Electricity')
-ObjectGenerator.ElectricityGenerator = require('Game.Blocks.ElectricityGenerator')
+ObjectGenerator.MineMagnet = require('Game.CharacterMetaData.MineMagnet')
+ObjectGenerator.Star = require('Game.CharacterMetaData.Star')
+ObjectGenerator.Electricity = require('Game.CharacterMetaData.Electricity')
+ObjectGenerator.ElectricityGenerator = require('Game.CharacterMetaData.ElectricityGenerator')
 
-ObjectGenerator.Rock = require('Game.Blocks.Rock')
-ObjectGenerator.RockCrumbling = require('Game.Blocks.RockCrumbling')
-ObjectGenerator.EmptySpace = require('Game.Blocks.EmptySpace')
-ObjectGenerator.DebugSpace = require('Game.Blocks.DebugSpace')
-ObjectGenerator.UnmovableSpace = require('Game.Blocks.UnmovableSpace')
-ObjectGenerator.BounceRock = require('Game.Blocks.BounceRock')
-ObjectGenerator.Enemy1 = require('Game.Blocks.Enemy1')
+ObjectGenerator.Rock = require('Game.CharacterMetaData.Rock')
+ObjectGenerator.RockCrumbling = require('Game.CharacterMetaData.RockCrumbling')
+ObjectGenerator.EmptySpace = require('Game.CharacterMetaData.EmptySpace')
+ObjectGenerator.DebugSpace = require('Game.CharacterMetaData.DebugSpace')
+ObjectGenerator.UnmovableSpace = require('Game.CharacterMetaData.UnmovableSpace')
+ObjectGenerator.BounceRock = require('Game.CharacterMetaData.BounceRock')
+ObjectGenerator.Enemy1 = require('Game.CharacterMetaData.Enemy1')
 
 -- TODO: Refactor this mess
 ObjectGenerator.objectsInGridArray = {
@@ -48,7 +48,7 @@ ObjectGenerator.allObjects = {
     ObjectGenerator.UnmovableSpace,
     ObjectGenerator.BounceRock,
     -- ObjectGenerator.MineMagnet,
-    ObjectGenerator.Enemy1
+    -- ObjectGenerator.Enemy1
 }
 ObjectGenerator.names = {
     ObjectGenerator.EmptySpace.name,
@@ -62,20 +62,22 @@ ObjectGenerator.names = {
 
     -- ObjectGenerator.Electricity.name,
     -- ObjectGenerator.MineMagnet.name,
-    ObjectGenerator.Enemy1.name
+    -- ObjectGenerator.Enemy1.name
 
 }
 
 -- Get the next object out of the list of object types
 -- Used for levelbuilder
 ObjectGenerator.next = function(name)
+    print(name)
     local Table = require('Utils.Table')
     local i = Table.getIndex(ObjectGenerator.names, name) + 1
-
-    if(i > table.getn(ObjectGenerator.names) ) then
+    print(i);
+    if(i > table.getn(ObjectGenerator.allObjects) ) then
         i = 1
     end
-    
+    print(i)
+    print(ObjectGenerator.allObjects[i]);
     return ObjectGenerator.allObjects[i]
 end
 

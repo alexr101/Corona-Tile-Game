@@ -30,15 +30,20 @@ function scene:create( event )
 	AppState.init()
 	AppState.setSceneGroup( sceneGroup )
 	Grid.create(sceneGroup)
-	
 	Grid.updateUI()
 	EventListeners.init()
-
 	PhysicsMain.createBounds({
 		onSides = {'right', 'left'}
-	})	
-
+	})
 	player = Player.new(AppState.tileSize)
+
+	if(Config.levelBuilder.activated) then
+		local LevelBuilder = require('LevelBuilder.main')
+		LevelBuilder.initControls()
+		if(Config.levelBuilder.resetLevel) then
+			LevelBuilder.resetLevelData()
+		end
+	end
 end
 
 

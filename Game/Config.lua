@@ -5,14 +5,15 @@
 -----------------------------------------------------------------------------------------
 
 local config = {
-  debug = false,
+  debug = true,
   levelBuilder = {
     activated = false,
+    resetLevel = false,
     file = 'level1.json',
     createMode = 'inGrid', -- 'inGrid' or 'outOfGrid' -- TODO: add buttons to add grid objects in or out of grid based on this enumerator
   },
-  gridData = 'random', -- json, mock, random
-  levelSpeed = -.5,
+  gridData = 'json', -- json, mock, random
+  levelSpeed = -.2,
   tiles = 6,
   rows = 25,
 }

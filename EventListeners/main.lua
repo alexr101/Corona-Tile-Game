@@ -1,31 +1,28 @@
 local EventListeners = {}
 
 -- This allow you to move the map by dragging. Only usable on levelBuilder
+-- Loop through the GRID elements
+-- If you move the Grid itself BoxPhysics won't move
 local function moveMap( event )
-
-	if(Config.levelBuilder) then
+	if(Config.levelBuilder.) then
 		Grid.forEach(function(element)
-			local newTouchY = event.y
-				
-			if (event.phase == "began") or (element.lastTouchPosY == nil) then
-				element.lastTouchPosY = newTouchY
-				return
+			if (event.phase == "began") then
+				element.startEventY = event.y
+				element.startElementY = element.y
 			end
+
 			if (event.phase == "ended") or (event.phase == "cancelled") then
-				element.lastTouchPosY = nil
 				return
 			end
 
-			local deltaY = (newTouchY - element.lastTouchPosY)
-			element.y = element.y + deltaY
-			element.lastTouchPosY = newTouchY
+			local deltaY = element.startEventY - event.y
+			element.y = element.startElementY - deltaY
 		end)
 	end
-	
 end	
 
 EventListeners.init = function()
-	-- AppState.sceneGroup:addEventListener( "touch", moveMap ) 
+	AppState.sceneGroup:addEventListener( "touch", moveMap ) 
 end
 
 return EventListeners

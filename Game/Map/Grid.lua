@@ -236,8 +236,17 @@ Grid.toTable = function()
         local rowTable = RowBehavior.toTable(i)
         table.insert(data, rowTable)
     end
+    return data
+end
 
+Grid.toEmptyTable = function()
+    local RowBehavior = require('Game.Behaviors.Row')
+    local data = {}
 
+    for i = 0, Grid.rowQty-1, 1 do
+        local rowTable = RowBehavior.toEmptyTable(i)
+        table.insert(data, rowTable)
+    end
     return data
 end
 

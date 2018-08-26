@@ -5,6 +5,9 @@
 local LevelBuilder = {}
 local createModeBtn
 local createModeTxt
+local widget = require('widget')
+local File = require('Utils.File')
+
 
 local function updateText(textbox, text)
   textbox.text = text
@@ -20,6 +23,20 @@ local function changeCreateMode()
   end
 
   updateText(createModeTxt, 'Create Mode: ' .. Config.levelBuilder.createMode)
+end
+
+LevelBuilder.saveLevel = function()
+  local gridTableData   
+  gridTableData = Grid.toTable()
+  local levelFilePath = Config.levelBuilder.file
+  File.save('/LevelData/' .. levelFilePath, gridTableData)
+end
+
+LevelBuilder.resetLevelData = function()
+  local gridTableData   
+  gridTableData = Grid.toEmptyTable()
+  local levelFilePath = Config.levelBuilder.file
+  File.save('/LevelData/' .. levelFilePath, gridTableData)
 end
 
 
@@ -54,5 +71,6 @@ LevelBuilder.initControls = function()
   createModeTxt.x = 0
   createModeTxt.y = createModeBtn.height + 10
 end
+
 
 return LevelBuilder

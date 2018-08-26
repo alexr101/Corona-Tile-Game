@@ -23,9 +23,7 @@ swipe.handler = function(event)
   local Config = require('Game.Config')
   local State = require('Game.State')
   local ObjectService = require('Services.ObjectService')
-  local File = require('Utils.File')
-
-
+  local LevelBuilder = require('LevelBuilder.main')
 
   if ( event.phase == "began" ) then    
       display.getCurrentStage():setFocus( target )
@@ -41,19 +39,19 @@ swipe.handler = function(event)
     local direction = ''
 
     if(Config.levelBuilder.activated) then
+      print('level builder')
       ObjectService.replace(target, {
         getNext = true
       })
-          
-      local table = Grid.toTable()
-      local levelFile = Config.levelBuilder.file
-      File.save('/LevelData/' .. levelFile, table)
-      RowBehavior.update(row)
+
+      LevelBuilder.saveLevel()
+
+      RowBehavior.update(row) -- what for? electricity?
     elseif(target.info.unmovable ~= true) then
 
       -- Node.seeAll({row = row, column = column })
 
-      if     xCurrent > xStart+ swipeOffset then
+      if     xCurrent > xStart + swipeOffset then
         direction = 'right'
       elseif xCurrent < xStart - swipeOffset then
         direction = 'left'

@@ -17,7 +17,7 @@ ObjectService.replace = function(obj, options)
 
   local objIsNotOutOfGrid = obj.coordinates ~= nil
 
-  if(objIsNotOutOfGrid) then
+  if(objIsNotOutOfGrid or options.getNext) then
     -- GET OBJ METADATA
     local row = obj.coordinates.row
     local column = obj.coordinates.column
@@ -56,22 +56,24 @@ ObjectService.replace = function(obj, options)
     if(options == nil or options.getNext == nil) then
       newObjInfo = ObjectGenerator.EmptySpace
     else
+      print(obj.info.name)
       newObjInfo = ObjectGenerator.next(obj.info.name) -- used for levelbuilder mode
+      print(newObjInfo.name)
     end 
 
     -- REPLACE THE OBJ
-    if(objInfo.consumable ) then
-      local replaceTileFn = Tiles.replace({
-        oldObj = obj,
-        newObjInfo = newObjInfo,
-        x = x,
-        y = y,
-        row = row,
-        column = column
-      })
+    -- if(objInfo.consumable ) then
+    local replaceTileFn = Tiles.replace({
+      oldObj = obj,
+      newObjInfo = newObjInfo,
+      x = x,
+      y = y,
+      row = row,
+      column = column
+    })
 
-      timer.performWithDelay( 1, replaceTileFn )
-    end
+    timer.performWithDelay( 1, replaceTileFn )
+    -- end
   end
 end
 

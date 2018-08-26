@@ -86,6 +86,19 @@ Row.toTable = function(row)
     return rowTable
 end
 
+Row.toEmptyTable = function(row)
+    local Config = require('Game.Config')
+    local Grid = require('Game.Map.Grid')
+    local Table = require('Utils.Table')
+    local rowTable = {}
+    for i = 0, Config.tiles-1, 1 do
+        local obj = Grid.matrix[row][i]
+        table.insert(rowTable, 'EmptySpace')
+    end
+
+    return rowTable
+end
+
 Row.getYPosition = function(row)
     local Config = require('Game.Config')
     local Grid = require('Game.Map.Grid')
