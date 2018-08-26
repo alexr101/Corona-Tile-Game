@@ -18,13 +18,17 @@ local State = require('Game.State')
 local File = require('Utils.File')
 local Table = require('Utils.Table')
 
-Grid.matrix = {}
-Grid.topRow = 0 -- row at the top of grid. Changes as we create more
-Grid.columnsQty = 0
-Grid.tileSize = 0
-Grid.rowQty = 0
+Grid.reset = function()
+    Grid.matrix = {}
+    Grid.topRow = 0 -- row at the top of grid. Changes as we create more
+    Grid.columnsQty = 0
+    Grid.tileSize = 0
+    Grid.rowQty = 0
+end
+
 
 Grid.init = function(columns)
+    Grid.reset()
     Grid.columnsQty = columns
     Grid.tileSize = Screen.width / Grid.columnsQty
     Grid.rowQty = Config.rows
@@ -45,6 +49,7 @@ Grid.create = function (data)
             Grid.newRow()
         end
     end
+
     return Grid.matrix
 end
 

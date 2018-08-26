@@ -32,7 +32,8 @@ File.read = function(dir, data)
         print( "File error: " .. errorString )
     else
         contents = file:read( "*a" )
-        print( "Contents of " .. path .. "\n" .. contents )
+        print('Open File: ' .. path)
+        -- print( "Contents of " .. path .. "\n" .. contents )
         io.close( file )
     end
 

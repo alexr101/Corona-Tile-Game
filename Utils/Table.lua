@@ -78,7 +78,6 @@ Table.printArr = function(arr)
     local element = arr[i]
     print(element)
   end
-
 end
 
 -- Print matrix. ie matrix = [ [1,2], [2,3], [3,5] ]

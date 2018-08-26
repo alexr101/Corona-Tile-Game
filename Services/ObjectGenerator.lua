@@ -69,15 +69,11 @@ ObjectGenerator.names = {
 -- Get the next object out of the list of object types
 -- Used for levelbuilder
 ObjectGenerator.next = function(name)
-    print(name)
     local Table = require('Utils.Table')
     local i = Table.getIndex(ObjectGenerator.names, name) + 1
-    print(i);
     if(i > table.getn(ObjectGenerator.allObjects) ) then
         i = 1
     end
-    print(i)
-    print(ObjectGenerator.allObjects[i]);
     return ObjectGenerator.allObjects[i]
 end
 

@@ -1,36 +1,38 @@
 local composer = require( "composer" )
-		composer.removeScene( "Menu" )
+	  composer.removeScene( "Menu" )
 local scene = composer.newScene()
 
-AppState = require('Game.State')
-Config = require('Game.config')
-EventListeners = require('EventListeners.main')
-Graphics = require('UI.GraphicEffects')
-Grid = require('Game.Map.Grid')
-Player = require('Game.Player')
-PhysicsMain = require('Physics.Main')
-Math = require('Utils.math')
-Node = require('Game.Map.Node')
-RowBehaviors = require('Game.Behaviors.Row')
-LevelMenu = require('Menus.Level')
-LevelData = require('Game.Data.LevelData')
 
-Screen = require('Device.Screen')
-Sprites = require('Sprites.Main')
-Table = require('Utils.Table')
-
-physics = require 'physics'
-physics.start()
-physics.setGravity( 0, 9.81)  -- 9.81 m/s*s in the positive x direction  
 
 function scene:create( event )
-
 	local sceneGroup = self.view
 	movableGroup = display.newGroup()
 	staticGroup = display.newGroup()
 
+	Inspect = require('Libraries.Inspect')
+	AppState = require('Game.State')
+	Config = require('Game.config')
+	EventListeners = require('EventListeners.main')
+	Graphics = require('UI.GraphicEffects')
+	Grid = require('Game.Map.Grid')
+	Player = require('Game.Player')
+	PhysicsMain = require('Physics.Main')
+	Math = require('Utils.math')
+	Node = require('Game.Map.Node')
+	RowBehaviors = require('Game.Behaviors.Row')
+	LevelMenu = require('Menus.LevelMenu')
+	LevelData = require('Game.Data.LevelData')
+	Screen = require('Device.Screen')
+	Sprites = require('Sprites.Main')
+	Table = require('Utils.Table')
+
+	physics = require 'physics'
+	physics.start()
+	physics.setGravity( 0, 9.81)  -- 9.81 m/s*s in the positive x direction  
+
 	AppState.init()
 	AppState.setSceneGroup(sceneGroup)
+	print( Inspect(Grid) )
 
 	-- Create Grid
 	local levelData = LevelData.getLevelData()
@@ -38,7 +40,7 @@ function scene:create( event )
 	Grid.create(levelData)
 	Grid.updateUI()
 
-	EventListeners.init()
+
 	PhysicsMain.createBounds({
 		onSides = {'right', 'left'}
 	})
@@ -75,6 +77,8 @@ function scene:show( event )
 		RuntimeMain.init({
 			ZOrderGroups = gameViewLayers
 		})
+		EventListeners.init()
+
 
 	end
 end
@@ -89,8 +93,10 @@ function scene:hide( event )
 		--
 		-- INSERT code here to pause the scene
 		-- e.g. stop timers, stop animation, unload sounds, etc.)
-		Grid.delete()
 		RuntimeMain.removeAll()
+		EventListeners.removeAll()
+		Grid.reset()
+
 		physics.stop()
 	elseif phase == "did" then
 		-- Called when the scene is now off screen

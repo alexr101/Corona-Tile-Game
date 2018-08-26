@@ -16,7 +16,7 @@ LevelMenu.initMenuBtn = function()
         x = 0,
         y = 0,
         onRelease = function()
-            -- composer.gotoScene( "Level1", "fade", 500 )
+            composer.gotoScene( "Level1", "fade", 500 )
             composer.removeScene( "Level1", "fade", 500 )
         end
     })
